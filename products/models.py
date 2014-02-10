@@ -24,7 +24,7 @@ class Product(models.Model):
 		return str(self.title)
 
 	# COMMENT DATE: 3-3-14
-	# This sets up the 
+	# This sets up the
 	class Meta:
 		# The default ordering for the object, for use when obtaining lists of objects:
 		# the '-' will return the items in reverse order
@@ -90,4 +90,4 @@ class CategoryImage(models.Model):
 		# work well in most cases, so it's best to designate it to ensure it
 		# matches in all cases
 		verbose_name_plural = "Category Images"
-		
+
