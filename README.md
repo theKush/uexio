@@ -7,3 +7,8 @@ The project will be a web application that enables students to buy and sell text
 > Giving students the ability to easily sell textbooks to other students, while simultaneously offering a higher profit margin per sale to sellers.
 
 Developers: [Alex Garcia](https://github.com/alejandro9561), [Jordan Hudgens](https://github.com/jordanhudgens), [Kush Patel](https://github.com/lasanster)
+
+
+### Required packages:
+
+Pillow: pip install Pillow
