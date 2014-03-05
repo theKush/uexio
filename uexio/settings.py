@@ -111,10 +111,7 @@ ROOT_URLCONF = 'uexio.urls'
 WSGI_APPLICATION = 'uexio.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "static", "templates")
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'templates')),
 )
 
 INSTALLED_APPS = (

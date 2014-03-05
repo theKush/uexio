@@ -19,6 +19,9 @@ class Product(models.Model):
 	order = models.IntegerField(default=0)
 	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 	updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+	isbn_number = models.CharField(max_length=500, null=True, blank=True)
+	author = models.CharField(max_length=500, null=True, blank=True)
+	active = models.BooleanField(default=True)
 
 	def __unicode__(self):
 		return str(self.title)
