@@ -3,6 +3,11 @@
 {% block content %}
 
 
-{{ products }}
+<h1>{{ product }}</h1>
 
+<ul>
+    {% for category in categories %}
+        <li>{{ category }}</li>
+    {% endfor %}
 {% endblock %}
+</ul>
