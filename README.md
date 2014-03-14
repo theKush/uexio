@@ -12,4 +12,5 @@ Developers: [Alex Garcia](https://github.com/alejandro9561), [Jordan Hudgens](ht
 ### Required packages:
 
 Pillow: pip install Pillow
+
 South: pip install South
