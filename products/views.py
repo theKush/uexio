@@ -1,5 +1,5 @@
-from django.shortcuts import render_to_response, RequestContext, Http404
-
+from django.shortcuts import render_to_response, RequestContext, Http404, HttpResponseRedirect
+from django.template.defaultfilters import slugify
 
 from .models import Product, Category, ProductImage
 from .forms import ProductForm
@@ -7,6 +7,18 @@ from .forms import ProductForm
 def list_all(request):
     products = Product.objects.filter(active=True)
     return render_to_response("products/all.html", locals(), context_instance=RequestContext(request))
+
+def add_product(request):
+        form = ProductForm(request.POST or None)
+
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.user = request.user
+            product.slug = slugify(form.cleaned_data['title'])
+            product.active = False
+            product.save()
+            return HttpResponseRedirect('/products/%s'%(product.slug))
+        return render_to_response("products/edit.html", locals(), context_instance=RequestContext(request))
 
 def edit_product(request, slug):
     instance = Product.objects.get(slug=slug)
