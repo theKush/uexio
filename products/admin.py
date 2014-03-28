@@ -10,6 +10,7 @@ class TagInline(admin.TabularInline):
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage # establishes the association between the product and the image and shows it in the admin panel
+    extra = 0
 
 class CategoryImageInline(admin.TabularInline):
     model = CategoryImage

@@ -4,9 +4,22 @@
 
 {% block content %}
 
-<h1>Edit: {{ instance.title }}</h1>
-<form method='POST' action=''> {% csrf_token %}
-{{ formset }}
-<input type='submit' value='Update' />
+<h1>Edit: {{ product.title }} images</h1>
+
+<form method='POST' action='' enctype="multipart/form-data"> {% csrf_token %}
+{{ formset.management_form }}
+
+<table>
+{% for form in formset %}
+    <tr>
+        <td><img src="{{ MEDIA_URL }}{{ form.instance.image }}" width="150"></td>
+        {% for field in form %}
+            <td>{{ field.label_tag }}</td>
+            <td>{{ field }}</td>
+        {% endfor %}
+    </tr>
+{% endfor %}
+<tfoot><td><input type='submit' value='Update' /></td></tfoot>
+</table>
 </form>
 {% endblock %}

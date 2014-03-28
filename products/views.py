@@ -30,12 +30,17 @@ def manage_product_image(request, slug):
         product = False
 
     if request.user == product.user:
-        ProductImageFormset = modelformset_factory(ProductImage, form=ProductImageForm)
-        formset = ProductImageFormset(queryset= ProductImage.objects.filter(product__slug=slug))
+        queryset = ProductImage.objects.filter(product__slug=slug) # this queries the images and ensures that the correct image is selected
+        ProductImageFormset = modelformset_factory(ProductImage, form=ProductImageForm, can_delete=True)
+        formset = ProductImageFormset(request.POST or None, request.FILES or None, queryset=queryset)
         form = ProductImageForm(request.POST or None) # this initializes the ability to reference the image for the product
 
-        if form.is_valid():
-            print "form is valid"
+        # validates and saves the image when uploaded
+        if formset.is_valid(): #
+            for form in formset:
+                instance = form.save(commit=False)
+                instance.save()
+
         return render_to_response("products/manage_images.html", locals(), context_instance=RequestContext(request))
     else:
         raise Http404
