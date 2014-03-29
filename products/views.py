@@ -16,19 +16,28 @@ def list_all(request):
     products = Product.objects.filter(active=True)
     return render_to_response("products/all.html", locals(), context_instance=RequestContext(request))
 
+def check_product(user, product):
+    if product in user.userpurchase.products.all():
+        return True
+    else:
+        return False
+
 def download_product(request, slug, filename):
     product = Product.objects.get(slug=slug)
-    print filename
-    product_file = str(product.download)
-    file_path = os.path.join(settings.PROTECTED_UPLOADS, product_file)
-    wrapper = FileWrapper(file(file_path))
-    response = HttpResponse(wrapper, content_type=guess_type(product_file))
 
-    # these are the content headers for the download
-    response['Content-Diposition'] = 'attachement;filename=%s' %filename
-    response['Content-Type'] = ''
-    response['X-SendFile'] = file_path
-    return response
+    if product in request.user.userpurchase.products.all():
+        product_file = str(product.download)
+        file_path = os.path.join(settings.PROTECTED_UPLOADS, product_file)
+        wrapper = FileWrapper(file(file_path))
+        response = HttpResponse(wrapper, content_type=guess_type(product_file))
+
+        # these are the content headers for the download
+        response['Content-Diposition'] = 'attachement;filename=%s' %filename
+        response['Content-Type'] = ''
+        response['X-SendFile'] = file_path
+        return response
+    else:
+        raise Http404
 
 def add_product(request):
         form = ProductForm(request.POST or None)
@@ -84,15 +93,15 @@ def edit_product(request, slug):
 
 def single(request, slug):
     product = Product.objects.get(slug=slug)
-
     images = product.productimage_set.all()
-
     categories = product.category_set.all()
+    downloadable = check_product(request.user, product)
     context = {
         "product": product,
         "categories": categories,
         "edit": True,
         "images": images,
+        "downloadable": downloadable,
     }
 
     return render_to_response("products/single.html", locals(), context_instance=RequestContext(request))

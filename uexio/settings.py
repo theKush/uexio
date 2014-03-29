@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'south',
     'products',
+    'profiles',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

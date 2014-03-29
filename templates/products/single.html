@@ -16,9 +16,10 @@
     {% endfor %}
 </ul>
 
-
+{% if product.download and downloadable %}
 <a href="#">Edit Product</a>
 <a href="download/{{ product.download|filename }}">Download Materials</a>
+{% endif %}
 
 
 {% endblock %}
