@@ -10,6 +10,6 @@ urlpatterns = patterns('products.views',
     url(r'^add/', 'add_product', name="add_product"),
     url(r'^(?P<slug>.*)/images/', 'edit_product', name="edit_product"),
     url(r'^(?P<slug>.*)/edit/', 'edit_product', name="edit_product"),
-    url(r'^(?P<slug>.*)/download/(?P<filename>.*)$', 'download_product'),
+    url(r'^(?P<slug>.*)/download/(?P<filename>.*)$', 'download_product', name='download_product'),
     url(r'^(?P<slug>.*)/$', 'single', name="single_product"),
 )
