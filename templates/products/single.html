@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% load filename %}
+
 
 {% block content %}
-
 
 <h1>{{ product }}</h1>
 
@@ -13,5 +14,11 @@
     {% for category in categories %}
         <li>{{ category }}</li>
     {% endfor %}
-{% endblock %}
 </ul>
+
+
+<a href="#">Edit Product</a>
+<a href="download/{{ product.download|filename }}">Download Materials</a>
+
+
+{% endblock %}

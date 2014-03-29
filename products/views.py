@@ -1,6 +1,12 @@
-from django.shortcuts import render_to_response, RequestContext, Http404, HttpResponseRedirect
+import os
+
+from mimetypes import guess_type
+
+from django.conf import settings
+from django.shortcuts import render_to_response, RequestContext, Http404, HttpResponseRedirect, HttpResponse
 from django.template.defaultfilters import slugify
 from django.forms.models import modelformset_factory
+from django.core.servers.basehttp import FileWrapper
 
 
 from .models import Product, Category, ProductImage
@@ -9,6 +15,20 @@ from .forms import ProductForm, ProductImageForm
 def list_all(request):
     products = Product.objects.filter(active=True)
     return render_to_response("products/all.html", locals(), context_instance=RequestContext(request))
+
+def download_product(request, slug, filename):
+    product = Product.objects.get(slug=slug)
+    print filename
+    product_file = str(product.download)
+    file_path = os.path.join(settings.PROTECTED_UPLOADS, product_file)
+    wrapper = FileWrapper(file(file_path))
+    response = HttpResponse(wrapper, content_type=guess_type(product_file))
+
+    # these are the content headers for the download
+    response['Content-Diposition'] = 'attachement;filename=%s' %filename
+    response['Content-Type'] = ''
+    response['X-SendFile'] = file_path
+    return response
 
 def add_product(request):
         form = ProductForm(request.POST or None)
@@ -36,7 +56,7 @@ def manage_product_image(request, slug):
         form = ProductImageForm(request.POST or None) # this initializes the ability to reference the image for the product
 
         # validates and saves the image when uploaded
-        if formset.is_valid(): #
+        if formset.is_valid(): # checks to make sure that the form is valid prior to saving
             for form in formset:
                 instance = form.save(commit=False)
                 instance.save()
