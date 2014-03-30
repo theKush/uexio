@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     'south',
     'products',
     'profiles',
+    'shoppingcart',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

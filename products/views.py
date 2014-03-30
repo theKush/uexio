@@ -95,13 +95,10 @@ def single(request, slug):
     product = Product.objects.get(slug=slug)
     images = product.productimage_set.all()
     categories = product.category_set.all()
-    downloadable = check_product(request.user, product)
-    context = {
-        "product": product,
-        "categories": categories,
-        "edit": True,
-        "images": images,
-        "downloadable": downloadable,
-    }
+
+    if request.user.is_authenticated():
+        downloadable = check_product(request.user, product)
+
+    edit = True
 
     return render_to_response("products/single.html", locals(), context_instance=RequestContext(request))
