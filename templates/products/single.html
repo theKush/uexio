@@ -5,6 +5,10 @@
 
 <h1>{{ product }}</h1>
 
+{% for image in images %}
+<img src="{{ MEDIA_URL }}{{ image.image }}" width="300px" />
+{% endfor %}
+
 <ul>
     {% for category in categories %}
         <li>{{ category }}</li>
