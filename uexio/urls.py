@@ -8,7 +8,9 @@ admin.autodiscover()
 urlpatterns = patterns('',
 	# regular expression below sets up the path for the app, more info in settings
     url(r'^$', 'products.views.list_all', name="all_products"),
+    url(r'^lib/', 'profiles.views.library', name="library"),
 	url(r'^products/', include('products.urls')),
+	url(r'^shoppingcart/', include('shoppingcart.urls')),
 	(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 	(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     # The line below enables admin documentation:

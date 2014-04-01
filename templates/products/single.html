@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load filename %}
 
 {% block content %}
 
-
+<a href='{% url "add_to_cart" product.id %}'>Add to Cart</a>
 <h1>{{ product }}</h1>
 
 {% for image in images %}
@@ -13,5 +14,12 @@
     {% for category in categories %}
         <li>{{ category }}</li>
     {% endfor %}
-{% endblock %}
 </ul>
+
+{% if product.download and downloadable %}
+<a href="#">Edit Product</a>
+<a href="download/{{ product.download|filename }}">Download Materials</a>
+{% endif %}
+
+
+{% endblock %}

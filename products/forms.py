@@ -11,3 +11,4 @@ class ProductForm(ModelForm):
 class ProductImageForm(ModelForm):
     class Meta:
         model = ProductImage
+        fields = ('title', 'image', 'featured_image')

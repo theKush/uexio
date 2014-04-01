@@ -1,5 +1,15 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
+
+protected_loc = settings.PROTECTED_UPLOADS
+
+def download_loc(instance, filename):
+    if instance.user.username:
+        return "%s/download/%s" %(instance.user.username, filename)
+    else:
+        return "%s/download/%s" %("default", filename)
 
 # COMMENT DATE: 3-3-14
 # The model gives instruction to the database on how it should be stored
@@ -13,6 +23,7 @@ class Product(models.Model):
 	user = models.ForeignKey(User, null=True, blank=True)
 	title = models.CharField(max_length=180)
 	description = models.CharField(max_length=500)
+	download = models.FileField(upload_to=download_loc, storage=FileSystemStorage(location=protected_loc), null=True) # this is for testing the order authentication process
 	price = models.DecimalField(max_digits=20, decimal_places=2)
 	sale_price = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
 	slug = models.SlugField()
