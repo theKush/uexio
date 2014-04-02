@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<a href='{% url "add_to_cart" product.id %}'>Add to Cart</a>
+<a href='{% url "update_cart" product.id %}'>Add to Cart</a>
 <h1>{{ product }}</h1>
 
 {% for image in images %}

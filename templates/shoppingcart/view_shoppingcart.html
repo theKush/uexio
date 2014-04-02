@@ -3,7 +3,7 @@
 
 
 {% block content %}
-{% if shoppingcart %}
+{% if exists %}
 
 <h1>Shopping Cart</h1>
 
@@ -25,6 +25,9 @@
         </td>
         <td>
             {{ item.product.price }}
+        </td>
+        <td>
+            <a href='{% url "update_cart" item.product.id %}'>Remove</a>
         </td>
     </tr>
     {% endfor %}
