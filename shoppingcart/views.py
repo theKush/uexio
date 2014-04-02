@@ -8,6 +8,15 @@ from .models import Shoppingcart, ShoppingcartItem
 
 
 def shoppingcart(request):
+    try:
+        shoppingcart_id = request.session['shoppingcart_id']
+    except:
+        shoppingcart_id = False
+
+    if shoppingcart_id:
+        shoppingcart = Shoppingcart.objects.get(id=shoppingcart_id)
+    else:
+        shoppingcart = False
 
     return render_to_response('shoppingcart/view_shoppingcart.html', locals(), context_instance=RequestContext(request))
 
@@ -34,5 +43,5 @@ def add_to_cart(request, id):
         new_item, created = ShoppingcartItem.objects.get_or_create(shoppingcart=shoppingcart, product=product)
         if created:
             messages.success(request, 'cart item added')
-        return HttpResponseRedirect('/cart/')
+        return HttpResponseRedirect('/shoppingcart/')
 

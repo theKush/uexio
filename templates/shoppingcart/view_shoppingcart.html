@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+{% if shoppingcart %}
+
+<h1>Shopping Cart</h1>
+
+
+
+<table>
+    <thead>
+        <th>Item</th>
+        <th></th>
+        <th>Price</th>
+    </thead>
+
+    {% for item in shoppingcart.shoppingcartitem_set.all %}
+    <tr>
+        <td>
+            {{ item.product }}
+        </td>
+        <td>
+        </td>
+        <td>
+            {{ item.product.price }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% else %}
+
+
+<h1>Your car is empty</h1>
+
+{% endif %}
+{% endblock %}
