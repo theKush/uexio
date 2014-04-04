@@ -14,12 +14,25 @@ Uexio utilizes the Django framework.
 
 ### Views
 Currently you can visit http://localhost:8000/admin (after you have started the server) to access the admin dashboard for the application.
+Also, you can view the cart, single product page, and all products. 
 
 ### Functionality
 In the admin panel you can create products, associate products with categories, create addtional categories, create url slugs, etc. You can also create users.
 
+Following links can be used to navigate through uexio products:
+* /products/ # shows the product index
+* /products/<slug>/edit/ # allows the user to edit the product
+* /products/<slug>/images/ # allows the user to manage their product
+
+### Installation
+You can follow the installation guides below:
+*  make sure pip is installed, if not follow guide here: http://www.pip-installer.org/en/latest/quickstart.html
+*  If you’re using Linux, Mac OS X or some other flavor of Unix, enter the command ``` sudo pip install Django```at the shell prompt. If you’re using Windows, start a command shell with administrator privileges and run the command ``` pip install Django```. This will install Django in your Python installation’s site-packages directory.
+* Next, unzip the uexio-master zip file and then navigate to that folder through commandline.
+* Next, Follow the Login credentials instructions bellow  
+
 ### Login credentials
-You can create a local superadmin user by running the command: django-admin.py createsuperuser in the console, you will then be prompted to enter your login crentials. After you have created the superadmin you can access the admin dashboard with full authorization. If the command: django-admin.py createsuperuser does not work automatically, you will need to run the following commands:
+You can create a local superadmin user by running the command: ```django-admin.py createsuperuser``` in the console, you will then be prompted to enter your login crentials. After you have created the superadmin you can access the admin dashboard with full authorization. If the command: django-admin.py createsuperuser does not work automatically, you will need to run the following commands:
 
 * python manage.py syncdb
 * python manage.py migrate
