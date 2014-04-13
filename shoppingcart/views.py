@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render_to_response, Http404, RequestContext, HttpResponseRedirect
-
+from django.core.urlresolvers import reverse
 from products.models import Product
 from products.views import check_product
 
@@ -8,11 +8,25 @@ from .models import Shoppingcart, ShoppingcartItem
 
 
 def shoppingcart(request):
+    try:
+        shoppingcart_id = request.session['shoppingcart_id']
+    except:
+        shoppingcart_id = False
+
+    if shoppingcart_id:
+        shoppingcart = Shoppingcart.objects.get(id=shoppingcart_id)
+    else:
+        shoppingcart = False
+
+    try:
+        exists = ShoppingcartItem.objects.get(shoppingcart=shoppingcart)
+    except:
+        exists = False
 
     return render_to_response('shoppingcart/view_shoppingcart.html', locals(), context_instance=RequestContext(request))
 
 
-def add_to_cart(request, id):
+def update_cart(request, id):
     try:
         product = Product.objects.get(id=id)
     except:
@@ -33,6 +47,11 @@ def add_to_cart(request, id):
     if product:
         new_item, created = ShoppingcartItem.objects.get_or_create(shoppingcart=shoppingcart, product=product)
         if created:
+            new_item.Shoppingcart = shoppingcart
+            new_item.save()
             messages.success(request, 'cart item added')
-        return HttpResponseRedirect('/cart/')
+        else:
+            new_item.delete()
+            messages.success(request, 'cart item remove')
+        return HttpResponseRedirect(reverse('shoppingcart'))
 
