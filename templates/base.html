@@ -1,13 +1,41 @@
 <!DOCTYPE html>
-    <html>
-        <head>
-        
-        </head>
+<html lang="en">
+    <head>
+        <title>{% block title %} uexio {% endblock %}</title>
+        <!-- Meta -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Uex.io provides a marketplace for students to buy and sell books">
+        <!-- Favicon -->
+        <!-- Bootstrap -->
+        <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet" />
+        <!-- Global Styles -->
+        <link href="{{ STATIC_URL }}css/main.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}fonts/css/font-awesome.min.css"/>
+    </head>
 
-        <body>
-            <div style='width: 700px; margin: 0 auto;'>
-                {% block content %} 
+    <body>
+        {% block navbar %}
+            {%  include "navbar.html" %}
+        {% endblock %}
+
+        <div id="wrapper">
+            <div class="container">
+                {% block sidebar %}
+                {% endblock %}
+                {% block breadcrumbs %}
+                {% endblock %}
+                {% block alert %}
+                {% endblock %}
+                {% block content %}
                 {% endblock %}
             </div>
-        </body>
-    </html>
+        </div>
+
+        {% block footer %}
+            {% include "footer.html" %}
+        {% endblock %}
+    </body>
+
+</html>

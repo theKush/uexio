@@ -1,33 +1,67 @@
 {% extends 'base.html' %}
 {% load filename %}
 
+{% block sidebar %}
+    <div id="sidebar" class="col-lg-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">My Account</div>
+            <ul class="list-group">
+              <a id="nav_view_profile" class="list-group-item" href="#" title="View Profile">View Profile</a>
+              <a id="nav_edit_profile" class="list-group-item" href="#" title="Edit Profile">Edit Profile</a>
+              <a id="nav_active_listings" class="list-group-item" href="#" title="Active Listings">Active Listings</a>
+              <a id="nav_my_library" class="list-group-item active" href="#" title="My Library">My Library</a>
+              <a id="nav_my_purchases" class="list-group-item" href="#" title="My Purchases">My Purchases</a>
+              <a id="nav_my_sold_items" class="list-group-item" href="#" title="My Sold Items">My Sold Items</a>
+            </ul>
+          </div>
+        </div>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="col-lg-9">
+        <section id="breadcrumb">
+          <ul class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Profile</a></li>
+            <li class="active">My Library</li>
+          </ul>
+        </section>
+    </div>
+{% endblock %}
 {% block content %}
-
-
-<table>
-
-    <thead>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Download</th>
-    </thead>
-
-    {% for product in products %}
-    <tr>
-        <td>
-            {{ product }}
-        </td>
-        <td>
-            {{ product.description }}
-        </td>
-        <td>
-            <a href='{% url 'download_product' product.slug product.download|filename %}'>Download Materials</a>
-        </td>
-    </tr>
-    {% endfor %}
-
-</table>
-
-
+<div class="col-lg-9">
+    <h1>My Library</h1>
+    <hr>
+    <section id="main">
+        <div class="row">
+            <div class="table_container">
+                <table id="table_library" class="table table-bordered table-responsive table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Download</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                            <tr>
+                                <td>
+                                    {{ product }}
+                                </td>
+                                <td>
+                                    {{ product.description }}
+                                </td>
+                                <td>
+                                    <a href='{% url 'download_product' product.slug product.download|filename %}'>Download Materials</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
 
 {% endblock %}

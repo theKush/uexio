@@ -1,0 +1,41 @@
+<!-- ================== Sidebar ========================================= -->
+          <div id="sidebar" class="col-lg-3">
+            <div class="well well-small">
+              <a href="/products"> All Products <i class="fa fa-angle-double-right"></i> </a>
+            </div>
+            <ul id="sideManu" class="nav nav-pills nav-stacked">
+                {# list the categories in the side bar #}
+                {% for category in categories %}
+                    <li><a href="/{{ category }}"> {{ category }}</a> </li>
+                {% endfor %}
+            </ul>
+
+            <br />
+            {# list the featured products in the side bar #}
+            {% for product in products.featured %}
+                <div class="thumbnail">
+                    {% for image in product.productimage_set.all %}
+                        {% if image.featured_image %}
+                            <img src="{{ MEDIA_URL }}{{ image.image }}" alt="{{ image.title }}" />
+                        {% endif %}
+                    {% endfor %}
+                    <div class="caption">
+                        <h5>{{ product.title }}</h5>
+                        <h4>
+                            <button type="button" class="btn btn-default disabled">{{ product.price }}</button>
+                            <a class="btn btn-primary" href="{% url "update_cart" product.id %}">Add to <i class="fa fa-shopping-cart"></i></a>
+                        </h4>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="thumbnail">
+              <div class="caption">
+                <h5 align="center">Payment Methods</h5>
+              </div>
+              <img src="{{ STATIC_URL }}/img/payment_methods.png" title="Payment Methods" alt="Payments Methods">
+
+            </div>
+          </div>
+
+          <!-- **** end Sidebar ***** -->

@@ -1,25 +1,204 @@
 {% extends "base.html" %}
 {% load filename %}
 
+{% block alert %}
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> Alert appears here when something goes wrong
+    </div>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <section id="breadcrumb">
+      <ul class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/all">All Products</a></li>
+        <li class="active">{{ product }}</li>
+      </ul>
+    </section>
+{% endblock %}
+
 {% block content %}
-
-<a href='{% url "update_cart" product.id %}'>Add to Cart</a>
-<h1>{{ product }}</h1>
-
-{% for image in images %}
-<img src="{{ MEDIA_URL }}{{ image.image }}" width="300px" />
-{% endfor %}
-
-<ul>
-    {% for category in categories %}
-        <li>{{ category }}</li>
-    {% endfor %}
-</ul>
-
-{% if product.download and downloadable %}
-<a href="#">Edit Product</a>
-<a href="download/{{ product.download|filename }}">Download Materials</a>
-{% endif %}
-
+    <section id="main">
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title" align="center">Featured Image</h3>
+                </div>
+                <div class="panel-body" align="center">
+                    {% for image in product.productimage_set.all %}
+                        {% if image.featured_image %}
+                            <img src="{{ MEDIA_URL }}{{ image.image }}"  alt="{{ image.title }}" width="70%" />
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="panel-footer">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h1>{{ product }}</h1>
+            <p>{{ product.headline }}</p>
+            <hr>
+            <div class="col-md-5">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        Add to Cart
+                    </div>
+                    <div class="panel-body">
+                        <div class="price pull-left">
+                            <i class="fa fa-usd fa-sm"></i>
+                            <span itemprop="price">{{ product.price|floatformat:2 }}</span>
+                            <meta itemprop="currency" content="USD">
+                        </div>
+                        <div class="pull-right">
+                            <a class="btn btn-success" href="{% url "update_cart" product.id %}">Add to <i class="fa fa-shopping-cart"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Seller Profile
+                        <a href="{#% url "seller" product.id %#}" class="pull-right">View Profile <i class="fa fa-angle-double-right"></i></a> {# click to go to seller profile #}
+                    </div>
+                    <div class="panel-body">
+                        <div class ="media">
+                            <a class="pull-left" href="#">
+                                <img src="{# seller profile image #}{{ seller.image }}" alt="Profile" width="50" height="50" border="0"/>
+                            </a>
+                            <div class="media-body">
+                                <ul>
+                                    <li><b>{{ product.seller }}</b></li> {# seller name #}
+                                    <li> {{product.seller.rating }}</li> {# seller rating goes here #}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section id="pictures">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Pictures
+                    </div>
+                    <div class="panel-body">
+                        {% for image in images %}
+                        <div class="listing_images">
+                            <div class="listing_image" align="center">
+                                <div style="width: 125px; height: 125px">
+                                    <a href="" class="lightbox" target="_blank">
+                                        <img src="{{ MEDIA_URL }}{{ image.image }}" width="125" height="93" border="0">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section class="description">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Description
+                    </div>
+                    <div class="panel-body">
+                        {{ product.description }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Included Materials
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            {# list of included material goes here #}
+                            <li>this</li>
+                            <li>that</li>
+                        </ul>
+                        {% if product.download and downloadable %}
+                            <a class="btn btn-success" href="download/{{ product.download|filename }}">Download</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section id="comments">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="comments">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Comments
+                        </div>
+                        <div class="panel-body">
+                            <p>
+                                Note: Comments are public and visible to everyone
+                            </p>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="comment">
+                                        <div class="media">
+                                            <a class="pull-left" href="#">
+                                                <img class="media-object" src="themes/images/products/1.jpg" width="50" height="50" border="0" />
+                                            </a>
+                                            <div class="media-body">
+                                                <a href="#">Kush</a>
+                                                <span class="label label-success">Staff</span>
+                                                <div class="text" >
+                                                    <p>Listing approved. Thanks for using Swappa.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% if user.is_authenticated %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Add Comment
+                    </div>
+                    <div class="panel-body">
+                        <form id="commentForm" action="#" method="post" role="form">
+                            <input type="hidden" name="canned_key" id="id_canned_key">
+                            <div class="form-group">
+                                <label class="sr-only" for="id_comment">Comment</label>
+                                <textarea class="form-control" id="id_comment" name="comment" placeholder="Comment"></textarea>
+                            </div>
+                            <div id="comment_errors" class="errors"></div>
+                            <div>
+                                <div style="float:left;">
+                                    <button id="submit_button" class="btn btn-primary">Post Comment</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% else %}
+                    <p class="alert alert-warning">
+                        <a class="btn btn-primary" href="/login">Login</a> Please Login to Add a comment
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
 
 {% endblock %}
