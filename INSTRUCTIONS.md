@@ -29,6 +29,7 @@ You can follow the installation guides below:
 *  make sure pip is installed, if not follow guide here: http://www.pip-installer.org/en/latest/quickstart.html
 *  If you’re using Linux, Mac OS X or some other flavor of Unix, enter the command ``` sudo pip install Django```at the shell prompt. If you’re using Windows, start a command shell with administrator privileges and run the command ``` pip install Django```. This will install Django in your Python installation’s site-packages directory.
 * Next, unzip the uexio-master zip file and then navigate to that folder through commandline.
+* Copy uexio.sqlite3.sample file to uexio.sqlite3
 * Next, Follow the Login credentials instructions bellow  
 
 ### Login credentials
