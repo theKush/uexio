@@ -20,88 +20,88 @@ def download_loc(instance, filename):
 # you simply designate it with a ManyToManyField (as I did in the category model), so below categories
 # have many products, and vice versa
 class Product(models.Model):
-	user = models.ForeignKey(User, null=True, blank=True)
-	title = models.CharField(max_length=180)
-	description = models.CharField(max_length=500)
-	download = models.FileField(upload_to=download_loc, storage=FileSystemStorage(location=protected_loc), null=True) # this is for testing the order authentication process
-	price = models.DecimalField(max_digits=20, decimal_places=2)
-	sale_price = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-	slug = models.SlugField()
-	order = models.IntegerField(default=0)
-	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
-	updated = models.DateTimeField(auto_now_add=False, auto_now=True)
-	isbn_number = models.CharField(max_length=500, null=True, blank=True)
-	author = models.CharField(max_length=500, null=True, blank=True)
-	active = models.BooleanField(default=True)
+    user = models.ForeignKey(User, null=True, blank=True)
+    title = models.CharField(max_length=180)
+    description = models.CharField(max_length=500)
+    download = models.FileField(upload_to=download_loc, storage=FileSystemStorage(location=protected_loc), null=True) # this is for testing the order authentication process
+    price = models.DecimalField(max_digits=20, decimal_places=2)
+    sale_price = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    slug = models.SlugField()
+    order = models.IntegerField(default=0)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    isbn_number = models.CharField(max_length=500, null=True, blank=True)
+    author = models.CharField(max_length=500, null=True, blank=True)
+    active = models.BooleanField(default=True)
 
-	def __unicode__(self):
-		return str(self.title)
+    def __unicode__(self):
+        return str(self.title)
 
-	# COMMENT DATE: 3-3-14
-	# This sets up the
-	class Meta:
-		# The default ordering for the object, for use when obtaining lists of objects:
-		# the '-' will return the items in reverse order
-		ordering = ['-order']
+    # COMMENT DATE: 3-3-14
+    # This sets up the
+    class Meta:
+        # The default ordering for the object, for use when obtaining lists of objects:
+        # the '-' will return the items in reverse order
+        ordering = ['-order']
 
 class ProductImage(models.Model):
-	product = models.ForeignKey(Product)
-	image = models.ImageField(upload_to="products/image/")
-	title = models.CharField(max_length=120, null=True, blank=True)
-	featured_image = models.BooleanField(default=False)
-	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
-	updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    product = models.ForeignKey(Product)
+    image = models.ImageField(upload_to="products/image/")
+    title = models.CharField(max_length=120, null=True, blank=True)
+    featured_image = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-	def __unicode__(self):
-		return str(self.title)
+    def __unicode__(self):
+        return str(self.title)
 
 class Tag(models.Model):
-	product = models.ForeignKey(Product)
-	tag = models.CharField(max_length=20)
-	slug = models.SlugField()
-	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
-	updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    product = models.ForeignKey(Product)
+    tag = models.CharField(max_length=20)
+    slug = models.SlugField()
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-	def __unicode__(self):
-		return str(self.tag)
+    def __unicode__(self):
+        return str(self.tag)
 
 class Category(models.Model):
-	products = models.ManyToManyField(Product)
-	title = models.CharField(max_length=120)
-	description = models.CharField(max_length=500)
-	slug = models.SlugField()
-	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
-	updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    products = models.ManyToManyField(Product)
+    title = models.CharField(max_length=120)
+    description = models.CharField(max_length=500)
+    slug = models.SlugField()
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-	def __unicode__(self):
-		return str(self.title)
+    def __unicode__(self):
+        return str(self.title)
 
-	class Meta:
-		# A human-readable name for the object
-		verbose_name = "Category"
-		# A human-readable name for the object in plural form, if we didn't
-		# provide it, Django would automatically just add an 's', which doesn't
-		# work well in most cases, so it's best to designate it to ensure it
-		# matches in all cases
-		verbose_name_plural = "Categories"
+    class Meta:
+        # A human-readable name for the object
+        verbose_name = "Category"
+        # A human-readable name for the object in plural form, if we didn't
+        # provide it, Django would automatically just add an 's', which doesn't
+        # work well in most cases, so it's best to designate it to ensure it
+        # matches in all cases
+        verbose_name_plural = "Categories"
 
 class CategoryImage(models.Model):
-	category = models.ForeignKey(Category)
-	image = models.ImageField(upload_to="products/image/")
-	title = models.CharField(max_length=120, null=True, blank=True)
-	featured_image = models.BooleanField(default=False)
-	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
-	updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    category = models.ForeignKey(Category)
+    image = models.ImageField(upload_to="products/image/")
+    title = models.CharField(max_length=120, null=True, blank=True)
+    featured_image = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-	def __unicode__(self):
-		return str(self.title)
+    def __unicode__(self):
+        return str(self.title)
 
-	class Meta:
-		# A human-readable name for the object
-		verbose_name = "Category Image"
-		# A human-readable name for the object in plural form, if we didn't
-		# provide it, Django would automatically just add an 's', which doesn't
-		# work well in most cases, so it's best to designate it to ensure it
-		# matches in all cases
-		verbose_name_plural = "Category Images"
+    class Meta:
+        # A human-readable name for the object
+        verbose_name = "Category Image"
+        # A human-readable name for the object in plural form, if we didn't
+        # provide it, Django would automatically just add an 's', which doesn't
+        # work well in most cases, so it's best to designate it to ensure it
+        # matches in all cases
+        verbose_name_plural = "Category Images"
 
