@@ -12,7 +12,11 @@
 <table>
 {% for form in formset %}
     <tr>
-        <td><img src="{{ MEDIA_URL }}{{ form.instance.image }}" width="150"></td>
+        <td>
+            {% if form.instance.image %}
+                <img src="{{ MEDIA_URL }}{{ form.instance.image }}" width="150">
+            {% endif %}
+        </td>
         {% for field in form %}
             <td>{{ field.label_tag }}</td>
             <td>{{ field }}</td>
