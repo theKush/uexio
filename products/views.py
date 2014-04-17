@@ -67,8 +67,9 @@ def manage_product_image(request, slug):
         # validates and saves the image when uploaded
         if formset.is_valid(): # checks to make sure that the form is valid prior to saving
             for form in formset:
-                instance = form.save(commit=False)
-                instance.save()
+                image = form.save(commit=False)
+                image.product = product
+                image.save()
 
         return render_to_response("products/manage_images.html", locals(), context_instance=RequestContext(request))
     else:
