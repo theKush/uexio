@@ -9,7 +9,6 @@ from django.forms.models import modelformset_factory
 from django.core.servers.basehttp import FileWrapper
 from django.core.urlresolvers import reverse
 
-
 from .models import Product, Category, ProductImage
 from .forms import ProductForm, ProductImageForm
 
@@ -20,32 +19,32 @@ def list_all(request):
 def download_product(request, slug, filename):
     product = Product.objects.get(slug=slug)
 
-    if request.user.has_purchased(product):
-        product_file = str(product.download)
-        file_path = os.path.join(settings.PROTECTED_UPLOADS, product_file)
-        wrapper = FileWrapper(file(file_path))
-        response = HttpResponse(wrapper, content_type=guess_type(product_file))
-
-        # these are the content headers for the download
-        response['Content-Diposition'] = 'attachement;filename=%s' %filename
-        response['Content-Type'] = ''
-        response['X-SendFile'] = file_path
-        return response
-    else:
+    if not request.user.has_purchased(product):
         raise Http404
 
+    product_file = str(product.download)
+    file_path = os.path.join(settings.PROTECTED_UPLOADS, product_file)
+    wrapper = FileWrapper(file(file_path))
+    response = HttpResponse(wrapper, content_type=guess_type(product_file))
+
+    # these are the content headers for the download
+    response['Content-Diposition'] = 'attachement;filename=%s' %filename
+    response['Content-Type'] = ''
+    response['X-SendFile'] = file_path
+    return response
+
 def add_product(request):
-        form = ProductForm(request.POST or None)
+    form = ProductForm(request.POST or None)
 
-        if form.is_valid():
-            product = form.save(commit=False)
-            product.user = request.user
-            product.slug = slugify(form.cleaned_data['title'])
-            product.active = False
-            product.save()
-            return HttpResponseRedirect('/products/%s'%(product.slug))
-        return render_to_response("products/edit.html", locals(), context_instance=RequestContext(request))
+    if form.is_valid():
+        product = form.save(commit=False)
+        product.user = request.user
+        product.slug = slugify(form.cleaned_data['title'])
+        product.active = False
+        product.save()
+        return HttpResponseRedirect('/products/%s'%(product.slug))
 
+    return render_to_response("products/edit.html", locals(), context_instance=RequestContext(request))
 
 def manage_product_image(request, slug):
     product = Product.objects.get(slug=slug)
@@ -71,22 +70,20 @@ def manage_product_image(request, slug):
 
     return render_to_response("products/manage_images.html", locals(), context_instance=RequestContext(request))
 
-
 def edit_product(request, slug):
     instance = Product.objects.get(slug=slug)
     # this conditional ensures that only the product owners can edit the product,
     # any other user trying to access the edit form will be shown a 404 error
-    if request.user == instance.user:
-        form = ProductForm(request.POST or None, instance=instance) # this performs a post request to make the edit work from the form
-
-        if form.is_valid():
-            product_edit = form.save(commit=False)
-
-            product_edit.save()
-
-        return render_to_response("products/edit.html", locals(), context_instance=RequestContext(request))
-    else:
+    if request.user != instance.user:
         raise Http404
+
+    form = ProductForm(request.POST or None, instance=instance) # this performs a post request to make the edit work from the form
+
+    if form.is_valid():
+        product_edit = form.save(commit=False)
+        product_edit.save()
+
+    return render_to_response("products/edit.html", locals(), context_instance=RequestContext(request))
 
 def single(request, slug):
     product = Product.objects.get(slug=slug)
