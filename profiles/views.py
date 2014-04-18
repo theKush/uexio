@@ -9,7 +9,7 @@ from .models import UserPurchase
 
 def library(request):
     if request.user.is_authenticated():
-        products = request.user.userpurchase.products.all()
+        products = request.user.purchased_products()
         return render_to_response("profiles/library.html", locals(), context_instance=RequestContext(request))
     else:
         raise Http404

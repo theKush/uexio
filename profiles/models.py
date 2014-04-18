@@ -17,3 +17,7 @@ def has_purchased(self, product):
             return True
     return False
 User.has_purchased = has_purchased
+
+def purchased_products(self):
+    return [product for purchase in UserPurchase.objects.filter(user=self) for product in purchase.products.all()]
+User.purchased_products = purchased_products
