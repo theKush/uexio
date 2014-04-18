@@ -22,6 +22,20 @@
             <td>{{ field }}</td>
         {% endfor %}
     </tr>
+    <tr>
+        <td></td>
+        <td colspan=11>
+            {{ form.non_field_errors }}
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        {% for field in form %}
+            {% if field.errors %}
+                <td colspan=11>{{ field.name }}: {{ field.errors.as_text }}</td>
+            {% endif %}
+        {% endfor %}
+    </tr>
 {% endfor %}
 <tfoot><td><input type='submit' value='Update' /></td></tfoot>
 </table>
