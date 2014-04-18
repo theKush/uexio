@@ -54,30 +54,28 @@ def add_product(request):
 
 
 def manage_product_image(request, slug):
-    try:
-        product = Product.objects.get(slug=slug)
-    except:
-        product = False
+    product = Product.objects.get(slug=slug)
 
-    if request.user == product.user:
-        queryset = ProductImage.objects.filter(product__slug=slug) # this queries the images and ensures that the correct image is selected
-        ProductImageFormset = modelformset_factory(ProductImage, form=ProductImageForm, can_delete=True)
-        formset = ProductImageFormset(request.POST or None, request.FILES or None, queryset=queryset)
-
-        if request.method == 'POST':
-            try:
-                # all images are automatically validated during save()
-                images = formset.save(commit=False)
-                for image in images:
-                    image.product = product
-                    image.save()
-                return HttpResponseRedirect(reverse('manage_product_image', args=[product.slug]))
-            except ValueError: # handle validation errors
-                pass
-
-        return render_to_response("products/manage_images.html", locals(), context_instance=RequestContext(request))
-    else:
+    if request.user != product.user:
         raise Http404
+
+    # this queries the images and ensures that the correct image is selected
+    queryset = ProductImage.objects.filter(product__slug=slug)
+    ProductImageFormset = modelformset_factory(ProductImage, form=ProductImageForm, can_delete=True)
+    formset = ProductImageFormset(request.POST or None, request.FILES or None, queryset=queryset)
+
+    if request.method == 'POST':
+        try:
+            # all images are automatically validated during save()
+            images = formset.save(commit=False)
+            for image in images:
+                image.product = product
+                image.save()
+            return HttpResponseRedirect(reverse('manage_product_image', args=[product.slug]))
+        except ValueError: # handle validation errors
+            pass
+
+    return render_to_response("products/manage_images.html", locals(), context_instance=RequestContext(request))
 
 
 def edit_product(request, slug):
