@@ -127,7 +127,11 @@ INSTALLED_APPS = (
     'products',
     'profiles',
     'shoppingcart',
+    'auth',
 )
+
+LOGIN_URL = '/auth/login/'
+LOGIN_REDIRECT_URL = '/profile/library/'
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
