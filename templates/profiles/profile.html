@@ -1,4 +1,5 @@
 {% extends 'profiles/base.html' %}
+{% load gravatar %}
 
 {% block breadcrumbs %}
     <div class="col-lg-9">
@@ -13,22 +14,71 @@
 
 {% block content %}
 <div class="col-lg-9">
-    <h1>My Profile</h1>
+    <h1>{{ user.username }}'s profile</h1>
     <hr>
     <section id="main">
+        <div class="col-lg-2">
+            <img src="{% gravatar_url user.email %}" alt="Profile" border="0">
+        </div>
+        <div class="col-lg-10">
+            <div class="row">
+                <ul>
+                    <li><b>User since:</b> {{ user.date_joined|date }}</li>
+                    <li><b>Active Listings:</b> {# Active listings count #}</li>
+                    <li><b>Items Sold:</b> {# Number of Items sold Count #}</li>
+                    <li><b>User Rating:</b> {# user rating or stars #}</li>
+                </ul>
+            </div>
+        </div>
+
         <div class="row">
-            <dl class="dl-horizontal">
-                <dt>Username</dt>
-                <dd>{{ user.username }}</dd>
-            </dl>
-            <dl class="dl-horizontal">
-                <dt>Email</dt>
-                <dd>{{ user.email }}</dd>
-            </dl>
-            <dl class="dl-horizontal">
-                <dt>Joined</dt>
-                <dd>{{ user.date_joined }}</dd>
-            </dl>
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#user_feedback" data-toggle="tab">User Feedback</a></li>
+                <li><a href="#active_listings" data-toggle="tab">Active Listings</a></li>
+            </ul>
+            <div id="tabsContent" class="tab-content">
+                <div class="tab-pane fade active in" id="user_feedback">
+                    {% if user.feedback == 0 %}
+                        <blockquote>
+                            <p>This user has not received any feedback</p>
+                        </blockquote>
+                    {% else %}
+                        {% for feedback in user.feedback %} {# from all the feedbacks received for this user #}
+                        <blockquote>
+                            <p>{{ feedback.text }}</p>  {# populate the feedback #}
+                            <small>{{ feedback.by }}</small>    {# and feedback received by #}
+                        </blockquote>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="tab-pane fade active in" id="active_listings">
+                    {% if user.active_listings == 0 %}
+                        <blockquote>
+                            <p>This user does not have any active listings</p>
+                        </blockquote>
+                    {% else %}
+                        {% for product in user.active_listings %}   {# for all the products that this user is currently selling #}
+                            <div class="col-lg-4">
+                                <div class="thumbnail">
+                                    {% for image in product %}      {# populate the featured image #}
+                                        {% if image.featured_image %}
+                                            <a href="{% url "single_product" product.slug %}">
+                                            <img src="{{ MEDIA_URL }}{{ image.image }}"  alt="{{ image.title }}" width="70%"/>
+                                        {% endif %}
+                                    {% endfor %}
+                                <div class="caption">
+                                    <h5>{{ product }}</h5></a>  {# product title #}
+                                    <p> {{ product.headline }}</p>  {# product headline #}
+                                    <h4>
+                                        <button type="button" class="btn btn-default disabled"><i class="fa fa-usd"></i> {{ product.price|floatformat:2 }}</button>
+                                        <a class="btn btn-primary" href="{% url "update_cart" product.id %}">Add to <i class="fa fa-shopping-cart"></i></a>
+                                    </h4>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </section>
 </div>
