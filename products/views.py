@@ -17,16 +17,10 @@ def list_all(request):
     products = Product.objects.filter(active=True)
     return render_to_response("products/all.html", locals(), context_instance=RequestContext(request))
 
-def check_product(user, product):
-    if product in user.userpurchase.products.all():
-        return True
-    else:
-        return False
-
 def download_product(request, slug, filename):
     product = Product.objects.get(slug=slug)
 
-    if product in request.user.userpurchase.products.all():
+    if request.user.has_purchased(product):
         product_file = str(product.download)
         file_path = os.path.join(settings.PROTECTED_UPLOADS, product_file)
         wrapper = FileWrapper(file(file_path))
@@ -100,7 +94,7 @@ def single(request, slug):
     categories = product.category_set.all()
 
     if request.user.is_authenticated():
-        downloadable = check_product(request.user, product)
+        downloadable = request.user.has_purchased(product)
 
     edit = True
 
