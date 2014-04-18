@@ -1,0 +1,57 @@
+{% extends 'profiles/base.html' %}
+
+{% load bootstrap %}
+
+{% block alert %}
+{% if form.errors %}
+    <div class="col-lg-9">
+        <div class="alert alert-dismissable alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            Couldn't edit the profile because of those errors:
+            {{ form.errors }}
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="col-lg-9">
+        <section id="breadcrumb">
+          <ul class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li class="active">Edit</li>
+          </ul>
+        </section>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="col-lg-9">
+    <section id="main">
+        <div class="row">
+            <h1>Edit Profile</h1>
+            <hr>
+            <form action="{% url 'edit_profile' %}" method="post" class="form-horizontal">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="{% bootstrap_form_group_class field %}">
+                        {% bootstrap_label_tag field %}
+                        <div class="col-lg-5">
+                            {% bootstrap_field_tag field %}
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <hr />
+
+                <div class="col-lg-10 col-lg-offset-2">
+                    <input type='submit' value='Save' class="btn btn-success" />
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+

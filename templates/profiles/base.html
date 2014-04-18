@@ -6,8 +6,8 @@
             <div class="panel-heading">My Account</div>
             <ul class="list-group">
               <a id="nav_view_profile" class="list-group-item {% if request.path == '/profile/' %} active {% endif %}" href="/profile/" title="View Profile">View Profile</a>
-              <a id="nav_edit_profile" class="list-group-item" href="#" title="Edit Profile">Edit Profile</a>
-              <a id="nav_active_listings" class="list-group-item" href="#" title="Active Listings">Active Listings</a>
+              <a id="nav_edit_profile" class="list-group-item {% if request.path == '/profile/edit/' %} active {% endif %}" href="/profile/edit/" title="Edit Profile">Edit Profile</a>
+              <a id="nav_active_listings" class="list-group-item {% if request.path == '/profile/listings/' %} active {% endif %}" href="/profile/listings/" title="Active Listings">Active Listings</a>
               <a id="nav_my_library" class="list-group-item {% if request.path == '/profile/library/' %} active {% endif %}" href="/profile/library/" title="My Library">My Library</a>
               <a id="nav_my_purchases" class="list-group-item" href="#" title="My Purchases">My Purchases</a>
               <a id="nav_my_sold_items" class="list-group-item" href="#" title="My Sold Items">My Sold Items</a>

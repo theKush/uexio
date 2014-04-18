@@ -16,12 +16,12 @@
                 <li><a href="/about">About</a></li>
             </ul>
             <div class="col-sm-4 nav navbar-nav">
-                <form class="navbar-form navbar-left" role="search" id="header_search_form" action="/search" method="post">
+                <form class="navbar-form navbar-left" role="search" id="header_search_form" action="{% url 'search_products' %}" method="get">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" name="query" placeholder="Search" value="{{ query }}">
                         <span class="input-group-btn">
-                            <button class="btn btn-success" type="button">Go</button>
+                            <button class="btn btn-success" type="submit">Go</button>
                         </span>
                     </div>
                 </form>
