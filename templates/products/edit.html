@@ -1,12 +1,222 @@
+{# Not fully finished, just added the template to see what it looks like #}
 {% extends "base.html" %}
 
+{% block sidebar %}
+    <div id="sidebar" class="col-lg-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">Listing Help</div>
+            <div class="panel-body">
+              Supply enough information to make the buying decision easy. Please ensure that all products and content comply with our Selling policies and restrictions including the Restricted Products policy.
+            </div>
+          </div>
+     </div>
+{% endblock %}
 
+{% block breadcrumbs %}
+    <div class="col-lg-9">
+        <section id="breadcrumb">
+          <ul class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Sell</a></li>
+            <li class="active">Edit Listing</li>
+          </ul>
+        </section>
+    </div>
+{% endblock %}
+
+{% block alert %}
+<div class="col-lg-9">
+        <div class="alert alert-dismissable alert-danger">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> Alert appears here when something goes wrong
+        </div>
+
+    </div>
+{% endblock %}
 
 {% block content %}
+<div class="col-lg-9">
+    <section id="main">
+        <div class="row">
+        <h1>Edit: {{ instance.title }}</h1>
+        <hr>
+        <form class="form-horizontal" method="POST" action="">{% csrf_token %}
+        {# I will work on this later { form.as_p }} #}
+            <div class="form-group">
+                  <label for="inputTitle" class="col-lg-2 control-label">Title</label>
+                  <div class="col-lg-10">
 
-<h1>Edit: {{ instance.title }}</h1>
-<form method='POST' action=''> {% csrf_token %}
-{{ form.as_p }}
-<input type='submit' value='Update' />
-</form>
+                    <input type="text" class="form-control" id="inputTitle" placeholder="Title">
+                    <span class="help-block">The title that you want for your listing.</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputHeadline" class="col-lg-2 control-label">Headline</label>
+                  <div class="col-lg-10">
+                    <input type="text" class="form-control" id="inputHeadline" placeholder="Headline">
+                    <span class="help-block">A catchy description of your product, that makes the buyer want to buy your product</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="select" class="col-lg-2 control-label">Category</label>
+                  <div class="col-lg-10">
+                    <select class="form-control" id="select">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                    <span class="help-block">Category you want your listing to be under</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="description" class="col-lg-2 control-label">Description</label>
+                  <div class="col-lg-10">
+                    <textarea class="form-control" rows="3" id="description"></textarea>
+                    <span class="help-block">Describe in detail your product and what is included for the buyer.</span>
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label for="condition" class="col-lg-2 control-label">Condition</label>
+                  <div class="col-lg-10">
+                    <div class="controls widget" style="margin-bottom:0px;">
+                      <div class="condition_widget">
+                        <table class="table table-bordered">
+                          <tbody>
+                            <tr>
+                              <td width="25%">
+                                <label for="id_condition_mint" class="radio">
+                                  <input type="radio" id="id_condition_mint" value="mint" name="condition" class="required">
+                                  New
+                                </label>
+                                <ul>
+                                  <li>In origial packaging</li>
+                                  <li>Never Used</li>
+                                </ul>
+                              </td>
+                              <td width="25%">
+                                <label for="id_condition_mint" class="radio">
+                                  <input type="radio" id="id_condition_mint" value="mint" name="condition" class="required">
+                                  Mint
+                                </label>
+                                <ul>
+                                  <li>Looks new</li>
+                                  <li>No Sign of use</li>
+                                </ul>
+                              </td>
+                              <td width="25%">
+                                <label for="id_condition_good" class="radio">
+                                  <input type="radio" id="id_condition_good" value="good" name="condition" class="required">
+                                  Good
+                                </label>
+                                <ul>
+                                  <li>Normal wear</li>
+                                  <li>Some markings</li>
+                                </ul>
+                              </td>
+                              <td width="25%">
+                                <label for="id_condition_fair" class="radio">
+                                  <input type="radio" id="id_condition_fair" value="fair" name="condition" class="required">
+                                  Fair
+                                </label>
+                                <ul>
+                                  <li>Heavily Damaged</li>
+                                  <li>Full of markings</li>
+                                </ul>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <span class="help-block">Please be honest here</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-2 control-label" for="inputExpirationDate">Expiration Date</label>
+                  <div class="col-lg-10">
+                    <input type="date" class="form-control" id="inputExpirationDate">
+                    <span class="help-block">The date when your listing will expire</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-2 control-label">Price</label>
+                  <div class="col-lg-10">
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                      <input type="text" class="form-control">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Calculate</button>
+                      </span>
+                    </div>
+                    <span class="help-block">The ask price for your product. Please include reasonable shipping costs(if any).</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-2 control-label" for="inputPaypal">PayPal Email</label>
+                  <div class="col-lg-10">
+                    <input type="text" class="form-control" id="inputPaypal" placeholder="someone@something.com" disabled="">
+                    <span class="help-block">Your PayPal Email address will be used to accept payment</span>
+                  </div>
+                </div>
+                <hr>
+                <div class="form-group">
+                  <label for="description" class="col-lg-2 control-label">Upload Images</label>
+                  <div class="col-lg-10">
+                    <div class="listing_images">
+                    <div align="center" class="listing_image">
+                      <div stye="width:125px; height: 125px">
+                        <a href="themes/images/products/1.jpg" class="lightbox" target="_new">
+                          <img src="themes/images/products/1.jpg" width="125" height="93" border="0">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="listing_images">
+                    <div align="center" class="listing_image">
+                      <div stye="width:125px; height: 125px">
+                        <a href="themes/images/products/1.jpg" class="lightbox" target="_new">
+                          <img src="themes/images/products/1.jpg" width="125" height="93" border="0">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="listing_images">
+                    <div align="center" class="listing_image">
+                      <div stye="width:125px; height: 125px">
+                        <a href="themes/images/products/1.jpg" class="lightbox" target="_new">
+                          <img src="themes/images/products/1.jpg" width="125" height="93" border="0">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                    <span class="help-block">Upload images for your product</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="description" class="col-lg-2 control-label">Upload Additional Documents</label>
+                  <div class="col-lg-10">
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                    <span class="help-block">upload any other class notes or documents that you want your buyer to have.</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="description" class="col-lg-2 control-label">Documents Description</label>
+                  <div class="col-lg-10">
+                    <textarea class="form-control" rows="3" id="description"></textarea>
+                    <span class="help-block">Please provide any additional information regarding your included documents or notes.</span>
+                  </div>
+                </div>
+            <hr>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="submit" class="btn btn-success" value="Update">Update Listing</button>
+                    <button class="btn btn-default pull-right" value="Cancel">Cancel</button>
+                </div>
+            </div>
+        </form>
+            </div>
+    </section>
+</div>
 {% endblock %}

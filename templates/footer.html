@@ -1,0 +1,89 @@
+<!-- ================== Footerbar ========================================= -->
+    <section id="footer-bar">
+      <div class="container" >
+      <div class="row">
+        <div class="col-sm-3">
+            <h4>How To</h4>
+            <ul class="nav">
+              <li><a href="/buy">Buy</a></li>
+              <li><a href="/sell">Sell</a></li>
+              <li><a href="/checklibrary">My Library</a> </li>
+            </ul>
+          </div>
+          <div class="col-sm-3">
+            <h4>About UEXIO</h4>
+            <ul class="nav">
+              <li><a href="/about">About Us</a></li>
+              <li><a href="/faq">FAQ</a></li>
+              <li><a href="/vslocal">vs. Local Bookstores</a></li>
+            </ul>
+          </div>
+          <div class="col-sm-3">
+            <h4>More Details</h4>
+            <ul class="nav">
+              <li><a href="/contactus">Contact</a></li>
+              <li><a href="/termsofuse">Terms of Use</a></li>
+              <li><a href="/privacy">Privacy</a></li>
+            </ul>
+          </div>
+          <div class="col-sm-3">
+            <div id="social">
+
+            <div class="row">
+               <div class="col-xs-3" align="center">
+                <a href="#"><i class="fa fa-facebook fa-4x"></i></a>
+              </div>
+              <div class="col-xs-3">
+                <a href="#"><i class="fa fa-twitter fa-4x"></i></a>
+              </div>
+              <div class="col-xs-3">
+                <a href="#"><i class="fa fa-google-plus fa-4x"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      </div>
+    </section>
+<!-- **** end footer bar **** -->
+
+<!-- ================== Copyright bar ========================================= -->
+    <section id="copyright-bar">
+      <div class="container">
+        <div class="col-sm-3 col-xs-6">
+        uexio
+      </div>
+      <div class="col-sm-4 col-xs-6 col-sm-offset-5">
+        <div class="pull-right">
+          Copyright © 2014 Uexio, LLC
+        </div>
+      </div>
+      </div>
+    </section>
+<!-- **** end copyright bar **** -->
+
+<!-- ================== Load JavaScripts  ========================================= -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+    <!-- scripts -->
+    <script src="{{ STATIC_URL }}js/jquery.scrolltotop.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        $(document).ready(function() {
+          $('.flexslider').flexslider({
+            animation: "fade",
+            slideshowSpeed: 4000,
+            animationSpeed: 600,
+            controlNav: false,
+            directionNav: true,
+            controlsContainer: ".flex-container" // the container that holds the flexslider
+          });
+        });
+      });
+    </script>
+    <script src="{{ STATIC_URL }}js/common.js"></script>
+<!-- **** end javascripts **** -->

@@ -1,19 +1,57 @@
 {% extends "base.html" %}
 
+{% block sidebar %}
+    {% include "sidebar.html" %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <section id="breadcrumb" class="col-lg-9">
+      <ul class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">All Products</li>
+      </ul>
+    </section>
+{% endblock %}
+
 {% block content %}
+        <div class="col-lg-9">
+            <div class="row">
+              <div class="col-lg-4">
+                <h3>All Products</h3>
+              </div>
+              <div class="col-lg-4 pull-right">
+                <form class="form-horizontal col-sm-9 pull-right">
+                  <select class="form-control" id="select">
+                    <option>Price Low to High</option>
+                    <option>Price High to Low</option>
+                  </select>
+                </form>
+              </div>
+            </div>
+          <hr>
+        </div>
+        <div class="col-lg-9">
+        {% for product in products %}
+            <div class="col-lg-4">
+                <div class="thumbnail">
+                    {% for image in product.productimage_set.all %}
+                        {% if image.featured_image %}
+                            <a href="{% url "single_product" product.slug %}">
+                                <img src="{{ MEDIA_URL }}{{ image.image }}"  alt="{{ image.title }}" width="70%"/>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="caption">
+                        <h5>{{ product }}</h5></a>
+                        <p> {{ product.headline }}</p>
+                        <h4>
+                            <button type="button" class="btn btn-default disabled"><i class="fa fa-usd"></i> {{ product.price|floatformat:2 }}</button>
+                            <a class="btn btn-primary" href="{% url "update_cart" product.id %}">Add to <i class="fa fa-shopping-cart"></i></a>
+                        </h4>
+                    </div>
 
-<ol>
-{% for product in products %}
-
-<li>
-    {% for image in product.productimage_set.all %}
-            {% if image.featured_image %}
-                <img src="{{ MEDIA_URL }}{{ image.image }}" width="150" />
-            {% endif %}
+                </div>
+            </div>
         {% endfor %}
-    <a href="{% url "single_product" product.slug %}">{{ product }}</a></li>
-
-    {% endfor %}
-</ol>
+        </div>
 
 {% endblock %}
