@@ -105,3 +105,11 @@ class CategoryImage(models.Model):
         # matches in all cases
         verbose_name_plural = "Category Images"
 
+class Comment(models.Model):
+    product = models.ForeignKey(Product)
+    user = models.ForeignKey(User, null=False, blank=False)
+    content = models.CharField(max_length=500)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+
+    def __unicode__(self):
+        return str(self.content)

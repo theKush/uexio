@@ -147,10 +147,8 @@
                             Comments
                         </div>
                         <div class="panel-body">
-                            <p>
-                                Note: Comments are public and visible to everyone
-                            </p>
                             <ul class="list-group">
+                                {% for comment in comments %}
                                 <li class="list-group-item">
                                     <div class="comment">
                                         <div class="media">
@@ -158,15 +156,18 @@
                                                 <img class="media-object" src="themes/images/products/1.jpg" width="50" height="50" border="0" />
                                             </a>
                                             <div class="media-body">
-                                                <a href="#">Kush</a>
+                                                <a href="#">{{comment.user}}</a>
+                                                {% if comment.user.is_superuser %}
                                                 <span class="label label-success">Staff</span>
+                                                {% endif %}
                                                 <div class="text" >
-                                                    <p>Listing approved. Thanks for using Swappa.</p>
+                                                    <p>{{comment}}</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
@@ -177,13 +178,15 @@
                         Add Comment
                     </div>
                     <div class="panel-body">
-                        <form id="commentForm" action="#" method="post" role="form">
-                            <input type="hidden" name="canned_key" id="id_canned_key">
+                        <p>
+                            Note: Comments are public and visible to everyone
+                        </p>
+                        <form id="commentForm" action="{% url 'comment' product.slug %}" method="post" role="form">
+                        {% csrf_token %}
                             <div class="form-group">
                                 <label class="sr-only" for="id_comment">Comment</label>
-                                <textarea class="form-control" id="id_comment" name="comment" placeholder="Comment"></textarea>
+                                <textarea class="form-control" id="id_content" name="content" placeholder="Comment"></textarea>
                             </div>
-                            <div id="comment_errors" class="errors"></div>
                             <div>
                                 <div style="float:left;">
                                     <button id="submit_button" class="btn btn-primary">Post Comment</button>

@@ -10,8 +10,8 @@ from django.core.servers.basehttp import FileWrapper
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 
-from .models import Product, Category, ProductImage
-from .forms import ProductForm, ProductImageForm
+from .models import Product, Category, ProductImage, Comment
+from .forms import ProductForm, ProductImageForm, CommentForm
 
 def list_all(request):
     title = "All Products"
@@ -91,6 +91,8 @@ def single(request, slug):
     product = Product.objects.get(slug=slug)
     images = product.productimage_set.all()
     categories = product.category_set.all()
+    comment_form = CommentForm(request.POST)
+    comments = Comment.objects.filter(product=product)
 
     if request.user.is_authenticated():
         downloadable = request.user.has_purchased(product)
@@ -103,7 +105,6 @@ def search_products(request):
     query = request.GET['query']
     products = Product.objects.filter(Q(description__contains=query) | Q(title__contains=query) | Q(author__contains=query), active=True)
     title = "Products matching " + query
-
     return render_to_response("products/all.html", locals(), context_instance=RequestContext(request))
 
 def activate_product(request, slug):
@@ -117,3 +118,14 @@ def deactivate_product(request, slug):
     product.active = False
     product.save()
     return HttpResponseRedirect(reverse('listings'))
+
+def comment(request, slug):
+    product = Product.objects.get(slug=slug)
+    if request.method == 'POST':
+        try:
+            comment = CommentForm(request.POST, instance=Comment(product=product, user=request.user))
+            comment.save()
+        except ValueError: # handle validation errors
+            return render_to_response("products/single.html", locals(), context_instance=RequestContext(request))
+
+    return HttpResponseRedirect(reverse('single_product', args=[product.slug]))
