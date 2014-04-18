@@ -2,13 +2,9 @@
 
 {% load bootstrap %}
 
-{% block sidebar %}
-    {% include "sidebar.html" %}
-{% endblock %}
-
 {% block alert %}
 {% if form.errors %}
-    <div class="col-lg-9">
+    <div class="col-lg-12">
         <div class="alert alert-dismissable alert-danger">
             <button type="button" class="close" data-dismiss="alert">×</button>
             Your username and password didn't match. Please try again.
@@ -18,39 +14,56 @@
 {% endblock %}
 
 {% block content %}
-    <div class="col-lg-9">
-        <div class="row">
-            <h3>Log in</h3>
+    <div class="col-lg-12">
+        <h1>Welcome to uexio</h1>
+        <hr>
+        <section id="main">
+            <div class="col-lg-6">
+                <div class="well bs-component">
+                    <form action="{% url 'login' %}" method="post" class="form-horizontal">
+                        {% csrf_token %}
+                        <fieldset>
+                            <legend>Log in</legend>
+                            <div class="form-group">
+                                {% bootstrap_label_tag form.username %}
+                                <div class="col-lg-8">
+                                    {% bootstrap_field_tag form.username %}
+                                </div>
+                            </div>
 
-            <form action="{% url 'login' %}" method="post" class="form-horizontal">
-                {% csrf_token %}
-                <div class="form-group">
-                    {% bootstrap_label_tag form.username %}
-                    <div class="col-lg-5">
-                        {% bootstrap_field_tag form.username %}
-                    </div>
+                            <div class="form-group">
+                                {% bootstrap_label_tag form.password %}
+                                <div class="col-lg-8">
+                                    {% bootstrap_field_tag form.password %}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-10 text-right">
+                                    <a href="{# % url 'forgotpassword' %#}">Forgot Password?</a>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-8 col-lg-offset-2">
+                                    <button type="submit" class="btn btn-success btn-block" value="Login">Log in</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
-
-                <div class="form-group">
-                    {% bootstrap_label_tag form.password %}
-                    <div class="col-lg-5">
-                        {% bootstrap_field_tag form.password %}
-                    </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="well bs-component">
+                    <fieldset>
+                        <legend>New to uexio?</legend>
+                        Get started now and avoid pricey University Bookstores. It's fast and easy!
+                        <br/>
+                        <br/>
+                        <a href="{% url "register" %}" class="btn btn-success">Create Your Account</a>
+                    </fieldset>
                 </div>
-
-                <div class="form-group">
-                    <div class="col-lg-7 text-right">
-                    Don't have an account?
-                    <a href="{% url 'register' %}">Register</a>
-                    </div>
-                </div>
-
-                <hr />
-
-                <div class="col-lg-10 col-lg-offset-2">
-                    <input type='submit' value='Login' class="btn btn-success" />
-                </div>
-            </form>
-        </div>
+            </div>
+        </section>
     </div>
 {% endblock %}

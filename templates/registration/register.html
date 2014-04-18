@@ -2,13 +2,9 @@
 
 {% load bootstrap %}
 
-{% block sidebar %}
-    {% include "sidebar.html" %}
-{% endblock %}
-
 {% block alert %}
 {% if form.errors %}
-    <div class="col-lg-9">
+    <div class="col-lg-12">
         <div class="alert alert-dismissable alert-danger">
             <button type="button" class="close" data-dismiss="alert">×</button>
             Couldn't register an account because of those errors:
@@ -19,34 +15,54 @@
 {% endblock %}
 
 {% block content %}
-    <div class="col-lg-9">
-        <div class="row">
-            <h3>Register an account</h3>
 
+        <h1>Get started with uexio</h1>
+        <hr>
+    <div class="col-lg-7">
+        <div class="well bs-component">
             <form action="{% url 'register' %}" method="post" class="form-horizontal">
-                {% csrf_token %}
-                {% for field in form %}
-                <div class="{% bootstrap_form_group_class field %}">
-                    {% bootstrap_label_tag field %}
-                    <div class="col-lg-5">
-                        {% bootstrap_field_tag field %}
+                <fieldset>
+                    <legend>Register</legend>
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="{% bootstrap_form_group_class field %}">
+                        {% bootstrap_label_tag field %}
+                        <div class="col-lg-9">
+                            {% bootstrap_field_tag field %}
+                        </div>
                     </div>
-                </div>
-                {% endfor %}
-
-                <div class="form-group">
-                    <div class="col-lg-7 text-right">
-                    Already have an account?
-                    <a href="{% url 'login' %}">Login</a>
+                        {# Also need form fields for First Name, Last Name, Email, PhoneNumber, Paypal email #}
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col-lg-9 col-lg-offset-2">
+                            <p>By clicking "Register" I agree that:</p>
+                            <ul>
+                                <li>
+                                    I have read and accepted the <a href="#"> Privacy Policy</a> and <a href="#"> Terms & Conditions</a>.
+                                </li>
+                                <li>
+                                    I am at least 18 years old.
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-
-                <hr />
-
-                <div class="col-lg-10 col-lg-offset-2">
-                    <input type='submit' value='Register' class="btn btn-success" />
-                </div>
+                    <div class="row">
+                        <div class="col-lg-9 col-lg-offset-2">
+                            <div class="form-group">
+                                <button type="submit" value="Register" class="btn btn-success btn-block">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                 </fieldset>
             </form>
         </div>
+    </div>
+    <div class="col-lg-5">
+    <div class="well bs-component">
+        <fieldset>
+            <legend>Already have an account?</legend>
+            <a href="{% url "login" %}" class="btn btn-success">Login</a>
+        </fieldset>
+    </div>
     </div>
 {% endblock %}
