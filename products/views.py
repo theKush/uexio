@@ -105,3 +105,15 @@ def search_products(request):
     title = "Products matching " + query
 
     return render_to_response("products/all.html", locals(), context_instance=RequestContext(request))
+
+def activate_product(request, slug):
+    product = Product.objects.get(slug=slug)
+    product.active = True
+    product.save()
+    return HttpResponseRedirect(reverse('listings'))
+
+def deactivate_product(request, slug):
+    product = Product.objects.get(slug=slug)
+    product.active = False
+    product.save()
+    return HttpResponseRedirect(reverse('listings'))

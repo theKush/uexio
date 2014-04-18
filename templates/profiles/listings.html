@@ -7,7 +7,7 @@
           <ul class="breadcrumb">
             <li><a href="/">Home</a></li>
             <li><a href="{% url 'profile' %}">Profile</a></li>
-            <li class="active">My Library</li>
+            <li class="active">Active Listings</li>
           </ul>
         </section>
     </div>
@@ -15,7 +15,7 @@
 
 {% block content %}
 <div class="col-lg-9">
-    <h1>My Library</h1>
+    <h1>Active Listings</h1>
     <hr />
     <section id="main">
         <div class="row">
@@ -24,8 +24,9 @@
                     <thead>
                         <tr>
                             <th>Title</th>
+                            <th>Author</th>
                             <th>Description</th>
-                            <th>Download</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,10 +36,24 @@
                                     {{ product }}
                                 </td>
                                 <td>
+                                    {{ product.author }}
+                                </td>
+                                <td>
                                     {{ product.description }}
                                 </td>
                                 <td>
-                                    <a href='{% url 'download_product' product.slug product.download|filename %}'>Download Materials</a>
+                                    <a href="{% url 'edit_product' product.slug %}">Edit</a>
+                                    {% if product.active %}
+                                        <form action="/products/{{product.slug}}/deactivate/" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-warning">Deactivate</button>
+                                        </form>
+                                    {% else %}
+                                        <form action="/products/{{product.slug}}/activate/" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-success">Activate</button>
+                                        </form>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}

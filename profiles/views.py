@@ -4,6 +4,7 @@ from django.template.defaultfilters import slugify
 from django.forms.models import modelformset_factory
 from django.core.urlresolvers import reverse
 
+from profiles.models import Product
 from .models import UserPurchase
 from .forms import EditProfileForm
 
@@ -26,3 +27,7 @@ def library(request):
         return render_to_response("profiles/library.html", locals(), context_instance=RequestContext(request))
     else:
         raise Http404
+
+def listings(request):
+    products = Product.objects.filter(user=request.user)
+    return render_to_response("profiles/listings.html", locals(), context_instance=RequestContext(request))
