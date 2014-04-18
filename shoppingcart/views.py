@@ -2,7 +2,6 @@ from django.contrib import messages
 from django.shortcuts import render_to_response, Http404, RequestContext, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from products.models import Product
-from products.views import check_product
 
 from .models import Shoppingcart, ShoppingcartItem
 

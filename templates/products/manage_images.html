@@ -12,10 +12,28 @@
 <table>
 {% for form in formset %}
     <tr>
-        <td><img src="{{ MEDIA_URL }}{{ form.instance.image }}" width="150"></td>
+        <td>
+            {% if form.instance.image %}
+                <img src="{{ MEDIA_URL }}{{ form.instance.image }}" width="150">
+            {% endif %}
+        </td>
         {% for field in form %}
             <td>{{ field.label_tag }}</td>
             <td>{{ field }}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan=11>
+            {{ form.non_field_errors }}
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        {% for field in form %}
+            {% if field.errors %}
+                <td colspan=11>{{ field.name }}: {{ field.errors.as_text }}</td>
+            {% endif %}
         {% endfor %}
     </tr>
 {% endfor %}

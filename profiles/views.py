@@ -5,11 +5,12 @@ from django.forms.models import modelformset_factory
 
 from .models import UserPurchase
 
-
+def profile(request):
+    return render_to_response("profiles/profile.html", locals(), context_instance=RequestContext(request))
 
 def library(request):
     if request.user.is_authenticated():
-        products = request.user.userpurchase.products.all()
+        products = request.user.purchased_products()
         return render_to_response("profiles/library.html", locals(), context_instance=RequestContext(request))
     else:
         raise Http404

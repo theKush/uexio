@@ -72,8 +72,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "static"),
-    "/Users/kush/PycharmProjects/uexio/static/"
+    os.path.join(os.path.dirname(os.path.dirname(__file__)), "static"),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -128,7 +127,11 @@ INSTALLED_APPS = (
     'products',
     'profiles',
     'shoppingcart',
+    'auth',
 )
+
+LOGIN_URL = '/auth/login/'
+LOGIN_REDIRECT_URL = '/profile/library/'
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
