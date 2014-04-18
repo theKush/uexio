@@ -8,11 +8,13 @@ from django.template.defaultfilters import slugify
 from django.forms.models import modelformset_factory
 from django.core.servers.basehttp import FileWrapper
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 
 from .models import Product, Category, ProductImage
 from .forms import ProductForm, ProductImageForm
 
 def list_all(request):
+    title = "All Products"
     products = Product.objects.filter(active=True)
     return render_to_response("products/all.html", locals(), context_instance=RequestContext(request))
 
@@ -96,3 +98,10 @@ def single(request, slug):
     edit = True
 
     return render_to_response("products/single.html", locals(), context_instance=RequestContext(request))
+
+def search_products(request):
+    query = request.GET['query']
+    products = Product.objects.filter(Q(description__contains=query) | Q(title__contains=query) | Q(author__contains=query), active=True)
+    title = "Products matching " + query
+
+    return render_to_response("products/all.html", locals(), context_instance=RequestContext(request))
