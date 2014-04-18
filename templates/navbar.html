@@ -1,5 +1,6 @@
 <!-- ================== Navbar ========================================= -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+ {% load gravatar %}
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
           <a href="/index" class="navbar-brand" style="font-size: 30px"><strong>UEXIO</strong></a>
@@ -29,7 +30,7 @@
                 <li><a href="/shoppingcart"> <i class="fa fa-shopping-cart"></i> Cart</a></li>
                 {% if user.is_authenticated %}
                     <li class="nav-icon-50 hidden-xs hidden-sm">
-                        <a style="padding: 0px;" href="/profile" title="View Profile"><img src="#" width="60" height="60" alt="Profile" border="0"> </a>
+                        <a style="padding: 0px;" href="/profile" title="View Profile"><img src="{% gravatar_url user.email %}" width="60" height="60" alt="Profile" border="0"> </a>
                     </li>
                     <li id="nav_profile" class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }} <b class="caret"></b> </a>
@@ -38,13 +39,19 @@
                             <li><a href="/profile/edit">Edit Profile</a></li>
                             <li><a href="/profile/active">Active Listings</a></li>
                             <li><a href="/profile/library">My Library</a></li>
-                            <li><a href="/profile/settings">Settings</a></li>
                             <li class="divider"></li>
-                            <li><a href="/logout">Logout</a></li>
+                            <li><a href="/singnout">Signout</a></li>
                         </ul>
                     </li>
                 {% else %}
-                    <li><a href="/login">Login/Register</a> </li>
+                    <li id="nav_profile" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Signin <b class="caret"></b> </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/signin"><i class="fa fa-sign-in"></i> Signin</a> </li>
+                            <li><a href="/register">Create Account</a> </li>
+                        </ul>
+                    </li>
+
                 {% endif %}
             </ul>
         </div>
