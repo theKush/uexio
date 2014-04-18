@@ -1,0 +1,36 @@
+{% extends 'profiles/base.html' %}
+
+{% block breadcrumbs %}
+    <div class="col-lg-9">
+        <section id="breadcrumb">
+          <ul class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">Profile</li>
+          </ul>
+        </section>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="col-lg-9">
+    <h1>My Profile</h1>
+    <hr>
+    <section id="main">
+        <div class="row">
+            <dl class="dl-horizontal">
+                <dt>Username</dt>
+                <dd>{{ user.username }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Email</dt>
+                <dd>{{ user.email }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Joined</dt>
+                <dd>{{ user.date_joined }}</dd>
+            </dl>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

@@ -1,33 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'profiles/base.html' %}
 {% load filename %}
-
-{% block sidebar %}
-    <div id="sidebar" class="col-lg-3">
-          <div class="panel panel-default">
-            <div class="panel-heading">My Account</div>
-            <ul class="list-group">
-              <a id="nav_view_profile" class="list-group-item" href="#" title="View Profile">View Profile</a>
-              <a id="nav_edit_profile" class="list-group-item" href="#" title="Edit Profile">Edit Profile</a>
-              <a id="nav_active_listings" class="list-group-item" href="#" title="Active Listings">Active Listings</a>
-              <a id="nav_my_library" class="list-group-item active" href="#" title="My Library">My Library</a>
-              <a id="nav_my_purchases" class="list-group-item" href="#" title="My Purchases">My Purchases</a>
-              <a id="nav_my_sold_items" class="list-group-item" href="#" title="My Sold Items">My Sold Items</a>
-            </ul>
-          </div>
-        </div>
-{% endblock %}
 
 {% block breadcrumbs %}
     <div class="col-lg-9">
         <section id="breadcrumb">
           <ul class="breadcrumb">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Profile</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
             <li class="active">My Library</li>
           </ul>
         </section>
     </div>
 {% endblock %}
+
 {% block content %}
 <div class="col-lg-9">
     <h1>My Library</h1>
