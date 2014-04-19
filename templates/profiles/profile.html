@@ -24,15 +24,15 @@
     <hr />
     <section id="main">
         <div class="col-lg-2">
-            <img src="{% gravatar_url user.email %}" alt="Profile" border="0">
+            <img src="{% gravatar_image_url profile_user %}" alt="Profile Picture" width="80" height="80" border="0" />
         </div>
         <div class="col-lg-10">
             <div class="row">
                 <ul>
-                    <li><b>User since:</b> {{ user.date_joined|date }}</li>
+                    <li><b>User since:</b> {{ profile_user.date_joined|date }}</li>
                     <li><b>Active Listings:</b> {# Active listings count #}</li>
                     <li><b>Items Sold:</b> {# Number of Items sold Count #}</li>
-                    <li><b>User Rating:</b> {# user rating or stars #}</li>
+                    <li><b>User Rating:</b> {{ profile_user.rating }}{# user rating or stars #}</li>
                 </ul>
             </div>
         </div>
@@ -44,26 +44,32 @@
             </ul>
             <div id="tabsContent" class="tab-content">
                 <div class="tab-pane fade active in" id="user_feedback">
-                    {% if user.feedback == 0 %}
+                    {% if not profile_user.reviews_received.all %}
                         <blockquote>
                             <p>This user has not received any feedback</p>
                         </blockquote>
                     {% else %}
-                        {% for feedback in user.feedback %} {# from all the feedbacks received for this user #}
+                        {% for review in profile_user.reviews_received.all %} {# from all the feedbacks received for this user #}
                         <blockquote>
-                            <p>{{ feedback.text }}</p>  {# populate the feedback #}
-                            <small>{{ feedback.by }}</small>    {# and feedback received by #}
+                            <p>{{ review.content }}</p>  {# populate the feedback #}
+                            <small>{{ review.author }} on {{ review.timestamp|date }}</small>    {# and feedback received by #}
                         </blockquote>
                         {% endfor %}
                     {% endif %}
+                    <hr>
+                    <div class="row text-center">
+                        {% if profile_user != user %} {# also need to check if the user and profile_user had a previous transaction (bought or sold) than allow the user to write a review #}
+                            <a href="{% url 'review_seller' profile_user.username %}" class="btn btn-primary">Review this seller</a>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="tab-pane fade active in" id="active_listings">
-                    {% if user.active_listings == 0 %}
+                <div class="tab-pane fade in" id="active_listings">
+                    {% if not profile_user.products.all %}
                         <blockquote>
                             <p>This user does not have any active listings</p>
                         </blockquote>
                     {% else %}
-                        {% for product in user.active_listings %}   {# for all the products that this user is currently selling #}
+                        {% for product in profile_user.products.all %}   {# for all the products that this user is currently selling #}
                             <div class="col-lg-4">
                                 <div class="thumbnail">
                                     {% for image in product %}      {# populate the featured image #}
@@ -85,44 +91,6 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="col-lg-1">
-                <img src="{% gravatar_image_url profile_user %}" alt="Profile Picture" width="80" height="80" border="0" />
-            </div>
-            <dl class="dl-horizontal col-lg-8">
-                <dt>Username</dt>
-                <dd>{{ profile_user.username }}</dd>
-                <dt>Email</dt>
-                <dd>{{ profile_user.email }}</dd>
-                <dt>Joined</dt>
-                <dd>{{ profile_user.date_joined }}</dd>
-            </dl>
-        </div>
-
-        <hr />
-
-        <div class="row col-lg-9">
-        {% if profile_user.reviews_received.all %}
-            <table class="table table-striped">
-                <tr>
-                    <th>Date</th>
-                    <th>Review</th>
-                    <th>Author</th>
-                </tr>
-            {% for review in profile_user.reviews_received.all %}
-                <tr>
-                    <td>{{ review.timestamp }}</td>
-                    <td>{{ review.content }}</td>
-                    <td>{{ review.author }}</td>
-                </tr>
-            {% endfor %}
-            </table>
-        {% endif %}
-        </div>
-
-        <div class="row text-center">
-            {% if profile_user != user %}
-                <a href="{% url 'review_seller' profile_user.username %}" class="btn btn-primary">Review this seller</a>
-            {% endif %}
         </div>
     </section>
 </div>
