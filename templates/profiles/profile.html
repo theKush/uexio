@@ -60,7 +60,9 @@
         </div>
 
         <div class="row text-center">
-            <a href="{% url 'review_seller' profile_user.username %}" class="btn btn-primary">Review this seller</a>
+            {% if profile_user != user %}
+                <a href="{% url 'review_seller' profile_user.username %}" class="btn btn-primary">Review this seller</a>
+            {% endif %}
         </div>
     </section>
 </div>

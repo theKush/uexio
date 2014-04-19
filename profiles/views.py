@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render_to_response, RequestContext, Http404, HttpResponseRedirect, HttpResponse
+from django.http.response import HttpResponseForbidden
 from django.template.defaultfilters import slugify
 from django.forms.models import modelformset_factory
 from django.core.urlresolvers import reverse
@@ -44,6 +45,10 @@ def review_seller(request, username):
     current_user_profile_url = get_current_user_profile_url(request)
     profile_user = User.objects.get(username=username)
     form = ReviewSellerForm(request.POST)
+
+    if profile_user == request.user:
+        return HttpResponseForbidden()
+
     if request.method == 'POST':
         try:
             review = form.save(commit=False)
