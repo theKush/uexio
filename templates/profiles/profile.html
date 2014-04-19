@@ -37,6 +37,31 @@
                 <dd>{{ profile_user.date_joined }}</dd>
             </dl>
         </div>
+
+        <hr />
+
+        <div class="row col-lg-9">
+        {% if profile_user.reviews_received.all %}
+            <table class="table table-striped">
+                <tr>
+                    <th>Date</th>
+                    <th>Review</th>
+                    <th>Author</th>
+                </tr>
+            {% for review in profile_user.reviews_received.all %}
+                <tr>
+                    <td>{{ review.timestamp }}</td>
+                    <td>{{ review.content }}</td>
+                    <td>{{ review.author }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        {% endif %}
+        </div>
+
+        <div class="row text-center">
+            <a href="{% url 'review_seller' profile_user.username %}" class="btn btn-primary">Review this seller</a>
+        </div>
     </section>
 </div>
 

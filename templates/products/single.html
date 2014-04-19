@@ -184,9 +184,9 @@
                             Note: Comments are public and visible to everyone
                         </p>
                         <form id="commentForm" action="{% url 'comment' product.slug %}" method="post" role="form">
-                        {% csrf_token %}
+                            {% csrf_token %}
                             <div class="form-group">
-                                <label class="sr-only" for="id_comment">Comment</label>
+                                <label class="sr-only" for="id_content">Comment</label>
                                 <textarea class="form-control" id="id_content" name="content" placeholder="Comment"></textarea>
                             </div>
                             <div>

@@ -1,0 +1,38 @@
+{% extends 'profiles/base.html' %}
+
+{% block breadcrumbs %}
+    <div class="col-lg-9">
+        <section id="breadcrumb">
+          <ul class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="{% url 'profile' profile_user.username %}">Profile</a></li>
+            <li class="active">Review</li>
+          </ul>
+        </section>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="col-lg-9">
+    <h1>Review {{ profile_user.username }}</h1>
+    <hr />
+    <section id="main">
+        <div class="row col-lg-6">
+            <form id="reviewSellerForm" action="{% url 'review_seller' profile_user.username %}" method="post" role="form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="sr-only" for="id_content">Review</label>
+                    <textarea class="form-control" id="id_content" name="content" placeholder="Review..." rows=6></textarea>
+                </div>
+                <div>
+                    <div class="pull-right">
+                        <button id="submit_button" class="btn btn-primary">Post Review</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
