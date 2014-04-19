@@ -29,12 +29,12 @@
                 <li><a href="/shoppingcart"> <i class="fa fa-shopping-cart"></i> Cart</a></li>
                 {% if user.is_authenticated %}
                     <li class="nav-icon-50 hidden-xs hidden-sm">
-                        <a style="padding: 0px;" href="/profile" title="View Profile"><img src="#" width="60" height="60" alt="Profile" border="0"> </a>
+                        <a style="padding: 0px;" href="{% url 'profile' user.username %}" title="View Profile"><img src="#" width="60" height="60" alt="Profile" border="0"> </a>
                     </li>
                     <li id="nav_profile" class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }} <b class="caret"></b> </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="/profile">View Profile</a></li>
+                            <li><a href="{% url 'profile' user.username %}">View Profile</a></li>
                             <li><a href="/profile/edit">Edit Profile</a></li>
                             <li><a href="/profile/active">Active Listings</a></li>
                             <li><a href="/profile/library">My Library</a></li>

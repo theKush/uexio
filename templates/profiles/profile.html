@@ -13,21 +13,27 @@
 
 {% block content %}
 <div class="col-lg-9">
-    <h1>My Profile</h1>
-    <hr>
+    <h1>
+    {% if profile_user == user %}
+        My Profile
+    {% else %}
+        {{ profile_user.username }}'s Profile
+    {% endif %}
+    </h1>
+    <hr />
     <section id="main">
         <div class="row">
             <dl class="dl-horizontal">
                 <dt>Username</dt>
-                <dd>{{ user.username }}</dd>
+                <dd>{{ profile_user.username }}</dd>
             </dl>
             <dl class="dl-horizontal">
                 <dt>Email</dt>
-                <dd>{{ user.email }}</dd>
+                <dd>{{ profile_user.email }}</dd>
             </dl>
             <dl class="dl-horizontal">
                 <dt>Joined</dt>
-                <dd>{{ user.date_joined }}</dd>
+                <dd>{{ profile_user.date_joined }}</dd>
             </dl>
         </div>
     </section>
