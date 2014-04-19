@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load cart %}
+
 {% block sidebar %}
     {% include "sidebar.html" %}
 {% endblock %}
@@ -14,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-{% if exists %}
+{% if items %}
 <div class="col-lg-9">
 <h1>Shopping Cart</h1>
 <hr>
@@ -32,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in shoppingcart.shoppingcartitem_set.all %}
+                    {% for item in items %}
                         <tr>
                             <td>
                                 <a href='{% url "update_cart" item.product.id %}'>Remove</a>
@@ -47,23 +49,23 @@
                             </td>
                             <td>{{ item.product }}</td>
                             <td>{{ item.product.price|floatformat:2 }}</td>
-                            <td>{{ item.product.discount|floatformat:2 }}</td>
-                            <td>{{ item.product.price|add:"-item.product.discount" }}</td>
+                            <td>{{ item.discount|floatformat:2 }}</td>
+                            <td>{{ item.product.price|subtract:item.discount|floatformat:2 }}</td>
                         </tr>
                     {% endfor %}
                     <tr>
                         <td colspan="5" style="text-align:right">Total Price: </td>
-                        <td></td>
+                        <td>${{total_price}}</td>
                     </tr>
 
                     <tr>
                         <td colspan="5" style="text-align:right">Total Discount:  </td>
-                        <td> $50.00</td>
+                        <td>${{total_discount}}</td>
                     </tr>
 
                     <tr>
                         <td colspan="5" style="text-align:right"><strong>Total</strong></td>
-                        <td><strong>$100.00</strong></td>
+                        <td><strong>${{total_after_discount}}</strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -98,11 +100,9 @@
     </section>
 </div>
 
-
 {% else %}
 
-
-<h1>Your car is empty</h1>
+<h1>Your cart is empty</h1>
 
 {% endif %}
 {% endblock %}

@@ -9,21 +9,15 @@ from .models import Shoppingcart, ShoppingcartItem
 def shoppingcart(request):
     try:
         shoppingcart_id = request.session['shoppingcart_id']
-    except:
-        shoppingcart_id = False
-
-    if shoppingcart_id:
         shoppingcart = Shoppingcart.objects.get(id=shoppingcart_id)
-    else:
-        shoppingcart = False
-
-    try:
-        exists = ShoppingcartItem.objects.get(shoppingcart=shoppingcart)
-    except:
-        exists = False
+        items = shoppingcart.shoppingcartitem_set.all()
+        total_price = sum(item.product.price for item in items)
+        total_discount = sum(item.discount or 0 for item in items)
+        total_after_discount = total_price - total_discount
+    except KeyError:
+        pass
 
     return render_to_response('shoppingcart/view_shoppingcart.html', locals(), context_instance=RequestContext(request))
-
 
 def update_cart(request, id):
     try:
@@ -53,4 +47,3 @@ def update_cart(request, id):
             new_item.delete()
             messages.success(request, 'cart item remove')
         return HttpResponseRedirect(reverse('shoppingcart'))
-
