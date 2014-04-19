@@ -1,5 +1,7 @@
 {% extends 'profiles/base.html' %}
 
+{% load gravatar %}
+
 {% block breadcrumbs %}
     <div class="col-lg-9">
         <section id="breadcrumb">
@@ -23,15 +25,14 @@
     <hr />
     <section id="main">
         <div class="row">
-            <dl class="dl-horizontal">
+            <div class="col-lg-1">
+                <img src="{% gravatar_image_url profile_user %}" alt="Profile Picture" width="80" height="80" border="0" />
+            </div>
+            <dl class="dl-horizontal col-lg-8">
                 <dt>Username</dt>
                 <dd>{{ profile_user.username }}</dd>
-            </dl>
-            <dl class="dl-horizontal">
                 <dt>Email</dt>
                 <dd>{{ profile_user.email }}</dd>
-            </dl>
-            <dl class="dl-horizontal">
                 <dt>Joined</dt>
                 <dd>{{ profile_user.date_joined }}</dd>
             </dl>

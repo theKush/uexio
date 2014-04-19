@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+
 {% load filename %}
+{% load gravatar %}
 
 {% block alert %}
     <div class="alert alert-dismissable alert-danger">
@@ -66,7 +68,7 @@
                     <div class="panel-body">
                         <div class ="media">
                             <a class="pull-left" href="{% url 'profile' product.user.username %}">
-                                <img src="{# seller profile image #}{{ seller.image }}" alt="Profile" width="50" height="50" border="0"/>
+                                <img src="{% gravatar_image_url product.user 50 %}" alt="Profile" width="50" height="50" border="0"/>
                             </a>
                             <div class="media-body">
                                 <ul>
