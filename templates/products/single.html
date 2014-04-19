@@ -61,17 +61,17 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Seller Profile
-                        <a href="{#% url "seller" product.id %#}" class="pull-right">View Profile <i class="fa fa-angle-double-right"></i></a> {# click to go to seller profile #}
+                        <a href="{% url 'profile' product.user.username %}" class="pull-right">View Profile <i class="fa fa-angle-double-right"></i></a>
                     </div>
                     <div class="panel-body">
                         <div class ="media">
-                            <a class="pull-left" href="#">
+                            <a class="pull-left" href="{% url 'profile' product.user.username %}">
                                 <img src="{# seller profile image #}{{ seller.image }}" alt="Profile" width="50" height="50" border="0"/>
                             </a>
                             <div class="media-body">
                                 <ul>
-                                    <li><b>{{ product.seller }}</b></li> {# seller name #}
-                                    <li> {{product.seller.rating }}</li> {# seller rating goes here #}
+                                    <li><b>{{ product.user }}</b></li> {# seller name #}
+                                    <li> {{product.user.rating }}</li> {# seller rating goes here #}
                                 </ul>
                             </div>
                         </div>
