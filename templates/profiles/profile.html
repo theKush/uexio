@@ -14,8 +14,14 @@
 
 {% block content %}
 <div class="col-lg-9">
-    <h1>{{ user.username }}'s profile</h1>
-    <hr>
+    <h1>
+    {% if profile_user == user %}
+        My Profile
+    {% else %}
+        {{ profile_user.username }}'s Profile
+    {% endif %}
+    </h1>
+    <hr />
     <section id="main">
         <div class="col-lg-2">
             <img src="{% gravatar_url user.email %}" alt="Profile" border="0">
@@ -79,6 +85,44 @@
                     {% endif %}
                 </div>
             </div>
+            <div class="col-lg-1">
+                <img src="{% gravatar_image_url profile_user %}" alt="Profile Picture" width="80" height="80" border="0" />
+            </div>
+            <dl class="dl-horizontal col-lg-8">
+                <dt>Username</dt>
+                <dd>{{ profile_user.username }}</dd>
+                <dt>Email</dt>
+                <dd>{{ profile_user.email }}</dd>
+                <dt>Joined</dt>
+                <dd>{{ profile_user.date_joined }}</dd>
+            </dl>
+        </div>
+
+        <hr />
+
+        <div class="row col-lg-9">
+        {% if profile_user.reviews_received.all %}
+            <table class="table table-striped">
+                <tr>
+                    <th>Date</th>
+                    <th>Review</th>
+                    <th>Author</th>
+                </tr>
+            {% for review in profile_user.reviews_received.all %}
+                <tr>
+                    <td>{{ review.timestamp }}</td>
+                    <td>{{ review.content }}</td>
+                    <td>{{ review.author }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        {% endif %}
+        </div>
+
+        <div class="row text-center">
+            {% if profile_user != user %}
+                <a href="{% url 'review_seller' profile_user.username %}" class="btn btn-primary">Review this seller</a>
+            {% endif %}
         </div>
     </section>
 </div>

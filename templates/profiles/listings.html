@@ -6,7 +6,7 @@
         <section id="breadcrumb">
           <ul class="breadcrumb">
             <li><a href="/">Home</a></li>
-            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'profile' user.username %}">Profile</a></li>
             <li class="active">Active Listings</li>
           </ul>
         </section>

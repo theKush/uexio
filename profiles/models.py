@@ -11,6 +11,15 @@ class UserPurchase(models.Model):
     def __unicode__(self, ):
         return self.user.username
 
+class SellerReview(models.Model):
+    seller = models.ForeignKey(User, null=False, blank=False, related_name='reviews_received')
+    author = models.ForeignKey(User, null=False, blank=False, related_name='reviews_made')
+    content = models.CharField(max_length=500)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+
+    def __unicode__(self):
+        return str(self.content)
+
 def has_purchased(self, product):
     for purchase in UserPurchase.objects.filter(user=self):
         if product in purchase.products.all():
