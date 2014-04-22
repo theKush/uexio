@@ -43,7 +43,11 @@
 <div class="col-lg-9">
     <section id="main">
         <div class="row">
-        <h1>Edit: {{ instance.title }}</h1>
+        {% if instance.pk %}
+          <h1>Edit: {{ instance.title }}</h1>
+        {% else %}
+          <h1>New product</h1>
+        {% endif %}
         <hr>
         <form class="form-horizontal" method="POST" action="">{% csrf_token %}
             <div class="form-group">
@@ -211,7 +215,7 @@
             <hr>
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-success" value="Update">Update Listing</button>
+                    <button type="submit" class="btn btn-success" value="Save">Save</button>
                     <button class="btn btn-default pull-right" value="Cancel">Cancel</button>
                 </div>
             </div>
