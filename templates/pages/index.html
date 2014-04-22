@@ -1,91 +1,100 @@
-{% extends "base.html" %}
-
-<!-- ================== Carousel Image flexslider ========================================= -->
-    <section  class="homepage-slider" id="home-slider">
-          <div class="flexslider">
-            <ul class="slides">
-              <li>
-                <div class="intro">
-                  <h1>Buy & Sell books</h1>
-                  <p><span>Cheaper than your local bookstore</span></p>
-                  <br />
-                  <a class="btn btn-success" href="#">Learn more <i class="fa fa-angle-double-right"></i></a>
-                </div>
-                <img src="{{ STATIC_URL }}img/banner-1.png" alt="" />
-              </li>
-              <li>
-                <div class="intro">
-                  <h1>Why uexio?</h1>
-                  <p><span>Just for students, Verified listings, Notes Sharing, Secure & safe transaction through PayPal</span></p>
-                  <br />
-                  <a class="btn btn-success" href="#">Learn more <i class="fa fa-angle-double-right"></i></a>
-                </div>
-                <img src="{{ STATIC_URL }}img/banner-1.png" alt="" />
-              </li>
-            </ul>
-          </div>
-        </section>
-<!-- **** end Image flexslider **** -->
-{% block sidebar %}
-    {% include "sidebar.html" %}
-{% endblock %}
+{% extends "pages/base.html" %}
 
 {% block content%}
-    <div class="col-lg-9">
-        <h3>Latest Products</h3>
-        <hr>
-        {% for product in products %}
-            <div class="col-lg-4">
-                <div class="thumbnail">
-                    {% for image in product.productimage_set.all %}
-                        {% if image.featured_image %}
-                            <a href="{% url "single_product" product.slug %}">
-                                <img src="{{ MEDIA_URL }}{{ image.image }}"  alt="{{ image.title }}" width="70%"/>
-                        {% endif %}
-                    {% endfor %}
-                    <div class="caption">
-                        <h5>{{ product }}</h5></a>
-                        <p> {{ product.headline }}</p>
-                        <h4>
-                            <button type="button" class="btn btn-default disabled"><i class="fa fa-usd"></i> {{ product.price|floatformat:2 }}</button>
-                            <a class="btn btn-primary" href="{% url "update_cart" product.id %}">Add to <i class="fa fa-shopping-cart"></i></a>
-                        </h4>
-                    </div>
 
+<!-- ================== Carousel Image flexslider ========================================= -->
+<section  class="homepage-slider" id="home-slider">
+    <div class="flexslider" style="margin: 0px">
+        <ul class="slides">
+            <li>
+                <img src="{{ STATIC_URL }}img/banner-1.png" alt="" />
+                <div class="intro">
+                    <h1>Buy & Sell books</h1>
+                    <p><span>Cheaper than your local bookstore</span></p>
+                    <br />
+                    <a class="btn btn-success" href="#">Learn more <i class="fa fa-angle-double-right"></i></a>
                 </div>
-            </div>
-        {% endfor %}
-        <section class="our_client">
-          <div class="row feature_box">
-              <div class="col-lg-4">
-                <div class="service">
-                  <div class="responsive">
-                    <img src="themes/images/feature_img_2.png" alt="" />
-                    <h4>MODERN <strong>DESIGN</strong></h4>
-                    <p>Lorem Ipsum is simply dummy text of the printing and printing industry unknown printer.</p>
-                  </div>
+            </li>
+            <li>
+                <img src="{{ STATIC_URL }}img/banner-1.png" alt="" />
+                <div class="intro">
+                    <h1>Why uexio?</h1>
+                    <p><span>Just for students, Verified listings, Notes Sharing, Secure & safe transaction through PayPal</span></p>
+                    <br />
+                    <a class="btn btn-success" href="#">Learn more <i class="fa fa-angle-double-right"></i></a>
                 </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="service">
-                  <div class="customize">
-                    <img src="themes/images/feature_img_1.png" alt="" />
-                    <h4>FREE <strong>SHIPPING</strong></h4>
-                    <p>Lorem Ipsum is simply dummy text of the printing and printing industry unknown printer.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="service">
-                  <div class="support">
-                    <img src="themes/images/feature_img_3.png" alt="" />
-                    <h4>24/7 LIVE <strong>SUPPORT</strong></h4>
-                    <p>Lorem Ipsum is simply dummy text of the printing and printing industry unknown printer.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </section>
+            </li>
+        </ul>
     </div>
+</section>
+<!-- **** end Image flexslider **** -->
+
+<section id="wrapper">
+    <div class="container">
+        <h3>Featured Products</h3>
+        <hr>
+        <div class="col-lg-12">
+            {% for product in products %}
+                <div class="col-lg-4">
+                    <div class="thumbnail">
+                        {% for image in product.productimage_set.all %}
+                            {% if image.featured_image %}
+                                <a href="{% url "single_product" product.slug %}">
+                                    <img src="{{ MEDIA_URL }}{{ image.image }}"  alt="{{ image.title }}" width="70%"/>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="caption">
+                            <h5>{{ product }}</h5></a>
+                            <p> {{ product.headline }}</p>
+                            <h4>
+                                <button type="button" class="btn btn-default disabled"><i class="fa fa-usd"></i> {{ product.price|floatformat:2 }}</button>
+                                <a class="btn btn-primary" href="{% url "update_cart" product.id %}">Add to <i class="fa fa-shopping-cart"></i></a>
+                            </h4>
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="pull-right">
+            <a href="/products"> All Products <i class="fa fa-angle-double-right"></i> </a>
+        </div>
+    </div>
+</section>
+
+<section class="our_client">
+    <div class="container">
+        <hr>
+        <div class="row feature_box">
+            <div class="col-lg-4">
+                <div class="service">
+                    <div class="responsive">
+                        <img src="{{ STATIC_URL }}img/feature_img_2.png" alt="" />
+                        <h4>MODERN <strong>DESIGN</strong></h4>
+                        <p>Lorem Ipsum is simply dummy text of the printing and printing industry unknown printer.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="service">
+                    <div class="customize">
+                        <img src="{{ STATIC_URL }}img/feature_img_1.png" alt="" />
+                        <h4>FREE <strong>SHIPPING</strong></h4>
+                        <p>Lorem Ipsum is simply dummy text of the printing and printing industry unknown printer.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="service">
+                    <div class="support">
+                        <img src="{{ STATIC_URL }}img/feature_img_3.png" alt="" />
+                        <h4>24/7 LIVE <strong>SUPPORT</strong></h4>
+                        <p>Lorem Ipsum is simply dummy text of the printing and printing industry unknown printer.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}

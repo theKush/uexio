@@ -13,8 +13,12 @@
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
-                <li><a href="/buy">buy</a></li>
-                <li><a href="/sell">sell</a></li>
+                <li><a href="/products">buy</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'add_product' %}">sell</a></li>
+                {% else %}
+                    <li><a href="/sell">sell</a></li>
+                {% endif %}
             </ul>
             <div class="col-sm-4 nav navbar-nav">
                 <form class="navbar-form navbar-left" role="search" id="header_search_form" action="{% url 'search_products' %}" method="get">

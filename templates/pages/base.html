@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %} uexio {% endblock %}</title>
+        <!-- Meta -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Uex.io provides a marketplace for students to buy and sell books">
+        <!-- Favicon -->
+        <!-- Bootstrap -->
+        <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet" />
+        <!-- Global Styles -->
+        <link href="{{ STATIC_URL }}flexslider/flexslider.css" rel="stylesheet"/>
+        <link href="{{ STATIC_URL }}css/main.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}fonts/css/font-awesome.min.css"/>
+    </head>
+
+    <body>
+        {% block navbar %}
+            {%  include "navbar.html" %}
+        {% endblock %}
+
+        {% block content %}
+        {% endblock %}
+
+        {% block footer %}
+            {% include "footer.html" %}
+
+            <script src="{{ STATIC_URL }}flexslider/jquery.flexslider-min.js"></script>
+            <script type="text/javascript">
+
+                $(document).ready(function() {
+                  $('.flexslider').flexslider({
+                    animation: "fade",
+                    slideshowSpeed: 4000,
+                    animationSpeed: 600,
+                    controlNav: false,
+                    directionNav: true,
+                    controlsContainer: ".flex-container" // the container that holds the flexslider
+                  });
+                });
+
+            </script>
+        {% endblock %}
+    </body>
+
+</html>
