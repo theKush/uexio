@@ -37,6 +37,7 @@
                                 {% bootstrap_label_tag field 1 %}
                                 <div class="col-lg-2">
                                   {% bootstrap_field_tag field %}
+                                  {{ field.errors }}
                                 </div>
                             </div>
                         {% else %}
