@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load bootstrap %}
 {% load cart %}
 
 {% block sidebar %}
@@ -77,9 +78,10 @@
                   Coupon Code
                 </div>
                 <div class="panel-body">
-                  <form class="form-horizontal" method="POST" action="">
+                  <form class="form-horizontal" method="POST" action="{% url 'apply_coupon' %}">
+                    {% csrf_token %}
                     <div class="col-md-8">
-                      <input type="text" class="form-control" placeholder="CODE">
+                      {% bootstrap_field_tag coupon_form.code %}
                     </div>
                     <div class="col-md-4">
                       <button type="submit" class="btn"> ADD </button>
