@@ -13,6 +13,7 @@ from .forms import EditProfileForm, ReviewSellerForm
 def profile(request, username):
     current_user_profile_url = get_current_user_profile_url(request)
     profile_user = User.objects.get(username=username)
+    products = Product.objects.filter(user=request.user, active=True)
     if not profile_user:
         raise Http404
     return render_to_response("profiles/profile.html", locals(), context_instance=RequestContext(request))

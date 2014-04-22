@@ -30,7 +30,7 @@
             <div class="row">
                 <ul>
                     <li><b>User since:</b> {{ profile_user.date_joined|date }}</li>
-                    <li><b>Active Listings:</b> {# Active listings count #}</li>
+                    <li><b>Active Listings:</b> {{ products.count }}</li>
                     <li><b>Items Sold:</b> {# Number of Items sold Count #}</li>
                     <li><b>User Rating:</b> {{ profile_user.rating }}{# user rating or stars #}</li>
                 </ul>
@@ -64,15 +64,15 @@
                     </div>
                 </div>
                 <div class="tab-pane fade in" id="active_listings">
-                    {% if not profile_user.products.all %}
+                    {% if not products.all %}
                         <blockquote>
                             <p>This user does not have any active listings</p>
                         </blockquote>
                     {% else %}
-                        {% for product in profile_user.products.all %}   {# for all the products that this user is currently selling #}
+                        {% for product in products.all %}   {# for all the products that this user is currently selling #}
                             <div class="col-lg-4">
                                 <div class="thumbnail">
-                                    {% for image in product %}      {# populate the featured image #}
+                                    {% for image in product.productimage_set.all %}      {# populate the featured image #}
                                         {% if image.featured_image %}
                                             <a href="{% url "single_product" product.slug %}">
                                             <img src="{{ MEDIA_URL }}{{ image.image }}"  alt="{{ image.title }}" width="70%"/>
