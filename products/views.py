@@ -81,9 +81,12 @@ def edit_product(request, slug):
 
     form = ProductForm(request.POST or None, instance=instance) # this performs a post request to make the edit work from the form
 
-    if form.is_valid():
-        product_edit = form.save(commit=False)
-        product_edit.save()
+    if request.method == 'POST':
+        try:
+            form.save()
+            return HttpResponseRedirect(reverse('listings'))
+        except ValueError:
+            pass
 
     return render_to_response("products/edit.html", locals(), context_instance=RequestContext(request))
 

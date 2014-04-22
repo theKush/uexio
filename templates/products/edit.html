@@ -1,6 +1,8 @@
 {# Not fully finished, just added the template to see what it looks like #}
 {% extends "base.html" %}
 
+{% load bootstrap %}
+
 {% block sidebar %}
     <div id="sidebar" class="col-lg-3">
           <div class="panel panel-default">
@@ -17,24 +19,27 @@
         <section id="breadcrumb">
           <ul class="breadcrumb">
             <li><a href="#">Home</a></li>
-            <li><a href="#">Sell</a></li>
-            <li class="active">Edit Listing</li>
+            <li><a href="{% url 'listings' %}">Active Listings</a></li>
+            <li class="active">Edit</li>
           </ul>
         </section>
     </div>
 {% endblock %}
 
 {% block alert %}
-<div class="col-lg-9">
+{% if form.errors %}
+    <div class="col-lg-12">
         <div class="alert alert-dismissable alert-danger">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> Alert appears here when something goes wrong
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            Couldn't edit the product because of those errors:
+            {{ form.errors }}
         </div>
-
     </div>
+{% endif %}
 {% endblock %}
 
 {% block content %}
+
 <div class="col-lg-9">
     <section id="main">
         <div class="row">
@@ -45,8 +50,7 @@
             <div class="form-group">
                   <label for="inputTitle" class="col-lg-2 control-label">Title</label>
                   <div class="col-lg-10">
-
-                    <input type="text" class="form-control" id="inputTitle" placeholder="Title">
+                    {% bootstrap_field_tag form.title %}
                     <span class="help-block">The title that you want for your listing.</span>
                   </div>
                 </div>
