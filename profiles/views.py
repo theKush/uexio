@@ -5,6 +5,7 @@ from django.template.defaultfilters import slugify
 from django.forms.models import modelformset_factory
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.contrib.auth.views import password_change
 
 from profiles.models import Product
 from .models import UserPurchase
@@ -28,6 +29,12 @@ def edit_profile(request):
         except ValueError: # handle validation errors
             pass
     return render_to_response("profiles/edit_profile.html", locals(), context_instance=RequestContext(request))
+
+def edit_password(request):
+    return password_change(request, template_name="profiles/edit_password.html",
+                           post_change_redirect=reverse('edit_password'),
+                           extra_context={'current_user_profile_url': get_current_user_profile_url(request),
+                                          'request': request})
 
 def library(request):
     current_user_profile_url = get_current_user_profile_url(request)
