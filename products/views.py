@@ -3,6 +3,7 @@ import os
 from mimetypes import guess_type
 
 from django.conf import settings
+from django.contrib import messages
 from django.shortcuts import render_to_response, RequestContext, Http404, HttpResponseRedirect, HttpResponse
 from django.template.defaultfilters import slugify
 from django.forms.models import modelformset_factory
@@ -84,6 +85,7 @@ def edit_product(request, slug):
     if request.method == 'POST':
         try:
             form.save()
+            messages.success(request, 'Product updated')
             return HttpResponseRedirect(reverse('listings'))
         except ValueError:
             pass

@@ -22,7 +22,7 @@ def download_loc(instance, filename):
 class Product(models.Model):
     user = models.ForeignKey(User, null=True, blank=True)
     title = models.CharField(max_length=180)
-    description = models.CharField(max_length=500)
+    description = models.TextField()
     download = models.FileField(upload_to=download_loc, storage=FileSystemStorage(location=protected_loc), null=True) # this is for testing the order authentication process
     price = models.DecimalField(max_digits=20, decimal_places=2)
     sale_price = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
