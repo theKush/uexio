@@ -10,8 +10,8 @@ from django.core.servers.basehttp import FileWrapper
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 
-from .models import Product, Category, ProductImage, Comment
-from .forms import ProductForm, ProductImageForm, CommentForm
+from .models import Product, Category, ProductImage, Comment, Coupon
+from .forms import ProductForm, ProductImageForm, CommentForm, CouponForm
 
 def list_all(request):
     title = "All Products"
@@ -129,3 +129,25 @@ def comment(request, slug):
             return render_to_response("products/single.html", locals(), context_instance=RequestContext(request))
 
     return HttpResponseRedirect(reverse('single_product', args=[product.slug]))
+
+def manage_coupons(request, slug):
+    product = Product.objects.get(slug=slug)
+
+    if request.user != product.user:
+        raise Http404
+
+    queryset = Coupon.objects.filter(product=product)
+    CouponFormset = modelformset_factory(Coupon, form=CouponForm, can_delete=True)
+    formset = CouponFormset(request.POST or None, queryset=queryset)
+
+    if request.method == 'POST':
+        try:
+            coupons = formset.save(commit=False)
+            for coupon in coupons:
+                coupon.product = product
+                coupon.save()
+            return HttpResponseRedirect(reverse('manage_coupons', args=[product.slug]))
+        except ValueError: # handle validation errors
+            pass
+
+    return render_to_response("products/manage_coupons.html", locals(), context_instance=RequestContext(request))

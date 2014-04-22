@@ -113,3 +113,12 @@ class Comment(models.Model):
 
     def __unicode__(self):
         return str(self.content)
+
+class Coupon(models.Model):
+    product = models.ForeignKey(Product)
+    code = models.CharField(max_length=20)
+    discount = models.DecimalField(max_digits=20, decimal_places=2)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+
+    def __unicode__(self):
+        return str(self.code)

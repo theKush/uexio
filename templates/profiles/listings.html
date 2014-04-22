@@ -42,7 +42,8 @@
                                     {{ product.description }}
                                 </td>
                                 <td>
-                                    <a href="{% url 'edit_product' product.slug %}">Edit</a>
+                                    <a href="{% url 'edit_product' product.slug %}" class="btn btn-sm btn-primary" role="button">Edit</a>
+                                    <a href="{% url 'manage_coupons' product.slug %}" class="btn btn-primary btn-sm" role="button">Coupons</a>
                                     {% if product.active %}
                                         <form action="/products/{{product.slug}}/deactivate/" method="post">
                                             {% csrf_token %}

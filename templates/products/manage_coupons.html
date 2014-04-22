@@ -1,0 +1,56 @@
+{% extends "profiles/base.html" %}
+
+{% load bootstrap %}
+
+{% block breadcrumbs %}
+    <div class="col-lg-9">
+        <section id="breadcrumb">
+          <ul class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="{% url 'listings' %}">Active Listings</a></li>
+            <li class="active">Edit Coupons</li>
+          </ul>
+        </section>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-lg-9">
+    <section id="main">
+        <div class="row">
+            <h1>{{ product.title }} coupons</h1>
+
+            <p>
+              Product currently listed at <strong>${{ product.price }}</strong>.
+            </p>
+
+            <form method='POST' action='' class="form" role="form">
+                {% csrf_token %}
+                {{ formset.management_form }}
+
+                {% for form in formset %}
+                    <div class="row">
+                    {% for field in form %}
+                        {% if not field.is_hidden %}
+                            <div>
+                                {% bootstrap_label_tag field 1 %}
+                                <div class="col-lg-2">
+                                  {% bootstrap_field_tag field %}
+                                </div>
+                            </div>
+                        {% else %}
+                            {{ field }}
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                {% endfor %}
+
+                <input type='submit' class="btn btn-primary" value='Update' />
+            </form>
+
+        </div>
+    </section>
+</div>
+
+{% endblock %}
