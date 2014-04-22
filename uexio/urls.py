@@ -7,7 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # regular expression below sets up the path for the app, more info in settings
-    url(r'^$', 'products.views.list_all', name="all_products"),
+    url(r'^$', 'pages.views.index', name="index"),
 
     url(r'^auth/', include('auth.urls')),
     url(r'^profile/', include('profiles.urls')),
