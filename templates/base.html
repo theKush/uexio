@@ -15,6 +15,8 @@
         <link rel="stylesheet" href="{{ STATIC_URL }}fonts/css/font-awesome.min.css"/>
     </head>
 
+    {% load bootstrap %}
+
     <body>
         {% block navbar %}
             {%  include "navbar.html" %}
@@ -26,6 +28,16 @@
                 {% endblock %}
                 {% block breadcrumbs %}
                 {% endblock %}
+                {% if messages %}
+                    <div class="col-lg-9">
+                        {% for message in messages %}
+                            <div class="{% bootstrap_alert_class message %}">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 {% block alert %}
                 {% endblock %}
                 {% block content %}

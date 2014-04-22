@@ -38,10 +38,10 @@ def update_cart(request, id):
         if created:
             new_item.Shoppingcart = shoppingcart
             new_item.save()
-            messages.success(request, 'cart item added')
+            messages.success(request, 'Item added to cart')
         else:
             new_item.delete()
-            messages.success(request, 'cart item remove')
+            messages.warning(request, 'Item removed from cart')
         return HttpResponseRedirect(reverse('shoppingcart'))
 
 def apply_coupon(request):
@@ -49,6 +49,7 @@ def apply_coupon(request):
     if request.method == 'POST':
         if form.is_valid():
             try:
+                applied = False
                 code = form.cleaned_data['code']
                 coupon = Coupon.objects.get(code=code)
                 items = _get_shooping_cart_items(request)
@@ -56,8 +57,12 @@ def apply_coupon(request):
                     if item.product == coupon.product:
                         item.discount = coupon.discount
                         item.save()
+                        messages.success(request, 'Code applied')
+                        applied = True
+                if not applied:
+                    messages.warning(request, "Coupon code doesn't apply to any of those products")
             except Coupon.DoesNotExist:
-                pass
+                messages.error(request, 'Coupon code invalid')
     return HttpResponseRedirect(reverse('shoppingcart'))
 
 def _get_shooping_cart_items(request):
