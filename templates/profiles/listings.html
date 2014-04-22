@@ -1,4 +1,5 @@
 {% extends 'profiles/base.html' %}
+
 {% load filename %}
 
 {% block breadcrumbs %}
@@ -44,6 +45,7 @@
                                 <td>
                                     <a href="{% url 'edit_product' product.slug %}" class="btn btn-sm btn-primary" role="button">Edit</a>
                                     <a href="{% url 'manage_coupons' product.slug %}" class="btn btn-primary btn-sm" role="button">Coupons</a>
+                                    <a href="{% url 'manage_product_image' product.slug %}" class="btn btn-primary btn-sm" role="button">Images</a>
                                     {% if product.active %}
                                         <form action="/products/{{product.slug}}/deactivate/" method="post">
                                             {% csrf_token %}

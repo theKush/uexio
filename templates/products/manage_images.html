@@ -1,8 +1,23 @@
-{% extends "base.html" %}
+{% extends 'profiles/base.html' %}
 
 {% load bootstrap %}
 
+{% block breadcrumbs %}
+    <div class="col-lg-9">
+        <section id="breadcrumb">
+          <ul class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="{% url 'profile' user.username %}">Profile</a></li>
+            <li><a href="{% url 'listings' %}">Active Listings</a></li>
+            <li class="active">Edit</li>
+          </ul>
+        </section>
+    </div>
+{% endblock %}
+
 {% block content %}
+
+<div class="row col-lg-9">
 
 <h1>Edit "{{ product.title }}" images</h1>
 
@@ -51,4 +66,5 @@
 <input type='submit' value='Update' />
 
 </form>
+</div>
 {% endblock %}
