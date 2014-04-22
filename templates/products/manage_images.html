@@ -1,43 +1,54 @@
 {% extends "base.html" %}
 
-
+{% load bootstrap %}
 
 {% block content %}
 
-<h1>Edit: {{ product.title }} images</h1>
+<h1>Edit "{{ product.title }}" images</h1>
 
-<form method='POST' action='' enctype="multipart/form-data"> {% csrf_token %}
+<form method='POST' action='' enctype="multipart/form-data" class="form-horizontal" role="form">
+
+{% csrf_token %}
 {{ formset.management_form }}
 
-<table>
 {% for form in formset %}
-    <tr>
-        <td>
-            {% if form.instance.image %}
-                <img src="{{ MEDIA_URL }}{{ form.instance.image }}" width="150">
-            {% endif %}
-        </td>
-        {% for field in form %}
-            <td>{{ field.label_tag }}</td>
-            <td>{{ field }}</td>
-        {% endfor %}
-    </tr>
-    <tr>
-        <td></td>
-        <td colspan=11>
-            {{ form.non_field_errors }}
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        {% for field in form %}
-            {% if field.errors %}
-                <td colspan=11>{{ field.name }}: {{ field.errors.as_text }}</td>
-            {% endif %}
-        {% endfor %}
-    </tr>
+<div class="media">
+  <a class="pull-left" href="#">
+    {% if form.instance.image %}
+      <img src="{{ MEDIA_URL }}{{ form.instance.image }}" width="125" height="93">
+    {% endif %}
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading">
+      {% if form.instance.title %}
+        {{ form.instance.title }}
+      {% else %}
+        New image
+      {% endif %}
+    </h4>
+    <div class="form-group">
+      {% for field in form %}
+        {% if not field.is_hidden %}
+          {% bootstrap_label_tag field %}
+          <div class="col-lg-9">
+            {% bootstrap_field_tag field %}
+          </div>
+        {% else %}
+          {{ field }}
+        {% endif %}
+        {{ field.errors.as_text }}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div>
+  {{ form.non_field_errors }}
+</div>
+
 {% endfor %}
-<tfoot><td><input type='submit' value='Update' /></td></tfoot>
-</table>
+
+<input type='submit' value='Update' />
+
 </form>
 {% endblock %}
