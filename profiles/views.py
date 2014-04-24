@@ -8,8 +8,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import password_change
 
 from profiles.models import Product
-from .models import UserPurchase
-from .forms import EditProfileForm, ReviewSellerForm
+from .models import UserPurchase, UserProfile
+from .forms import EditProfileForm, ReviewSellerForm, UserProfileForm
 
 def profile(request, username):
     current_user_profile_url = get_current_user_profile_url(request)
@@ -22,9 +22,12 @@ def profile(request, username):
 def edit_profile(request):
     current_user_profile_url = get_current_user_profile_url(request)
     form = EditProfileForm(request.POST or None, instance=request.user)
+    profile_user = UserProfile.objects.get(user=request.user)
+    profile_form = UserProfileForm(request.POST or None, instance=profile_user)
     if request.method == 'POST':
         try:
             form.save()
+            profile_form.save()
             return HttpResponseRedirect(reverse('profile', args=[request.user.username]))
         except ValueError: # handle validation errors
             pass

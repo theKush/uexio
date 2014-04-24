@@ -1,14 +1,21 @@
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 
-from .models import SellerReview
+from .models import SellerReview, UserProfile
 
 class EditProfileForm(ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('username','first_name', 'last_name', 'email')
+
+class UserProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('paypal', 'phonenumber')
+
 
 class ReviewSellerForm(ModelForm):
     class Meta:
         model = SellerReview
         fields = ('content',)
+

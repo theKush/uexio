@@ -3,6 +3,18 @@ from django.contrib.auth.models import User
 
 from products.models import Product
 
+class UserProfile(models.Model):
+    # This Line is required. Links UserProfile to a User Model instance.
+    user = models.OneToOneField(User)
+
+    # The additional attributes we wish to include.
+    paypal = models.EmailField(max_length=70, null=True, blank=False, unique=True)
+    phonenumber = models.CharField(max_length=40, null=True, blank=False, unique=True)
+
+    #Override the __unicode__() method to return out something meaningful!
+    def __unicode__(self):
+        return self.user.username
+
 
 class UserPurchase(models.Model):
     user = models.ForeignKey(User)

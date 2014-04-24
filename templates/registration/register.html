@@ -3,12 +3,13 @@
 {% load bootstrap %}
 
 {% block alert %}
-{% if form.errors %}
+{% if user_form.errors or profile_form.errors %}
     <div class="col-lg-12">
         <div class="alert alert-dismissable alert-danger">
             <button type="button" class="close" data-dismiss="alert">×</button>
             Couldn't register an account because of those errors:
-            {{ form.errors }}
+            {{ user_form.errors }}
+            {{ profile_form.errors }}
         </div>
     </div>
 {% endif %}
@@ -20,18 +21,25 @@
         <hr>
     <div class="col-lg-7">
         <div class="well bs-component">
-            <form action="{% url 'register' %}" method="post" class="form-horizontal">
+            <form action="{% url 'register' %}" method="post" class="form-horizontal" enctype="multipart/form-data">
                 <fieldset>
                     <legend>Register</legend>
                     {% csrf_token %}
-                    {% for field in form %}
+                    {% for field in user_form %}
                     <div class="{% bootstrap_form_group_class field %}">
                         {% bootstrap_label_tag field %}
                         <div class="col-lg-9">
                             {% bootstrap_field_tag field %}
                         </div>
                     </div>
-                        {# Also need form fields for First Name, Last Name, Email, PhoneNumber, Paypal email #}
+                    {% endfor %}
+                    {% for field in profile_form %}
+                        <div class="{% bootstrap_form_group_class field %}">
+                            {% bootstrap_label_tag field %}
+                            <div class="col-lg-9">
+                                {% bootstrap_field_tag field %}
+                            </div>
+                        </div>
                     {% endfor %}
                     <div class="row">
                         <div class="col-lg-9 col-lg-offset-2">

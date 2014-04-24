@@ -3,12 +3,13 @@
 {% load bootstrap %}
 
 {% block alert %}
-{% if form.errors %}
+{% if form.errors or profile_form.errors %}
     <div class="col-lg-9">
         <div class="alert alert-dismissable alert-danger">
             <button type="button" class="close" data-dismiss="alert">×</button>
             Couldn't edit the profile because of those errors:
             {{ form.errors }}
+            {{ profile_form.errors }}
         </div>
     </div>
 {% endif %}
@@ -32,7 +33,7 @@
         <div class="row">
             <h1>Edit Profile</h1>
             <hr>
-            <form action="{% url 'edit_profile' %}" method="post" class="form-horizontal">
+            <form action="{% url 'edit_profile' %}" method="post" class="form-horizontal" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% for field in form %}
                     <div class="{% bootstrap_form_group_class field %}">
@@ -42,7 +43,14 @@
                         </div>
                     </div>
                 {% endfor %}
-
+                {% for field in profile_form %}
+                    <div class="{% bootstrap_form_group_class field %}">
+                        {% bootstrap_label_tag field %}
+                        <div class="col-lg-5">
+                            {% bootstrap_field_tag field %}
+                        </div>
+                    </div>
+                {% endfor %}
                 <hr />
 
                 <div class="col-lg-10 col-lg-offset-2">
