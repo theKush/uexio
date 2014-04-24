@@ -4,10 +4,15 @@
 {% load gravatar %}
 
 {% block alert %}
-    <div class="alert alert-dismissable alert-danger">
-      <button type="button" class="close" data-dismiss="alert">×</button>
-      <strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> Alert appears here when something goes wrong
+{% if form.errors %}
+    <div class="col-lg-9">
+        <div class="alert alert-dismissable alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            Couldn't add comments because of these errors:
+            {{ form.errors }}
+        </div>
     </div>
+{% endif %}
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -21,6 +26,8 @@
 {% endblock %}
 
 {% block content %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/blueimp-gallery.min.css">
+
     <section id="main">
         <div class="col-md-4">
             <div class="panel panel-primary">
@@ -90,12 +97,12 @@
                     <div class="panel-heading">
                         Pictures
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" id="links">
                         {% for image in images %}
                         <div class="listing_images">
                             <div class="listing_image" align="center">
                                 <div style="width: 125px; height: 125px">
-                                    <a href="" class="lightbox" target="_blank">
+                                    <a href="{{ MEDIA_URL }}{{ image.image }}" title="{{ image.title }}" class="lightbox">
                                         <img src="{{ MEDIA_URL }}{{ image.image }}" width="125" height="93" border="0">
                                     </a>
                                 </div>
@@ -150,26 +157,30 @@
                         </div>
                         <div class="panel-body">
                             <ul class="list-group">
-                                {% for comment in comments %}
-                                <li class="list-group-item">
-                                    <div class="comment">
-                                        <div class="media">
-                                            <a class="pull-left" href="#">
-                                                <img class="media-object" src="themes/images/products/1.jpg" width="50" height="50" border="0" />
-                                            </a>
-                                            <div class="media-body">
-                                                <a href="#">{{comment.user}}</a>
-                                                {% if comment.user.is_superuser %}
-                                                <span class="label label-success">Staff</span>
-                                                {% endif %}
-                                                <div class="text" >
-                                                    <p>{{comment}}</p>
+                                {% if not comments %}
+                                    No Comments
+                                {% else %}
+                                    {% for comment in comments %}
+                                    <li class="list-group-item">
+                                        <div class="comment">
+                                            <div class="media">
+                                                <a class="pull-left" href="#">
+                                                    <img class="media-object" src="{% gravatar_image_url comment.user 50 %}" width="50" height="50" border="0" />
+                                                </a>
+                                                <div class="media-body">
+                                                    <a href="#">{{comment.user}}</a>
+                                                    {% if comment.user.is_superuser %}
+                                                    <span class="label label-success">Staff</span>
+                                                    {% endif %}
+                                                    <div class="text" >
+                                                        <p>{{comment}}</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                                {% endfor %}
+                                    </li>
+                                    {% endfor %}
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
@@ -205,5 +216,27 @@
             </div>
         </div>
     </section>
+
+<div id="blueimp-gallery" class="blueimp-gallery">
+    <div class="slides"></div>
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+</div>
+
+    <script src="{{ STATIC_URL }}js/blueimp-gallery.min.js"></script>
+    <script>
+document.getElementById('links').onclick = function (event) {
+    event = event || window.event;
+    var target = event.target || event.srcElement,
+        link = target.src ? target.parentNode : target,
+        options = {index: link, event: event},
+        links = this.getElementsByTagName('a');
+    blueimp.Gallery(links, options);
+};
+</script>
 
 {% endblock %}

@@ -15,18 +15,30 @@
     </div>
 {% endblock %}
 
+{% block alert %}
+{% if form.errors %}
+    <div class="col-lg-9">
+        <div class="alert alert-dismissable alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            Something happend, please see following errors:
+            {{ form.errors }}
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
 {% block content %}
 
 <div class="col-lg-9">
     <section id="main">
         <div class="row">
-            <h1>{{ product.title }} coupons</h1>
-
+            <h1>"{{ product.title }}" coupons</h1>
+            <hr>
             <p>
               Product currently listed at <strong>${{ product.price }}</strong>.
             </p>
 
-            <form method='POST' action='' class="form" role="form">
+            <form method='POST' action='' class="form-horizontal" role="form">
                 {% csrf_token %}
                 {{ formset.management_form }}
 
@@ -47,7 +59,7 @@
                     {% endfor %}
                     </div>
                 {% endfor %}
-
+                <br>
                 <input type='submit' class="btn btn-primary" value='Update' />
             </form>
 

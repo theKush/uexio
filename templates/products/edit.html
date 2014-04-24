@@ -1,18 +1,8 @@
 {# Not fully finished, some form fields not implemented #}
-{% extends "base.html" %}
+{% extends "profiles/base.html" %}
 
 {% load bootstrap %}
 
-{% block sidebar %}
-    <div id="sidebar" class="col-lg-3">
-          <div class="panel panel-default">
-            <div class="panel-heading">Listing Help</div>
-            <div class="panel-body">
-              Supply enough information to make the buying decision easy. Please ensure that all products and content comply with our Selling policies and restrictions including the Restricted Products policy.
-            </div>
-          </div>
-     </div>
-{% endblock %}
 
 {% block breadcrumbs %}
     <div class="col-lg-9">
@@ -21,7 +11,11 @@
             <li><a href="#">Home</a></li>
             <li><a href="{% url 'profile' user.username %}">Profile</a></li>
             <li><a href="{% url 'listings' %}">Active Listings</a></li>
-            <li class="active">Edit</li>
+              {% if "edit" in request.path %}
+                <li class="active">Edit</li>
+              {% else %}
+                <li class="active">New</li>
+              {% endif %}
           </ul>
         </section>
     </div>
@@ -29,7 +23,7 @@
 
 {% block alert %}
 {% if form.errors %}
-    <div class="col-lg-12">
+    <div class="col-lg-9">
         <div class="alert alert-dismissable alert-danger">
             <button type="button" class="close" data-dismiss="alert">×</button>
             Couldn't edit the product because of those errors:
@@ -38,7 +32,6 @@
     </div>
 {% endif %}
 {% endblock %}
-
 {% block content %}
 
 <div class="col-lg-9">
@@ -47,7 +40,7 @@
         {% if instance.pk %}
           <h1>Edit: {{ instance.title }}</h1>
         {% else %}
-          <h1>New product</h1>
+          <h1>New Listing</h1>
         {% endif %}
         <hr>
         <form class="form-horizontal" method="POST" action="">{% csrf_token %}

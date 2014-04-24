@@ -24,10 +24,10 @@
                 <table id="table_library" class="table table-bordered table-responsive table-striped">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Description</th>
-                            <th>Actions</th>
+                            <th class="col-sm-2">Title</th>
+                            <th class="col-sm-5">Headline</th>
+                            <th class="col-sm-1">Price</th>
+                            <th class="col-sm-4">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,15 +37,15 @@
                                     {{ product }}
                                 </td>
                                 <td>
-                                    {{ product.author }}
+                                    {{ product.headline }}
                                 </td>
                                 <td>
-                                    {{ product.description }}
+                                    <i class="fa fa-usd"></i>{{ product.price|floatformat:2 }}
                                 </td>
                                 <td>
-                                    <a href="{% url 'edit_product' product.slug %}" class="btn btn-sm btn-primary" role="button">Edit</a>
-                                    <a href="{% url 'manage_coupons' product.slug %}" class="btn btn-primary btn-sm" role="button">Coupons</a>
-                                    <a href="{% url 'manage_product_image' product.slug %}" class="btn btn-primary btn-sm" role="button">Images</a>
+                                    <a href="{% url 'edit_product' product.slug %}" class="btn btn-sm btn-primary" role="button" style="text-decoration: none; margin-bottom: 5px;">Edit</a>
+                                    <a href="{% url 'manage_coupons' product.slug %}" class="btn btn-primary btn-sm" role="button" style="text-decoration: none; margin-bottom: 5px;">Coupons</a>
+                                    <a href="{% url 'manage_product_image' product.slug %}" class="btn btn-primary btn-sm" role="button" style="text-decoration: none; margin-bottom: 5px;">Images</a>
                                     {% if product.active %}
                                         <form action="/products/{{product.slug}}/deactivate/" method="post">
                                             {% csrf_token %}

@@ -26,6 +26,10 @@ div .thumbnail a{
 div .thumbnail h4 a{
 	color:#FFFFFF;
 }
+div .thumbnail img{
+    width:200px;
+    height:200px;
+}
 .price {
 font-size: 250%;
 line-height: 100%;

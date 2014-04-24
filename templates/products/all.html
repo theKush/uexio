@@ -37,7 +37,7 @@
                     {% for image in product.productimage_set.all %}
                         {% if image.featured_image %}
                             <a href="{% url "single_product" product.slug %}">
-                                <img src="{{ MEDIA_URL }}{{ image.image }}"  alt="{{ image.title }}" width="70%"/>
+                                <img src="{{ MEDIA_URL }}{{ image.image }}"  alt="{{ image.title }}" />
                         {% endif %}
                     {% endfor %}
                     <div class="caption">
@@ -52,6 +52,16 @@
                 </div>
             </div>
         {% endfor %}
+            {# placeholder for pagination. Still need to implement #}
+            <ul class="pagination pull-right">
+                <li class="disabled"><a href="#">«</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">»</a></li>
+            </ul>
         </div>
 
 {% endblock %}

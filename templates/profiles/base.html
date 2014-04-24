@@ -14,5 +14,14 @@
               <a id="nav_my_sold_items" class="list-group-item" href="#" title="My Sold Items">My Sold Items</a>
             </ul>
           </div>
+            {% if request.path == '/products/add/' %}
+              <div class="panel panel-default">
+                <div class="panel-heading">Listing Help</div>
+                <div class="panel-body">
+                  Supply enough information to make the buying decision easy. Please ensure that all products and content comply with our Selling policies and restrictions including the Restricted Products policy.
+                </div>
+              </div>
+            {% endif %}
+
         </div>
 {% endblock %}

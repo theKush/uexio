@@ -1,4 +1,5 @@
 {% extends 'profiles/base.html' %}
+
 {% load filename %}
 
 {% block breadcrumbs %}
@@ -7,7 +8,7 @@
           <ul class="breadcrumb">
             <li><a href="/">Home</a></li>
             <li><a href="{% url 'profile' user.username %}">Profile</a></li>
-            <li class="active">My Library</li>
+            <li class="active">My Purchases</li>
           </ul>
         </section>
     </div>
@@ -15,7 +16,7 @@
 
 {% block content %}
 <div class="col-lg-9">
-    <h1>My Library</h1>
+    <h1>My Purchases</h1>
     <hr />
     <section id="main">
         <div class="row">
@@ -23,22 +24,26 @@
                 <table id="table_library" class="table table-bordered table-responsive table-striped">
                     <thead>
                         <tr>
-                            <th class="col-sm-3">Title</th>
-                            <th class="col-sm-6">Description</th>
-                            <th class="col-sm-3">Download</th>
+                            <th class="col-sm-2">Order #</th>
+                            <th class="col-sm-5">Title</th>
+                            <th class="col-sm-1">Price</th>
+                            <th class="col-sm-4">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for product in products %}
+                        {% for product in products %} {# for order in user's sold items  #}
                             <tr>
                                 <td>
-                                    {{ product }}
+                                    {{ product }}   {# Display order number #}
                                 </td>
                                 <td>
-                                    {{ product.description }}
+                                    {{ product }}   {# Display Product title #}
                                 </td>
                                 <td>
-                                    <a href='{% url 'download_product' product.slug product.download|filename %}'>Download Materials</a>
+                                    <i class="fa fa-usd"></i>{{ product.price|floatformat:2 }} {# Display product price #}
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-primary" role="button" style="text-decoration: none; margin-bottom: 5px;">View Order</a>            {# View sold Order Details #}
                                 </td>
                             </tr>
                         {% endfor %}
