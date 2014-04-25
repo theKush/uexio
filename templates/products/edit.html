@@ -54,11 +54,12 @@
                 <div class="form-group">
                   <label for="inputHeadline" class="col-lg-2 control-label">Headline</label>
                   <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputHeadline" placeholder="Headline">
+                    {% bootstrap_field_tag form.headline %}
                     <span class="help-block">A catchy description of your product, that makes the buyer want to buy your product</span>
                   </div>
                 </div>
-                <div class="form-group">
+                {# future implementation #}
+                <!--div class="form-group">
                   <label for="select" class="col-lg-2 control-label">Category</label>
                   <div class="col-lg-10">
                     <select class="form-control" id="select">
@@ -70,7 +71,7 @@
                     </select>
                     <span class="help-block">Category you want your listing to be under</span>
                   </div>
-                </div>
+                </div-->
                 <div class="form-group">
                   <label for="id_description" class="col-lg-2 control-label">Description</label>
                   <div class="col-lg-10">
@@ -81,14 +82,18 @@
                 <div class="form-group required">
                   <label for="condition" class="col-lg-2 control-label">Condition</label>
                   <div class="col-lg-10">
-                    <div class="controls widget" style="margin-bottom:0px;">
+
+                      {{ form.condition }}
+                    <!--div class="controls widget" style="margin-bottom:0px;">
                       <div class="condition_widget">
                         <table class="table table-bordered">
                           <tbody>
                             <tr>
+
+
                               <td width="25%">
                                 <label for="id_condition_mint" class="radio">
-                                  <input type="radio" id="id_condition_mint" value="mint" name="condition" class="required">
+                                  <input type="radio" id="id_condition_mint" value="1" name="condition" class="required">
                                   New
                                 </label>
                                 <ul>
@@ -98,7 +103,7 @@
                               </td>
                               <td width="25%">
                                 <label for="id_condition_mint" class="radio">
-                                  <input type="radio" id="id_condition_mint" value="mint" name="condition" class="required">
+                                  <input type="radio" id="id_condition_mint" value="2" name="condition" class="required">
                                   Mint
                                 </label>
                                 <ul>
@@ -108,7 +113,7 @@
                               </td>
                               <td width="25%">
                                 <label for="id_condition_good" class="radio">
-                                  <input type="radio" id="id_condition_good" value="good" name="condition" class="required">
+                                  <input type="radio" id="id_condition_good" value="3" name="condition" class="required">
                                   Good
                                 </label>
                                 <ul>
@@ -130,17 +135,11 @@
                           </tbody>
                         </table>
                       </div>
-                    </div>
+                    </div-->
                     <span class="help-block">Please be honest here</span>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="col-lg-2 control-label" for="inputExpirationDate">Expiration Date</label>
-                  <div class="col-lg-10">
-                    <input type="date" class="form-control" id="inputExpirationDate">
-                    <span class="help-block">The date when your listing will expire</span>
-                  </div>
-                </div>
+
                 <div class="form-group">
                   <label for="id_price" class="col-lg-2 control-label">Price</label>
                   <div class="col-lg-10">
@@ -161,17 +160,11 @@
                 <div class="form-group">
                   <label for="description" class="col-lg-2 control-label">Upload Additional Documents</label>
                   <div class="col-lg-10">
-                    <button type="submit" class="btn btn-primary">Upload</button>
+                    {% bootstrap_field_tag form.download %}
                     <span class="help-block">upload any other class notes or documents that you want your buyer to have.</span>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="description" class="col-lg-2 control-label">Documents Description</label>
-                  <div class="col-lg-10">
-                    <textarea class="form-control" rows="3" id="description"></textarea>
-                    <span class="help-block">Please provide any additional information regarding your included documents or notes.</span>
-                  </div>
-                </div>
+
             <hr>
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
