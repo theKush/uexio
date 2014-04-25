@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth import authenticate, login
-#from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -19,7 +18,6 @@ def register(request):
         if user_form.is_valid() and profile_form.is_valid():
             # Save the user's form data to the database.
             user = user_form.save()
-            user_form.save()
             # AutoLogin the user after registration
             autologin(user_form, request)
 
@@ -28,13 +26,6 @@ def register(request):
             # This delays saving the model until we're ready to avoid integrity problems.
             profile = profile_form.save(commit=False)
             profile.user = user
-
-            # Did the user provide paypal email and phonenumber?
-            # If so, we need to get it from the input form and put it in the UserProfile model.
-            if 'paypal' in request.POST:
-                profile.paypal = request.POST['paypal']
-            if 'phonenumber' in request.POST:
-                profile.phonenumber = request.POST['phonenumber']
 
             # Now we save the UserProfile model instance
             profile.save()

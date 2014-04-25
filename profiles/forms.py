@@ -13,7 +13,6 @@ class UserProfileForm(ModelForm):
         model = UserProfile
         fields = ('paypal', 'phonenumber')
 
-
 class ReviewSellerForm(ModelForm):
     class Meta:
         model = SellerReview
