@@ -15,18 +15,6 @@
     </div>
 {% endblock %}
 
-{% block alert %}
-{% if form.errors %}
-    <div class="col-lg-9">
-        <div class="alert alert-dismissable alert-danger">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            Something happend, please see following errors:
-            {{ form.errors }}
-        </div>
-    </div>
-{% endif %}
-{% endblock %}
-
 {% block content %}
 
 <div class="col-lg-9">
@@ -45,16 +33,18 @@
                 {% for form in formset %}
                     <div class="row">
                     {% for field in form %}
-                        {% if not field.is_hidden %}
-                            <div>
-                                {% bootstrap_label_tag field 1 %}
-                                <div class="col-lg-2">
-                                  {% bootstrap_field_tag field %}
-                                  {{ field.errors }}
+                        {% if field.name != 'product' %}
+                            {% if not field.is_hidden %}
+                                <div>
+                                    {% bootstrap_label_tag field 1 %}
+                                    <div class="col-lg-2">
+                                      {% bootstrap_field_tag field %}
+                                      {{ field.errors }}
+                                    </div>
                                 </div>
-                            </div>
-                        {% else %}
-                            {{ field }}
+                            {% else %}
+                                {{ field }}
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                     </div>

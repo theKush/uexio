@@ -141,18 +141,32 @@ def manage_coupons(request, slug):
     if request.user != product.user:
         raise Http404
 
+    # Products are fill-in at this stage instead just before save(), so that
+    # we can have a validation depending on it (see CouponForm#clean_discount).
+    params = fill_in_product_id(request.POST, product.pk)
+
     queryset = Coupon.objects.filter(product=product)
     CouponFormset = modelformset_factory(Coupon, form=CouponForm, can_delete=True)
-    formset = CouponFormset(request.POST or None, queryset=queryset)
+    formset = CouponFormset(params or None, queryset=queryset)
 
     if request.method == 'POST':
         try:
             coupons = formset.save(commit=False)
             for coupon in coupons:
-                coupon.product = product
                 coupon.save()
             return HttpResponseRedirect(reverse('manage_coupons', args=[product.slug]))
         except ValueError: # handle validation errors
             pass
 
     return render_to_response("products/manage_coupons.html", locals(), context_instance=RequestContext(request))
+
+def fill_in_product_id(params, product_id):
+    params = params.copy()
+
+    for i in range(int(params.get('form-MAX_NUM_FORMS', 0))):
+        if params.get('form-%s-discount' % i):
+            params['form-%s-product' % i] = product_id
+        else:
+            break
+
+    return params
