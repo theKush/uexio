@@ -149,7 +149,7 @@ def manage_coupons(request, slug):
     CouponFormset = modelformset_factory(Coupon, form=CouponForm, can_delete=True)
     formset = CouponFormset(params or None, queryset=queryset)
 
-    if request.method == 'POST':
+    if request.method == 'POST' and formset.is_valid():
         try:
             coupons = formset.save(commit=False)
             for coupon in coupons:
