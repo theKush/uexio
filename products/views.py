@@ -108,7 +108,7 @@ def single(request, slug):
 
 def search_products(request):
     query = request.GET['query']
-    products = Product.objects.filter(Q(description__contains=query) | Q(title__contains=query) | Q(author__contains=query), active=True)
+    products = Product.objects.filter(Q(description__contains=query) | Q(title__contains=query) | Q(headline__contains=query), active=True)
     title = "Products matching " + query
     return render_to_response("products/all.html", locals(), context_instance=RequestContext(request))
 
