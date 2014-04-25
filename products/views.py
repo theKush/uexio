@@ -153,6 +153,9 @@ def manage_coupons(request, slug):
         try:
             coupons = formset.save(commit=False)
             for coupon in coupons:
+                # Make sure the user is creating a coupon for her own product.
+                if coupon.product.user != request.user:
+                    return HttpResponseForbidden()
                 coupon.save()
             return HttpResponseRedirect(reverse('manage_coupons', args=[product.slug]))
         except ValueError: # handle validation errors
