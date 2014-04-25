@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+{% endblock %}
+{% block breadcrumbs %}
+    <div class="col-lg-12">
+    <section id="breadcrumb">
+        <ul class="breadcrumb">
+          <li><a href="/">Home</a></li>
+          <li class="active">vs Local Bookstore</li>
+        </ul>
+      </section>
+    </div>
+{% endblock %}
+<!-- ================== Main Content ========================================= -->
+
+{% block content %}
+          <div class="col-lg-12">
+          <h3>Go with UEXIO</h3>
+              <hr>
+            <div id="myTabContent" class="tab-content">
+              <div class="tab-pane fade active in" id="seller_feedback">
+                <div class="panel panel-default">
+                  <div class="panel-heading">How is UEXIO better than the local bookstore</div>
+                  <div class="panel-body">
+                    <p>Local Bookstores are a convenient way to shop for books and to get them immediately. The only and biggest drawback is that their barcodes ring up a frightening number, and bookstores are known for very overpriced merchandise. In worse cases, bookstores may not have a certain edition in stock, forcing you to wait or look to online shopping, which can take even longer. This is where UEXIO stands out. It allows students to exchange books with others in the same location, their own university! No more having to wait on shipments, simply contact the seller and have him/her meet to deliver the book. As for selling a book back, another drawback to bookstores is that if they carry the latest edition of a book series, then they will not buy back older editions. That or they may not even buy it at a quarter of what you paid for it. UEXIO connects students who look to sell any edition of their book if the course allows it.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+            <section id="main">
+            <div class="col-lg-12">
+              <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="seller_feedback">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">Buyers</div>
+                    <div class="panel-body"><p><a href="/howtobuy" class="btn btn-primary">How to Buy</a> Learn how to start buying with UEXIO</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="myTabContent" class="tab-content">
+                 <div class="tab-pane fade active in" id="seller_feedback">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">Sellers</div>
+                    <div class="panel-body"><p><a href="/howtosell" class="btn btn-primary">How to Sell</a> Learn how you can start selling today! </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+{% endblock %}

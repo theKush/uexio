@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+{% endblock %}
+{% block breadcrumbs %}
+    <div class="col-lg-12">
+    <section id="breadcrumb">
+        <ul class="breadcrumb">
+          <li><a href="/">Home</a></li>
+          <li class="active">Contact Us</li>
+        </ul>
+      </section>
+    </div>
+{% endblock %}
+<!-- ================== Main Content ========================================= -->
+
+{% block content %}
+          <div class="col-lg-12">
+          <h3>Contact UEXIO</h3>
+              <hr>
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>Email</th>
+                  <td><i class="fa fa-envelope-o"></i> <a href="#"> something@something.com</a></td>
+                </tr>
+                <tr>
+                  <th>Phone</th>
+                  <td>1234567890</td>
+                </tr>
+                <tr>
+                  <th>Postal</th>
+                  <td><p>UEXIO</p> 
+                    <p>P.O. Box 12345</p> 
+                    <p>Lubbock, TX 12345</p></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+   {% endblock %}

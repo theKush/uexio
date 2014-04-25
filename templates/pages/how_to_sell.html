@@ -1,0 +1,75 @@
+
+{% extends "base.html" %}
+
+{% block sidebar %}
+{% endblock %}
+{% block breadcrumbs %}
+    <div class="col-lg-12">
+    <section id="breadcrumb">
+        <ul class="breadcrumb">
+          <li><a href="/">Home</a></li>
+          <li class="active">How to Sell</li>
+        </ul>
+      </section>
+    </div>
+{% endblock %}
+<!-- ================== Main Content ========================================= -->
+
+{% block content %}
+          <div class="col-md-12">
+          <h3>Sell with UEXIO</h3>
+              <hr>
+            <div id="myTabContent" class="tab-content">
+              <div class="tab-pane fade active in" id="seller_feedback">
+                <div class="panel panel-default">
+                  <div class="panel-heading">UEXIO makes it easy for students to exchange textbooks</div>
+                  <div class="panel-body"><p>Selling on UEXIO is a safe and easy way to do business with other students. Textbook stores will only offer at most half of what you paid for your book. Selling on UEXIO is a sure way to help maximize profit because we only keep a fixed 10% of the total money you collect whereas most online marketplaces keep an average of 15%. Setting up a PayPal account is recommended to safely manage transactions on UEXIO. When your registration is validated, you may create listings and be able to upload your notes and additional content related to the course you used your textbook in. What are you waiting for? Sign up today and start selling!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+          <section id="main">
+            <div class="col-lg-12">
+              <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="seller_feedback">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">1. Login / Register before you sell...</div>
+                    <div class="panel-body"><p><a href="{% url "login" %}" class="btn btn-primary">Login/Register</a> It's very quick and easy</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="myTabContent" class="tab-content">
+                 <div class="tab-pane fade active in" id="seller_feedback">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">2. Create your listing...</div>
+                    <div class="panel-body"><p>It's very quick and easy</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="seller_feedback">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">3. Get your listing sold... </div>
+                    <div class="panel-body"><p>It's very quick and easy</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="seller_feedback">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">4. Get paid, then ship it... </div>
+                    <div class="panel-body"><p>It's very quick and easy</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+{% endblock %}

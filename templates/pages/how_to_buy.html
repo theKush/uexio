@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+{% endblock %}
+{% block breadcrumbs %}
+    <div class="col-lg-12">
+    <section id="breadcrumb">
+        <ul class="breadcrumb">
+          <li><a href="/">Home</a></li>
+          <li class="active">How to Buy</li>
+        </ul>
+      </section>
+    </div>
+{% endblock %}
+<!-- ================== Main Content ========================================= -->
+
+{% block content %}
+    <div class="col-lg-12">
+        <h3>Buy with UEXIO</h3>
+        <hr>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="seller_feedback">
+                <div class="panel panel-default">
+                    <div class="panel-heading">UEXIO makes it easy for students to exchange textbooks</div>
+                    <div class="panel-body">
+                        <p>
+                            UEXIO connects university students with other students buying or selling textbooks. When you sign up, your email address is school-verified, then you will have access to the online marketplace. Buyers are allowed to comment on the listing while browsing to get the best deal from the seller. Users will be able to rate each other so that buyers can find the most valued seller. UEXIO is different from other textbook sites in that we allow the seller to include their class notes and supplemental materials for download. Sellers will pay commission (smaller sales fee compared to competitors) of course. A PayPal email is also allowed for purchases. With UEXIO, users will feel safe browsing the market and can easily do business offline too.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <section id="main">
+        <div class="col-lg-12">
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="seller_feedback">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">1. Login / Register before you buy...</div>
+                        <div class="panel-body">
+                            <p><a href="{% url "login" %}" class="btn btn-primary">Login/Register</a> It's very quick and easy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="seller_feedback">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">2. Find the textbook you want to buy...</div>
+                        <div class="panel-body">
+                            <p>It's very quick and easy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="seller_feedback">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">3. Browse the listing you're interested in and choose... </div>
+                        <div class="panel-body">
+                            <p>It's very quick and easy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="seller_feedback">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">4. Pay with PayPal... </div>
+                        <div class="panel-body">
+                            <p>It's very quick and easy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="seller_feedback">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">5. After you pay... </div>
+                        <div class="panel-body">
+                            <p>It's very quick and easy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+ {% endblock %}
