@@ -9,7 +9,7 @@ from django.contrib.auth.views import password_change
 
 from profiles.models import Product
 from .models import UserPurchase, UserProfile
-from .forms import EditProfileForm, ReviewSellerForm, UserProfileForm
+from .forms import UserForm, ReviewSellerForm, UserProfileForm
 
 def profile(request, username):
     current_user_profile_url = get_current_user_profile_url(request)
@@ -21,7 +21,7 @@ def profile(request, username):
 
 def edit_profile(request):
     current_user_profile_url = get_current_user_profile_url(request)
-    form = EditProfileForm(request.POST or None, instance=request.user)
+    form = UserForm(request.POST or None, instance=request.user)
     profile_user = UserProfile.objects.get(user=request.user)
     profile_form = UserProfileForm(request.POST or None, instance=profile_user)
     if request.method == 'POST':

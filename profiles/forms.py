@@ -3,7 +3,7 @@ from django.forms import ModelForm
 
 from .models import SellerReview, UserProfile
 
-class EditProfileForm(ModelForm):
+class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ('username','first_name', 'last_name', 'email')
