@@ -12,7 +12,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 
 from .models import Product, Category, ProductImage, Comment, Coupon
-from .forms import ProductForm, ProductImageForm, CommentForm, CouponForm
+from .forms import ProductForm, ProductImageForm, CommentForm, CouponForm, ProductImageFormSet
 
 def list_all(request):
     title = "All Products"
@@ -57,8 +57,7 @@ def manage_product_image(request, slug):
 
     # this queries the images and ensures that the correct image is selected
     queryset = ProductImage.objects.filter(product__slug=slug)
-    ProductImageFormset = modelformset_factory(ProductImage, form=ProductImageForm, can_delete=True)
-    formset = ProductImageFormset(request.POST or None, request.FILES or None, queryset=queryset)
+    formset = ProductImageFormSet(request.POST or None, request.FILES or None, queryset=queryset)
 
     if request.method == 'POST' and formset.is_valid():
         images = formset.save(commit=False)

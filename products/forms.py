@@ -1,5 +1,6 @@
 from django.forms import ModelForm # this is a built in django form call that allows us to directly edit model data
 from django.forms import ValidationError
+from django.forms.models import BaseModelFormSet, modelformset_factory
 
 from .models import Product, ProductImage, Comment, Coupon # this is a call to a relative model, it just needs the '.' because we're already in the product dir
 
@@ -12,6 +13,23 @@ class ProductImageForm(ModelForm):
     class Meta:
         model = ProductImage
         fields = ('title', 'image', 'featured_image')
+
+class BaseProductImageFormSet(BaseModelFormSet):
+    def clean(self):
+        super(BaseProductImageFormSet, self).clean()
+
+        # Exactly one image should be marked as featured.
+        featured = sum(form.cleaned_data.get('featured_image', False) for form in self.forms)
+        if featured == 0:
+            raise ValidationError('At least one image needs to be featured.')
+        elif featured > 1:
+            raise ValidationError('Only one image can be featured.')
+
+ProductImageFormSet = modelformset_factory(ProductImage,
+                                           form=ProductImageForm,
+                                           formset=BaseProductImageFormSet,
+                                           can_delete=True)
+
 
 class CommentForm(ModelForm):
     class Meta:
