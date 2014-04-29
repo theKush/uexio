@@ -43,7 +43,7 @@
           <h1>New Listing</h1>
         {% endif %}
         <hr>
-        <form class="form-horizontal" method="POST" action="">{% csrf_token %}
+        <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
             <div class="form-group">
                   <label for="id_title" class="col-lg-2 control-label">Title</label>
                   <div class="col-lg-10">

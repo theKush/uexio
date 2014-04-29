@@ -37,7 +37,7 @@ def download_product(request, slug, filename):
     return response
 
 def add_product(request):
-    form = ProductForm(request.POST or None)
+    form = ProductForm(request.POST or None, request.FILES or None)
 
     if form.is_valid():
         product = form.save(commit=False)
@@ -80,7 +80,7 @@ def edit_product(request, slug):
     if request.user != instance.user:
         raise Http404
 
-    form = ProductForm(request.POST or None, instance=instance) # this performs a post request to make the edit work from the form
+    form = ProductForm(request.POST or None, request.FILES or None, instance=instance)
 
     if request.method == 'POST':
         try:
