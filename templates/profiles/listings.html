@@ -51,10 +51,15 @@
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-sm btn-warning">Deactivate</button>
                                         </form>
-                                    {% else %}
+                                    {% elif product.can_activate %}
                                         <form action="/products/{{product.slug}}/activate/" method="post">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-sm btn-success">Activate</button>
+                                        </form>
+                                    {% else %}
+                                        <form action="#">
+                                            <button type="submit" class="btn btn-sm btn-success" disabled="disabled">Activate</button>
+                                            <small class="text-warning">At least one image needs to be uploaded.</small>
                                         </form>
                                     {% endif %}
                                 </td>

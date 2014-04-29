@@ -40,6 +40,9 @@ class Product(models.Model):
     def __unicode__(self):
         return str(self.title)
 
+    def can_activate(self):
+        return self.productimage_set.count() > 0
+
     # COMMENT DATE: 3-3-14
     # This sets up the
     class Meta:
