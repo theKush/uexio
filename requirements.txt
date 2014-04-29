@@ -1,0 +1,9 @@
+--allow-all-external
+Django==1.6.2
+Pillow==2.4.0
+South==0.8.4
+gunicorn==18.0
+wsgiref==0.1.2
+dj-database-url==0.3.0
+dj-static==0.0.5
+psycopg2==2.5.2

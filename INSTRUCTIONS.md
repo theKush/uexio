@@ -27,7 +27,7 @@ Following links can be used to navigate through uexio products:
 ### Installation
 You can follow the installation guides below:
 *  make sure pip is installed, if not follow guide here: http://www.pip-installer.org/en/latest/quickstart.html
-*  If you’re using Linux, Mac OS X or some other flavor of Unix, enter the command ``` sudo pip install Django```at the shell prompt. If you’re using Windows, start a command shell with administrator privileges and run the command ``` pip install Django```. This will install Django in your Python installation’s site-packages directory.
+*  If you’re using Linux, Mac OS X or some other flavor of Unix, enter the command ```sudo pip install -r requirements.txt```at the shell prompt. If you’re using Windows, start a command shell with administrator privileges and run the command ```pip install -r requirements.txt```. This will install all project dependencies in your Python installation’s site-packages directory.
 * Next, unzip the uexio-master zip file and then navigate to that folder through commandline.
 * Copy uexio.sqlite3.sample file to uexio.sqlite3
 * Next, Follow the Login credentials instructions bellow  
@@ -38,6 +38,10 @@ You can create a local superadmin user by running the command: ```django-admin.p
 * python manage.py syncdb
 * python manage.py migrate
 * python manage.py createsuperuser
+
+### Running the application
+
+You can start the server with ```DATABASE_URL=sqlite:///uexio.sqlite3 foreman start```.
 
 ### Indentation
 Since the application is being built with Python, indentation is vital for the program to function properly, you will see spacing is consistent throughout the program.
