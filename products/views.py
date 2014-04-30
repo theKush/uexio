@@ -38,13 +38,18 @@ def download_product(request, slug, filename):
 
 def add_product(request):
     form = ProductForm(request.POST or None, request.FILES or None)
+    image_form = ProductImageForm(request.POST or None, request.FILES or None)
 
-    if form.is_valid():
+    if form.is_valid() and image_form.is_valid():
         product = form.save(commit=False)
         product.user = request.user
         product.slug = slugify(form.cleaned_data['title'])
         product.active = False
         product.save()
+        image = image_form.save(commit=False)
+        image.product = product
+        image.featured_image = True
+        image.save()
         return HttpResponseRedirect('/products/%s'%(product.slug))
 
     return render_to_response("products/edit.html", locals(), context_instance=RequestContext(request))
