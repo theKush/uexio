@@ -1,3 +1,5 @@
+{% load bootstrap %}
+
 <!-- ================== Sidebar ========================================= -->
           <div id="sidebar" class="col-lg-3">
             <div class="well well-small">
@@ -23,7 +25,7 @@
                         <h5>{{ product.title }}</h5>
                         <h4>
                             <button type="button" class="btn btn-default disabled">{{ product.price }}</button>
-                            <a class="btn btn-primary" href="{% url "update_cart" product.id %}">Add to <i class="fa fa-shopping-cart"></i></a>
+                            {% add_to_cart_button product %}
                         </h4>
                     </div>
                 </div>

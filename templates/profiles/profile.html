@@ -1,4 +1,6 @@
 {% extends 'profiles/base.html' %}
+
+{% load bootstrap %}
 {% load gravatar %}
 
 {% block breadcrumbs %}
@@ -86,7 +88,7 @@
                                         </div>
                                         <h4 class="pull-right">
                                         <button type="button" class="btn btn-default disabled"><i class="fa fa-usd"></i> {{ product.price|floatformat:2 }}</button>
-                                        <a class="btn btn-primary" href="{% url "update_cart" product.id %}">Add to <i class="fa fa-shopping-cart"></i></a>
+                                        {% add_to_cart_button product %}
                                     </h4>
                                     </div>
                                 </div>

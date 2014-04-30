@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load bootstrap %}
+
 {% block sidebar %}
     {% include "sidebar.html" %}
 {% endblock %}
@@ -45,7 +47,7 @@
                         <p> {{ product.headline }}</p>
                         <h4>
                             <button type="button" class="btn btn-default disabled"><i class="fa fa-usd"></i> {{ product.price|floatformat:2 }}</button>
-                            <a class="btn btn-primary" href="{% url "update_cart" product.id %}">Add to <i class="fa fa-shopping-cart"></i></a>
+                            {% add_to_cart_button product %}
                         </h4>
                     </div>
 

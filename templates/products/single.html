@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% load bootstrap %}
 {% load filename %}
 {% load gravatar %}
 
@@ -61,7 +62,7 @@
                             <meta itemprop="currency" content="USD">
                         </div>
                         <div class="pull-right">
-                            <a class="btn btn-success" href="{% url "update_cart" product.id %}">Add to <i class="fa fa-shopping-cart"></i></a>
+                            {% add_to_cart_button product "btn btn-success" %}
                         </div>
                     </div>
                 </div>

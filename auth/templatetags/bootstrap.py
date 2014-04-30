@@ -1,4 +1,5 @@
 from django import template
+from django.core.urlresolvers import reverse
 
 register = template.Library()
 
@@ -26,3 +27,8 @@ def bootstrap_alert_class(message):
     elif message.tags == 'warning':
         return 'alert alert-dismissable alert-warning'
     return 'alert alert-dismissable alert-danger'
+
+@register.simple_tag
+def add_to_cart_button(product, css_class="btn btn-primary"):
+    url = reverse('update_cart', args=[product.id])
+    return '<a class="%s" href="%s">Add to <i class="fa fa-shopping-cart"></i></a>' % (css_class, url)
