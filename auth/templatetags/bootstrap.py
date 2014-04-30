@@ -28,7 +28,18 @@ def bootstrap_alert_class(message):
         return 'alert alert-dismissable alert-warning'
     return 'alert alert-dismissable alert-danger'
 
-@register.simple_tag
-def add_to_cart_button(product, css_class="btn btn-primary"):
+from shoppingcart.views import is_product_in_cart
+
+@register.simple_tag(takes_context=True)
+def add_to_cart_button(context, product, css_class="btn btn-primary"):
     url = reverse('update_cart', args=[product.id])
-    return '<a class="%s" href="%s">Add to <i class="fa fa-shopping-cart"></i></a>' % (css_class, url)
+    if is_product_in_cart(context['request'], product):
+        text = 'Product already in cart'
+        label = 'Remove from'
+    else:
+        text = ''
+        label = 'Add to'
+    return '''<small>%(text)s</small>
+        <a class="%(css_class)s" href="%(url)s">
+            %(label)s <i class="fa fa-shopping-cart"></i>
+        </a>''' % {"text": text, "css_class": css_class, "url": url, "label": label}

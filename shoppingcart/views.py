@@ -77,3 +77,10 @@ def _get_or_create_shopping_cart(request):
         shoppingcart.save()
         request.session['shoppingcart_id'] = shoppingcart.id
     return shoppingcart
+
+def is_product_in_cart(request, product):
+    items = _get_shopping_cart_items(request)
+    for item in items:
+        if item.product == product:
+            return True
+    return False
