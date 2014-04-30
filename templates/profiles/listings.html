@@ -37,7 +37,7 @@
                                     {{ product }}
                                 </td>
                                 <td>
-                                    {{ product.headline }}
+                                    {{ product.headline|truncatechars:35 }}
                                 </td>
                                 <td>
                                     <i class="fa fa-usd"></i>{{ product.price|floatformat:2 }}
