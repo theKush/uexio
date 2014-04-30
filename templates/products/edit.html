@@ -22,12 +22,13 @@
 {% endblock %}
 
 {% block alert %}
-{% if form.errors %}
+{% if form.errors or image_form.errors %}
     <div class="col-lg-9">
         <div class="alert alert-dismissable alert-danger">
             <button type="button" class="close" data-dismiss="alert">×</button>
             Couldn't edit the product because of those errors:
             {{ form.errors }}
+            {{ image_form.errors }}
         </div>
     </div>
 {% endif %}
@@ -45,12 +46,26 @@
         <hr>
         <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
             <div class="form-group">
-                  <label for="id_title" class="col-lg-2 control-label">Title</label>
-                  <div class="col-lg-10">
-                    {% bootstrap_field_tag form.title %}
-                    <span class="help-block">The title that you want for your listing.</span>
-                  </div>
-                </div>
+              <label for="id_title" class="col-lg-2 control-label">Title</label>
+              <div class="col-lg-10">
+                {% bootstrap_field_tag form.title %}
+                <span class="help-block">The title that you want for your listing.</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="id_author" class="col-lg-2 control-label">Author</label>
+              <div class="col-lg-10">
+                {% bootstrap_field_tag form.author %}
+                <span class="help-block">The author of the book.</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="id_isbn_number" class="col-lg-2 control-label">ISBN number</label>
+              <div class="col-lg-10">
+                {% bootstrap_field_tag form.isbn_number %}
+                <span class="help-block">The ISBN number of the book.</span>
+              </div>
+            </div>
                 <div class="form-group">
                   <label for="inputHeadline" class="col-lg-2 control-label">Headline</label>
                   <div class="col-lg-10">

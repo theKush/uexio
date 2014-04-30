@@ -7,7 +7,7 @@ from .models import Product, ProductImage, Comment, Coupon # this is a call to a
 class ProductForm(ModelForm):
     class Meta:
         model = Product
-        fields = ('title', 'headline', 'description', 'condition', 'price', 'download')
+        fields = ('title', 'author', 'isbn_number', 'headline', 'description', 'condition', 'price', 'download')
 
 class ProductImageForm(ModelForm):
     class Meta:
