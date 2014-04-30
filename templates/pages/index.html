@@ -50,7 +50,11 @@
                             <p> {{ product.headline }}</p>
                             <h4>
                                 <button type="button" class="btn btn-default disabled"><i class="fa fa-usd"></i> {{ product.price|floatformat:2 }}</button>
-                                {% add_to_cart_button product %}
+                                {% if product.user == user %}
+                                    {% add_to_cart_button product 'btn btn-primary disabled' %}
+                                {% else %}
+                                    {% add_to_cart_button product %}
+                                {% endif %}
                             </h4>
                         </div>
 

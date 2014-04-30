@@ -25,7 +25,11 @@
                         <h5>{{ product.title }}</h5>
                         <h4>
                             <button type="button" class="btn btn-default disabled">{{ product.price }}</button>
-                            {% add_to_cart_button product %}
+                            {% if product.user == user %}
+                                {% add_to_cart_button product 'btn btn-primary disabled' %}
+                            {% else %}
+                                {% add_to_cart_button product %}
+                            {% endif %}
                         </h4>
                     </div>
                 </div>

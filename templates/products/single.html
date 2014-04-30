@@ -52,23 +52,25 @@
             <p>{{ product.isbn_number }}</p>
             <p>{{ product.headline }}</p>
             <hr>
-            <div class="col-md-5">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        Add to Cart
-                    </div>
-                    <div class="panel-body">
-                        <div class="price pull-left">
-                            <i class="fa fa-usd fa-sm"></i>
-                            <span itemprop="price">{{ product.price|floatformat:2 }}</span>
-                            <meta itemprop="currency" content="USD">
+            {% if product.user != user %}
+                <div class="col-md-5">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            Add to Cart
                         </div>
-                        <div class="pull-right">
-                            {% add_to_cart_button product "btn btn-success" %}
+                        <div class="panel-body">
+                            <div class="price pull-left">
+                                <i class="fa fa-usd fa-sm"></i>
+                                <span itemprop="price">{{ product.price|floatformat:2 }}</span>
+                                <meta itemprop="currency" content="USD">
+                            </div>
+                            <div class="pull-right">
+                                {% add_to_cart_button product "btn btn-success" %}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
             <div class="col-md-7">
                 <div class="panel panel-default">
                     <div class="panel-heading">
