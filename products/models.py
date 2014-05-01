@@ -1,9 +1,6 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.files.storage import FileSystemStorage
-
-protected_loc = settings.PROTECTED_UPLOADS
 
 def download_loc(instance, filename):
     if instance.user.username:
@@ -25,7 +22,7 @@ class Product(models.Model):
     title = models.CharField(max_length=180)
     headline = models.CharField(max_length=300, null=True)
     description = models.TextField()
-    download = models.FileField(upload_to=download_loc, storage=FileSystemStorage(location=protected_loc), blank=True, null=True) # this is for testing the order authentication process
+    download = models.FileField(upload_to=download_loc, blank=True, null=True) # this is for testing the order authentication process
     condition = models.IntegerField(choices=CONDITION_CHOICES, null=True)
     price = models.DecimalField(max_digits=20, decimal_places=2)
     sale_price = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)

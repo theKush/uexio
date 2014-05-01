@@ -38,7 +38,7 @@
                                     {{ product.description }}
                                 </td>
                                 <td>
-                                    <a href='{% url 'download_product' product.slug product.download|filename %}'>Download Materials</a>
+                                    <a href='{{ product.download.url }}'>Download Materials</a>
                                 </td>
                             </tr>
                         {% endfor %}

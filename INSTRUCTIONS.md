@@ -41,7 +41,7 @@ You can create a local superadmin user by running the command: ```django-admin.p
 
 ### Running the application
 
-You can start the server with ```DATABASE_URL=sqlite:///uexio.sqlite3 foreman start```.
+Copy `.env.sample` file to `.env` and fill in the S3 credentials. Once that's done you can start the server with ```foreman start```.
 
 ### Indentation
 Since the application is being built with Python, indentation is vital for the program to function properly, you will see spacing is consistent throughout the program.

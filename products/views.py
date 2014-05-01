@@ -4,10 +4,9 @@ from mimetypes import guess_type
 
 from django.conf import settings
 from django.contrib import messages
-from django.shortcuts import render_to_response, RequestContext, Http404, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render_to_response, RequestContext, Http404, HttpResponseRedirect
 from django.template.defaultfilters import slugify
 from django.forms.models import modelformset_factory
-from django.core.servers.basehttp import FileWrapper
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 
@@ -18,23 +17,6 @@ def list_all(request):
     title = "All Products"
     products = Product.objects.filter(active=True)
     return render_to_response("products/all.html", locals(), context_instance=RequestContext(request))
-
-def download_product(request, slug, filename):
-    product = Product.objects.get(slug=slug)
-
-    if not request.user.has_purchased(product):
-        raise Http404
-
-    product_file = str(product.download)
-    file_path = os.path.join(settings.PROTECTED_UPLOADS, product_file)
-    wrapper = FileWrapper(file(file_path))
-    response = HttpResponse(wrapper, content_type=guess_type(product_file))
-
-    # these are the content headers for the download
-    response['Content-Diposition'] = 'attachement;filename=%s' %filename
-    response['Content-Type'] = ''
-    response['X-SendFile'] = file_path
-    return response
 
 def add_product(request):
     form = ProductForm(request.POST or None, request.FILES or None)

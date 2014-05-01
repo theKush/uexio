@@ -4,3 +4,4 @@ local_settings.py
 static/media/
 static/protected/
 uexio.sqlite3
+.env
