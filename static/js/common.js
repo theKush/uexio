@@ -49,4 +49,7 @@ $(document).ready(function(){
 		}
 	});
 
+    $("select.autosubmit").change(function() {
+        $(this).closest('form').submit();
+    });
 });

@@ -17,7 +17,8 @@ from .forms import ProductForm, ProductImageForm, CommentForm, CouponForm, Produ
 def list_all(request):
     title = "All Products"
     products = Product.objects.filter(active=True)
-    page = _paginate(products, request)
+    order = _order(request)
+    page = _paginate(products.order_by(order), request)
     return render_to_response("products/all.html",
                               locals(),
                               context_instance=RequestContext(request))
@@ -159,6 +160,12 @@ def fill_in_product_id(params, product_id):
             break
 
     return params
+
+def _order(request):
+    order = request.GET.get('order')
+    if order in ['price', '-price']:
+        return order
+    return 'price' # the default sorting order
 
 def _paginate(products, request):
     paginator = Paginator(products, 6)
