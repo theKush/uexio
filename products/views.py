@@ -98,7 +98,7 @@ def search_products(request):
     products = Product.objects.filter(Q(description__icontains=query) | Q(title__icontains=query) | Q(headline__icontains=query) | Q(author__icontains=query) | Q(isbn_number__icontains=query), active=True)
     order = _order(request)
     page = _paginate(products.order_by(order), request)
-    title = "Products matching " + query
+    title = "Products matching \"" + query + "\""
     return render_to_response("products/all.html", locals(), context_instance=RequestContext(request))
 
 def activate_product(request, slug):
