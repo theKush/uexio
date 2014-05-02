@@ -24,9 +24,9 @@
                 <table id="table_library" class="table table-bordered table-responsive table-striped">
                     <thead>
                         <tr>
-                            <th class="col-sm-2">Title</th>
-                            <th class="col-sm-5">Headline</th>
-                            <th class="col-sm-1">Price</th>
+                            <th class="col-sm-3">Title</th>
+                            <th class="col-sm-4">Headline</th>
+                            <th class="col-sm-2">Price</th>
                             <th class="col-sm-4">Actions</th>
                         </tr>
                     </thead>
@@ -34,7 +34,7 @@
                         {% for product in products %}
                             <tr>
                                 <td>
-                                    {{ product }}
+                                    <a href="{% url "single_product" product.slug %}">{{ product }}</a>
                                 </td>
                                 <td>
                                     {{ product.headline|truncatechars:100 }}
@@ -58,8 +58,8 @@
                                         </form>
                                     {% else %}
                                         <form action="#">
-                                            <button type="submit" class="btn btn-sm btn-success" disabled="disabled">Activate</button>
-                                            <small class="text-warning">At least one image needs to be uploaded.</small>
+                                            <button type="button" class="btn btn-sm btn-success disabled">Activate</button>
+                                            <small class="text-warning"><br>At least one image needs to be uploaded.</small>
                                         </form>
                                     {% endif %}
                                 </td>
