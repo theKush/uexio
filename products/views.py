@@ -168,7 +168,7 @@ def _order(request):
     return 'price' # the default sorting order
 
 def _paginate(products, request):
-    paginator = Paginator(products, 6)
+    paginator = Paginator(products, 15)
 
     page = request.GET.get('page')
     try:
