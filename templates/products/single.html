@@ -48,17 +48,16 @@
         </div>
         <div class="col-md-8">
             <h1>{{ product }}</h1>
-            <p>{{ product.author }}</p>
-            <p>{{ product.isbn_number }}</p>
             <p>{{ product.headline }}</p>
             <hr>
-            {% if product.user != user %}
-                <div class="col-md-5">
+
+                <div class="col-md-6">
                     <div class="panel panel-success">
                         <div class="panel-heading">
                             Add to Cart
                         </div>
                         <div class="panel-body">
+                            {% if product.user != user %}
                             <div class="price pull-left">
                                 <i class="fa fa-usd fa-sm"></i>
                                 <span itemprop="price">{{ product.price|floatformat:2 }}</span>
@@ -67,11 +66,14 @@
                             <div class="pull-right">
                                 {% add_to_cart_button product "btn btn-success" %}
                             </div>
+                            {% else %}
+                                <p>This is your product</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-            {% endif %}
-            <div class="col-md-7">
+
+            <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Seller Profile
@@ -135,17 +137,19 @@
             <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Included Materials
+                        Details
                     </div>
                     <div class="panel-body">
                         <ul>
-                            {# list of included material goes here #}
-                            <li>this</li>
-                            <li>that</li>
+                            <li><b>Author: </b>{{ product.author }}</li>
+                            <li><b>ISBN: </b>{{ product.isbn_number }}</li>
+                            <li><b>Download materials provided: </b>
+                            {% if product.download %}
+                                <span style="color: #18bc9c"> Yes</span>
+                                {% else %}
+                                <span style="color: #e74c3c"> No</span>
+                            {% endif %}</li>
                         </ul>
-                        {% if product.download and downloadable %}
-                            <a class="btn btn-success" href="{{ product.download.url }}">Download</a>
-                        {% endif %}
                     </div>
                 </div>
             </div>

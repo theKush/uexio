@@ -51,11 +51,10 @@
                     {% endfor %}
                     <div class="caption">
                         <h5>{{ product }}</h5></a>
-                        <p> {{ product.headline }}</p>
+                        <p><i class="fa fa-usd"></i> {{ product.price|floatformat:2 }}</p>
                         <h4>
-                            <button type="button" class="btn btn-default disabled"><i class="fa fa-usd"></i> {{ product.price|floatformat:2 }}</button>
                             {% if product.user == user %}
-                                {% add_to_cart_button product 'btn btn-primary disabled' %}
+                                {% add_to_cart_button product 'btn btn-primary btn-block disabled' %}
                             {% else %}
                                 {% add_to_cart_button product %}
                             {% endif %}
