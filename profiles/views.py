@@ -4,6 +4,7 @@ from django.http.response import HttpResponseForbidden
 from django.template.defaultfilters import slugify
 from django.forms.models import modelformset_factory
 from django.core.urlresolvers import reverse
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.views import password_change
 
@@ -35,9 +36,14 @@ def edit_profile(request):
 
 def edit_password(request):
     return password_change(request, template_name="profiles/edit_password.html",
-                           post_change_redirect=reverse('edit_password'),
                            extra_context={'current_user_profile_url': get_current_user_profile_url(request),
                                           'request': request})
+
+# This action is invoked automatically after a successful password change and
+# is only needed to provide a nice flash message to the user.
+def password_change_done(request):
+    messages.success(request, 'Your password has been changed.')
+    return HttpResponseRedirect(reverse('edit_password'))
 
 def library(request):
     current_user_profile_url = get_current_user_profile_url(request)
