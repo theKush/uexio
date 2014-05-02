@@ -6,9 +6,8 @@
               <a href="/products"> All Products <i class="fa fa-angle-double-right"></i> </a>
             </div>
             <ul id="sideManu" class="nav nav-pills nav-stacked">
-                {# list the categories in the side bar #}
                 {% for category in categories %}
-                    <li><a href="/{{ category }}"> {{ category }}</a> </li>
+                    <li><a href="{% url 'category' category.slug %}"> {{ category }}</a> </li>
                 {% endfor %}
             </ul>
 
