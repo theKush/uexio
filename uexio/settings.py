@@ -107,6 +107,7 @@ INSTALLED_APPS = (
     'profiles',
     'shoppingcart',
     'auth',
+    'bootstrap_pagination',
 )
 
 LOGIN_URL = '/auth/login/'
@@ -143,6 +144,20 @@ LOGGING = {
     }
 }
 
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+######################################################################
+# Needed for bootstrap_pagination
+
+# TEMPLATE_CONTEXT_PROCESSORS = (
+#     "django.core.context_processors.request",
+#     "django.contrib.auth.context_processors.auth",
+# )
+
+######################################################################
+# Database setup code needed for Heroku
+
 DATABASES = {}
 
 if not os.environ.get('DATABASE_URL'):
@@ -152,8 +167,8 @@ if not os.environ.get('DATABASE_URL'):
 import dj_database_url
 DATABASES['default'] =  dj_database_url.config()
 
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+######################################################################
+# Media & upload setup needed for S3 integration
 
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
@@ -167,4 +182,3 @@ MEDIA_ROOT = "/"
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
 MEDIA_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
-

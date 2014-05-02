@@ -4,6 +4,7 @@ from mimetypes import guess_type
 
 from django.conf import settings
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render_to_response, RequestContext, Http404, HttpResponseRedirect
 from django.template.defaultfilters import slugify
 from django.forms.models import modelformset_factory
@@ -16,7 +17,10 @@ from .forms import ProductForm, ProductImageForm, CommentForm, CouponForm, Produ
 def list_all(request):
     title = "All Products"
     products = Product.objects.filter(active=True)
-    return render_to_response("products/all.html", locals(), context_instance=RequestContext(request))
+    page = _paginate(products, request)
+    return render_to_response("products/all.html",
+                              locals(),
+                              context_instance=RequestContext(request))
 
 def add_product(request):
     form = ProductForm(request.POST or None, request.FILES or None)
@@ -155,3 +159,16 @@ def fill_in_product_id(params, product_id):
             break
 
     return params
+
+def _paginate(products, request):
+    paginator = Paginator(products, 6)
+
+    page = request.GET.get('page')
+    try:
+        return paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        return paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        return paginator.page(paginator.num_pages)

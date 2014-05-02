@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load bootstrap %}
+{% load bootstrap_pagination %}
 
 {% block sidebar %}
     {% include "sidebar.html" %}
@@ -33,7 +34,7 @@
           <hr>
         </div>
         <div class="col-lg-9">
-        {% for product in products %}
+        {% for product in page %}
             <div class="col-lg-4">
                 <div class="thumbnail">
                     {% for image in product.productimage_set.all %}
@@ -58,16 +59,9 @@
                 </div>
             </div>
         {% endfor %}
-            {# placeholder for pagination. Still need to implement #}
-            <ul class="pagination pull-right">
-                <li class="disabled"><a href="#">«</a></li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">»</a></li>
-            </ul>
+            <div class="pull-right">
+                {% bootstrap_paginate page %}
+            </div>
         </div>
 
 {% endblock %}
