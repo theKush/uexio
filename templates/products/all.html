@@ -23,7 +23,8 @@
                 <h3>{{ title }}</h3>
               </div>
               <div class="col-lg-4 pull-right">
-                <form action="" class="form-horizontal col-sm-9 pull-right">
+                <form action="" class="form-horizontal col-sm-9 pull-right" method="get">
+                  <input type="hidden" name="query" value="{{query}}" />
                   <select class="form-control autosubmit" id="order" name="order">
                     {% if order == 'price' %}
                         <option selected="selected" value="price">Price Low to High</option>
