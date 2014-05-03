@@ -33,7 +33,7 @@
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title" align="center">Featured Image</h3>
+                    <h3 class="panel-title" align="center">{{ product.get_condition_display }}</h3>
                 </div>
                 <div class="panel-body" align="center">
                     {% for image in product.productimage_set.all %}
@@ -143,6 +143,7 @@
                         <ul>
                             <li><b>Author: </b>{{ product.author }}</li>
                             <li><b>ISBN: </b>{{ product.isbn_number }}</li>
+                            <li><b>Category: </b>{{ product.category }}</li>
                             <li><b>Download materials provided: </b>
                             {% if product.download %}
                                 <span style="color: #18bc9c"> Yes</span>
