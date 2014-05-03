@@ -21,6 +21,12 @@
       <ul class="breadcrumb">
         <li><a href="/">Home</a></li>
         <li><a href="/products">All Products</a></li>
+          <li>{% for category in categories %}
+              <a href="{% url 'category' category.slug %}">
+                    {{ category.title }}
+              </a>
+              {% endfor %}
+          </li>
         <li class="active">{{ product }}</li>
       </ul>
     </section>
