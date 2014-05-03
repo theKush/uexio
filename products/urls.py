@@ -8,6 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('products.views',
     url(r'^$', 'list_all', name="all_products"),
     url(r'^search/', 'search_products', name="search_products"),
+    url(r'^category/(?P<slug>.*)', 'category', name="category"),
     url(r'^add/', 'add_product', name="add_product"),
     url(r'^(?P<slug>.*)/comment/', 'comment', name="comment"),
     url(r'^(?P<slug>.*)/activate/', 'activate_product', name="activate_product"),

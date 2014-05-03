@@ -17,10 +17,27 @@ from .forms import ProductForm, ProductImageForm, CommentForm, CouponForm, Produ
 def list_all(request):
     title = "All Products"
     products = Product.objects.filter(active=True)
+    return _all_products_page(request, locals())
+
+def search_products(request):
+    query = request.GET['query']
+    products = Product.objects.filter(Q(description__icontains=query) | Q(title__icontains=query) | Q(headline__icontains=query) | Q(author__icontains=query) | Q(isbn_number__icontains=query), active=True)
+    title = "Products matching " + query
+    return _all_products_page(request, locals())
+
+def category(request, slug):
+    category = Category.objects.get(slug=slug)
+    title = "Products in " + category.title
+    products = Product.objects.filter(category=category, active=True)
+    return _all_products_page(request, locals())
+
+def _all_products_page(request, context):
+    categories = Category.objects.all()
     order = _order(request)
-    page = _paginate(products.order_by(order), request)
+    page = _paginate(context['products'].order_by(order), request)
+    context.update(locals())
     return render_to_response("products/all.html",
-                              locals(),
+                              context,
                               context_instance=RequestContext(request))
 
 def add_product(request):
@@ -92,14 +109,6 @@ def single(request, slug):
     edit = True
 
     return render_to_response("products/single.html", locals(), context_instance=RequestContext(request))
-
-def search_products(request):
-    query = request.GET['query']
-    products = Product.objects.filter(Q(description__icontains=query) | Q(title__icontains=query) | Q(headline__icontains=query) | Q(author__icontains=query) | Q(isbn_number__icontains=query), active=True)
-    order = _order(request)
-    page = _paginate(products.order_by(order), request)
-    title = "Products matching \"" + query + "\""
-    return render_to_response("products/all.html", locals(), context_instance=RequestContext(request))
 
 def activate_product(request, slug):
     product = Product.objects.get(slug=slug)
