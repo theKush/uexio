@@ -11,8 +11,12 @@
     <section id="breadcrumb" class="col-lg-9">
       <ul class="breadcrumb">
         <li><a href="/">Home</a></li>
-        <li><a href="/products">All Products</a></li>
-        <li class="active">{{ title }}</li>
+          {% if "search" in request.path %}
+            <li><a href="/products">All Products</a></li>
+            <li class="active">{{ title }}</li>
+          {% else %}
+              <li class="active">{{ title }}</li>
+          {% endif %}
       </ul>
     </section>
 {% endblock %}
