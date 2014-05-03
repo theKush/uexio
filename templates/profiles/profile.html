@@ -60,7 +60,7 @@
                     {% endif %}
                     <hr>
                     <div class="row text-center">
-                        {% if profile_user != user %} {# also need to check if the user and profile_user had a previous transaction (bought or sold) than allow the user to write a review #}
+                        {% if can_review %}
                             <a href="{% url 'review_seller' profile_user.username %}" class="btn btn-primary">Review this seller</a>
                         {% endif %}
                     </div>

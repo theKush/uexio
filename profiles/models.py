@@ -15,7 +15,6 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
 
-
 class UserPurchase(models.Model):
     user = models.ForeignKey(User)
     products = models.ManyToManyField(Product)
@@ -42,3 +41,21 @@ User.has_purchased = has_purchased
 def purchased_products(self):
     return [product for purchase in UserPurchase.objects.filter(user=self) for product in purchase.products.all()]
 User.purchased_products = purchased_products
+
+def flatten(alist):
+    return [item for sublist in alist for item in sublist]
+
+def sell_transactions(self):
+    # TODO Optimize this to narrow down records at the DB level.
+    # Ideally Product <-> UserPurchase should not be many-to-many, but
+    # one-to-many, as each Product is unique and can be in just a single
+    # UserPurchase.
+    products = Product.objects.filter(user=self)
+    return flatten(list(UserPurchase.objects.filter(products=product)) for product in products)
+User.sell_transactions = sell_transactions
+
+def can_review(self, other_user):
+    sellers = [product.user for product in self.purchased_products()]
+    buyers = [purchase.user for purchase in self.sell_transactions()]
+    return self != other_user and ((other_user in sellers) or (other_user in buyers))
+User.can_review = can_review
