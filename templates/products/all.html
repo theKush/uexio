@@ -11,7 +11,12 @@
     <section id="breadcrumb" class="col-lg-9">
       <ul class="breadcrumb">
         <li><a href="/">Home</a></li>
-        <li class="active">All Products</li>
+          {% if "search" in request.path %}
+            <li><a href="/products">All Products</a></li>
+            <li class="active">{{ title }}</li>
+          {% else %}
+              <li class="active">{{ title }}</li>
+          {% endif %}
       </ul>
     </section>
 {% endblock %}
@@ -51,20 +56,20 @@
                     {% endfor %}
                     <div class="caption">
                         <h5>{{ product }}</h5></a>
-                        <p> {{ product.headline }}</p>
+                        <p><i class="fa fa-usd"></i> {{ product.price|floatformat:2 }} <span class="pull-right">{{ product.get_condition_display }}</span> </p>
                         <h4>
-                            <button type="button" class="btn btn-default disabled"><i class="fa fa-usd"></i> {{ product.price|floatformat:2 }}</button>
                             {% if product.user == user %}
-                                {% add_to_cart_button product 'btn btn-primary disabled' %}
+                                {% add_to_cart_button product 'btn btn-primary btn-block disabled' %}
                             {% else %}
                                 {% add_to_cart_button product %}
                             {% endif %}
                         </h4>
                     </div>
-
                 </div>
             </div>
         {% endfor %}
+        </div>
+        <div class="col-lg-9 col-lg-offset-3">
             <div class="pull-right">
                 {% bootstrap_paginate page %}
             </div>

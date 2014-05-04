@@ -22,12 +22,12 @@ def list_all(request):
 def search_products(request):
     query = request.GET['query']
     products = Product.objects.filter(Q(description__icontains=query) | Q(title__icontains=query) | Q(headline__icontains=query) | Q(author__icontains=query) | Q(isbn_number__icontains=query), active=True)
-    title = "Products matching " + query
+    title = "Products matching \"" + query + "\""
     return _all_products_page(request, locals())
 
 def category(request, slug):
     category = Category.objects.get(slug=slug)
-    title = "Products in " + category.title
+    title = "Products in \"" + category.title + "\""
     products = Product.objects.filter(category=category, active=True)
     return _all_products_page(request, locals())
 
