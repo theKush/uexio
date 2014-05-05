@@ -15,24 +15,30 @@ def shoppingcart(request):
 
     return render_to_response('shoppingcart/view_shoppingcart.html', locals(), context_instance=RequestContext(request))
 
-def update_cart(request, id):
-    try:
-        product = Product.objects.get(id=id)
-    except:
-        product = False
-
+def add_to_cart(request, id):
+    product = Product.objects.get(id=id)
     shoppingcart = _get_or_create_shopping_cart(request)
 
-    if product:
-        new_item, created = ShoppingcartItem.objects.get_or_create(shoppingcart=shoppingcart, product=product)
-        if created:
-            new_item.Shoppingcart = shoppingcart
-            new_item.save()
-            messages.success(request, 'Item added to cart')
-        else:
-            new_item.delete()
-            messages.warning(request, 'Item removed from cart')
-        return HttpResponseRedirect(reverse('shoppingcart'))
+    _, created = ShoppingcartItem.objects.get_or_create(shoppingcart=shoppingcart, product=product)
+    if created:
+        messages.success(request, 'Item added to cart')
+    else:
+        messages.warning(request, 'Item already in cart')
+
+    return HttpResponseRedirect(reverse('shoppingcart'))
+
+def remove_from_cart(request, id):
+    product = Product.objects.get(id=id)
+    shoppingcart = _get_or_create_shopping_cart(request)
+
+    try:
+        item = ShoppingcartItem.objects.get(shoppingcart=shoppingcart, product=product)
+        item.delete()
+        messages.warning(request, 'Item removed from cart')
+    except ShoppingcartItem.DoesNotExist:
+        messages.warning(request, 'Item not in cart')
+
+    return HttpResponseRedirect(reverse('shoppingcart'))
 
 def apply_coupon(request):
     form = ApplyCouponForm(request.POST or None)

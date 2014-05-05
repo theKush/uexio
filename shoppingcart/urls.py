@@ -7,6 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('shoppingcart.views',
     url(r'^$', 'shoppingcart', name='shoppingcart'),
-    url(r'^update_cart/(?P<id>.*)', 'update_cart', name="update_cart"),
+    url(r'^add_to_cart/(?P<id>.*)', 'add_to_cart', name="add_to_cart"),
+    url(r'^remove_from_cart/(?P<id>.*)', 'remove_from_cart', name="remove_from_cart"),
     url(r'^apply_coupon', 'apply_coupon', name="apply_coupon"),
 )

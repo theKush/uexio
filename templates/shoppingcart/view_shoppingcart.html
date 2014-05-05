@@ -38,7 +38,7 @@
                     {% for item in items %}
                         <tr>
                             <td>
-                                <a href='{% url "update_cart" item.product.id %}'>Remove</a>
+                                <a href='{% url "remove_from_cart" item.product.id %}'>Remove</a>
                             </td>
                             <td>
                                 {% for image in item.product.productimage_set.all %}

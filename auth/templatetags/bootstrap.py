@@ -32,11 +32,12 @@ from shoppingcart.views import is_product_in_cart
 
 @register.simple_tag(takes_context=True)
 def add_to_cart_button(context, product, css_class="btn btn-primary btn-block"):
-    url = reverse('update_cart', args=[product.id])
     if is_product_in_cart(context['request'], product):
+        url = reverse('remove_from_cart', args=[product.id])
         text = 'Product already in cart'
         label = 'Remove from'
     else:
+        url = reverse('add_to_cart', args=[product.id])
         text = ''
         label = 'Add to'
     return '''<small>%(text)s</small>
