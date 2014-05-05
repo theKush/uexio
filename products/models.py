@@ -8,6 +8,25 @@ def download_loc(instance, filename):
     else:
         return "%s/download/%s" %("default", filename)
 
+class Category(models.Model):
+    title = models.CharField(max_length=120)
+    description = models.CharField(max_length=500)
+    slug = models.SlugField()
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __unicode__(self):
+        return str(self.title)
+
+    class Meta:
+        # A human-readable name for the object
+        verbose_name = "Category"
+        # A human-readable name for the object in plural form, if we didn't
+        # provide it, Django would automatically just add an 's', which doesn't
+        # work well in most cases, so it's best to designate it to ensure it
+        # matches in all cases
+        verbose_name_plural = "Categories"
+
 # COMMENT DATE: 3-3-14
 # The model gives instruction to the database on how it should be stored
 # The way the models work are as follows: the 'ForeignKey' designator in the first model attribute
@@ -32,6 +51,7 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
     isbn_number = models.CharField(max_length=20, null=True, blank=True)
     author = models.CharField(max_length=500, null=True, blank=True)
+    category = models.ForeignKey(Category)
     active = models.BooleanField(default=True)
 
     def __unicode__(self):
@@ -67,26 +87,6 @@ class Tag(models.Model):
 
     def __unicode__(self):
         return str(self.tag)
-
-class Category(models.Model):
-    products = models.ManyToManyField(Product)
-    title = models.CharField(max_length=120)
-    description = models.CharField(max_length=500)
-    slug = models.SlugField()
-    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
-
-    def __unicode__(self):
-        return str(self.title)
-
-    class Meta:
-        # A human-readable name for the object
-        verbose_name = "Category"
-        # A human-readable name for the object in plural form, if we didn't
-        # provide it, Django would automatically just add an 's', which doesn't
-        # work well in most cases, so it's best to designate it to ensure it
-        # matches in all cases
-        verbose_name_plural = "Categories"
 
 class CategoryImage(models.Model):
     category = models.ForeignKey(Category)
