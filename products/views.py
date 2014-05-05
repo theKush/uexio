@@ -99,7 +99,6 @@ def edit_product(request, slug):
 def single(request, slug):
     product = Product.objects.get(slug=slug)
     images = product.productimage_set.all()
-    categories = product.category_set.all()
     comment_form = CommentForm(request.POST)
     comments = Comment.objects.filter(product=product)
 

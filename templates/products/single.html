@@ -21,12 +21,11 @@
       <ul class="breadcrumb">
         <li><a href="/">Home</a></li>
         <li><a href="/products">All Products</a></li>
-          <li>{% for category in categories %}
-              <a href="{% url 'category' category.slug %}">
-                    {{ category.title }}
-              </a>
-              {% endfor %}
-          </li>
+        <li>
+          <a href="{% url 'category' product.category.slug %}">
+            {{ product.category.title }}
+          </a>
+        </li>
         <li class="active">{{ product }}</li>
       </ul>
     </section>
@@ -149,11 +148,7 @@
                         <ul>
                             <li><b>Author: </b>{{ product.author }}</li>
                             <li><b>ISBN: </b>{{ product.isbn_number }}</li>
-                            <li><b>Category: </b>
-                                {% for category in categories %}
-                                {{ category.title }}
-                                {% endfor %}
-                            </li>
+                            <li><b>Category: </b>{{ product.category.title }}</li>
                             <li><b>Download materials provided: </b>
                             {% if product.download %}
                                 <span style="color: #18bc9c"> Yes</span>
