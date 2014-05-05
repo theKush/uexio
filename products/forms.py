@@ -19,7 +19,9 @@ class BaseProductImageFormSet(BaseModelFormSet):
         super(BaseProductImageFormSet, self).clean()
 
         # Exactly one image should be marked as featured.
-        featured = sum(form.cleaned_data.get('featured_image', False) for form in self.forms)
+        featured = sum(form.cleaned_data.get('featured_image', False)
+                       for form in self.forms
+                       if form not in self.deleted_forms)
         if featured == 0:
             raise ValidationError('At least one image needs to be featured.')
         elif featured > 1:
