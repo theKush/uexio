@@ -53,6 +53,7 @@ class Product(models.Model):
     author = models.CharField(max_length=500, null=True, blank=True)
     category = models.ForeignKey(Category)
     active = models.BooleanField(default=True)
+    featured = models.BooleanField(default=False)
 
     def __unicode__(self):
         return str(self.title)
