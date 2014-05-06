@@ -8,10 +8,7 @@ from .forms import ApplyCouponForm
 
 def shoppingcart(request):
     coupon_form = ApplyCouponForm()
-    items = _get_shopping_cart_items(request)
-    total_price = sum(item.product.price for item in items)
-    total_discount = sum(item.discount or 0 for item in items)
-    total_after_discount = total_price - total_discount
+    shoppingcart = _get_shopping_cart(request)
 
     return render_to_response('shoppingcart/view_shoppingcart.html', locals(), context_instance=RequestContext(request))
 

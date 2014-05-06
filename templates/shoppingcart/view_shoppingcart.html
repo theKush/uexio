@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block content %}
-{% if items %}
+{% if shoppingcart.shoppingcartitem_set.all %}
 <div class="col-lg-9">
 <h1>Shopping Cart</h1>
 <hr>
@@ -35,7 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in items %}
+                    {% for item in shoppingcart.shoppingcartitem_set.all %}
                         <tr>
                             <td>
                                 <a href='{% url "remove_from_cart" item.product.id %}'>Remove</a>
@@ -56,17 +56,17 @@
                     {% endfor %}
                     <tr>
                         <td colspan="5" style="text-align:right">Total Price: </td>
-                        <td>${{total_price}}</td>
+                        <td>${{shoppingcart.total_price}}</td>
                     </tr>
 
                     <tr>
                         <td colspan="5" style="text-align:right">Total Discount:  </td>
-                        <td>${{total_discount}}</td>
+                        <td>${{shoppingcart.total_discount}}</td>
                     </tr>
 
                     <tr>
                         <td colspan="5" style="text-align:right"><strong>Total</strong></td>
-                        <td><strong>${{total_after_discount}}</strong></td>
+                        <td><strong>${{shoppingcart.total_after_discount}}</strong></td>
                     </tr>
                 </tbody>
             </table>
