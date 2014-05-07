@@ -13,12 +13,13 @@ from .models import UserProfile
 from .forms import UserForm, ReviewSellerForm, UserProfileForm
 
 def profile(request, username):
-    current_user_profile_url = get_current_user_profile_url(request)
     profile_user = User.objects.get(username=username)
-    can_review = request.user.can_review(profile_user)
-    products = Product.objects.filter(user=profile_user, active=True)
     if not profile_user:
         raise Http404
+    current_user_profile_url = get_current_user_profile_url(request)
+    can_review = request.user.can_review(profile_user)
+    products = Product.objects.filter(user=profile_user, active=True)
+    products_sold_count = Product.objects.filter(user=profile_user, purchase__isnull=False).count()
     return render_to_response("profiles/profile.html", locals(), context_instance=RequestContext(request))
 
 def edit_profile(request):
