@@ -63,6 +63,10 @@ def mypurchases(request):
     purchases = UserPurchase.objects.filter(user=request.user)
     return render_to_response("profiles/mypurchases.html", locals(), context_instance=RequestContext(request))
 
+def mysolditems(request):
+    products = Product.objects.filter(user=request.user, purchase__isnull=False)
+    return render_to_response("profiles/mysolditems.html", locals(), context_instance=RequestContext(request))
+
 def review_seller(request, username):
     current_user_profile_url = get_current_user_profile_url(request)
     profile_user = User.objects.get(username=username)
