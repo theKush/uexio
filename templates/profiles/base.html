@@ -4,6 +4,7 @@
     <div id="sidebar" class="col-lg-3">
           <div class="panel panel-default">
             <div class="panel-heading">My Account</div>
+            {% if user.is_authenticated %}
             <ul class="list-group">
               <a id="nav_view_profile" class="list-group-item {% if request.path == current_user_profile_url %} active {% endif %}" href="{{ current_user_profile_url }}" title="View Profile">View Profile</a>
               <a id="nav_edit_profile" class="list-group-item {% if request.path == '/profile/edit/' %} active {% endif %}" href="/profile/edit/" title="Edit Profile">Edit Profile</a>
@@ -13,6 +14,7 @@
               <a id="nav_my_purchases" class="list-group-item {% if request.path == '/profile/mypurchases/' %} active {% endif %}" href="/profile/mypurchases" title="My Purchases">My Purchases</a>
               <a id="nav_my_sold_items" class="list-group-item {% if request.path == '/profile/mysolditems/' %} active {% endif %}" href="/profile/mysolditems" title="My Sold Items">My Sold Items</a>
             </ul>
+            {% endif %}
           </div>
             {% if request.path == '/products/add/' %}
               <div class="panel panel-default">

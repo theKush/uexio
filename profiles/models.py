@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 
 from products.models import Product, UserPurchase
 
@@ -52,3 +52,4 @@ def can_review(self, other_user):
     buyers = [purchase.user for purchase in self.sell_transactions()]
     return self != other_user and ((other_user in sellers) or (other_user in buyers))
 User.can_review = can_review
+AnonymousUser.can_review = lambda s,u: False
