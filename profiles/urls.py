@@ -6,6 +6,7 @@ urlpatterns = patterns('profiles.views',
     url(r'^edit/$', 'edit_profile', name="edit_profile"),
     url(r'^library/$', 'library', name="library"),
     url(r'^listings/$', 'listings', name="listings"),
+    url(r'^mypurchases/$', 'mypurchases', name="mypurchases"),
     url(r'^edit_password/$', 'edit_password', name="edit_password"),
     url(r'^password_change_done/$', 'password_change_done', name="password_change_done"),
 )

@@ -24,26 +24,33 @@
                 <table id="table_library" class="table table-bordered table-responsive table-striped">
                     <thead>
                         <tr>
-                            <th class="col-sm-2">Order #</th>
-                            <th class="col-sm-5">Title</th>
-                            <th class="col-sm-1">Price</th>
-                            <th class="col-sm-4">Actions</th>
+                            <th class="col-sm-1">Order #</th>
+                            <th class="col-sm-6">Title</th>
+                            <th class="col-sm-2">Price</th>
+                            <th class="col-sm-3">Bought on</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for product in products %} {# for order in user's purchases #}
+                        {% for purchase in purchases %}
                             <tr>
                                 <td>
-                                    {{ product }}   {# Display order number #}
+                                    {{ purchase.transaction_id }}
                                 </td>
                                 <td>
-                                    {{ product }}   {# Display Product title #}
+                                    <ul class="list-unstyled">
+                                    {% for product in purchase.product_set.all %}
+                                        <li>
+                                            {{ product.title }}
+                                            <small class="text-muted"><i class="fa fa-usd"></i>{{ product.sold_for|floatformat:2 }}</small>
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
                                 </td>
                                 <td>
-                                    <i class="fa fa-usd"></i>{{ product.price|floatformat:2 }} {# Display product price #}
+                                    <i class="fa fa-usd"></i>{{ purchase.total|floatformat:2 }}
                                 </td>
                                 <td>
-                                    <a href="#" class="btn btn-sm btn-primary" role="button" style="text-decoration: none; margin-bottom: 5px;">View Order</a>            {# View Order Details #}
+                                    {{ purchase.timestamp }}
                                 </td>
                             </tr>
                         {% endfor %}

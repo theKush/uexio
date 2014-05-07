@@ -30,10 +30,11 @@ class Category(models.Model):
 class UserPurchase(models.Model):
     user = models.ForeignKey(User)
     total = models.DecimalField(max_digits=20, decimal_places=2)
+    transaction_id = models.IntegerField()
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __unicode__(self):
-        return self.id
+        return unicode(self.id)
 
 # COMMENT DATE: 3-3-14
 # The model gives instruction to the database on how it should be stored

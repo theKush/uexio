@@ -17,7 +17,7 @@ class CategoryImageInline(admin.TabularInline):
 
 # Admin components
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'user', 'current_price', 'category_link')
+    list_display = ('__unicode__', 'active', 'user', 'current_price', 'category_link')
     inlines = [TagInline, ProductImageInline] # sets up the two inline attribute selectors of tags and images
     search_fields = ['title', 'description', 'price', 'category__title', 'category__description', 'tag__tag'] # establishes what fields are searchable
     list_filter = ['price', 'timestamp', 'updated'] # establishes the filter process on the right hand side of the page

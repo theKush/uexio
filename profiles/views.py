@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.views import password_change
 
-from profiles.models import Product
+from products.models import Product, UserPurchase
 from .models import UserProfile
 from .forms import UserForm, ReviewSellerForm, UserProfileForm
 
@@ -58,6 +58,10 @@ def listings(request):
     current_user_profile_url = get_current_user_profile_url(request)
     products = Product.objects.filter(user=request.user)
     return render_to_response("profiles/listings.html", locals(), context_instance=RequestContext(request))
+
+def mypurchases(request):
+    purchases = UserPurchase.objects.filter(user=request.user)
+    return render_to_response("profiles/mypurchases.html", locals(), context_instance=RequestContext(request))
 
 def review_seller(request, username):
     current_user_profile_url = get_current_user_profile_url(request)
