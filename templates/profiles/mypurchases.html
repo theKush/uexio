@@ -41,7 +41,10 @@
                                     {% for product in purchase.product_set.all %}
                                         <li>
                                             {{ product.title }}
-                                            <small class="text-muted"><i class="fa fa-usd"></i>{{ product.sold_for|floatformat:2 }}</small>
+                                            <small class="text-muted">
+                                                for <i class="fa fa-usd"></i>{{ product.sold_for|floatformat:2 }}
+                                                from <a href="{% url 'profile' product.user.username %}">{{ product.user.username }}</a>
+                                            </small>
                                         </li>
                                     {% endfor %}
                                     </ul>
