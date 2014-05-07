@@ -63,6 +63,7 @@ class Product(models.Model):
     active = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)
     purchase = models.ForeignKey(UserPurchase, null=True, blank=True)
+    sold_for = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
 
     def __unicode__(self):
         return str(self.title)
