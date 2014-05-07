@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Product, Category, ProductImage, Tag, CategoryImage
+from .models import Product, Category, ProductImage, Tag, CategoryImage, UserPurchase
 
 # VERY IMPORTANT - These inlines need to go above the admin classes or they won't work
 class TagInline(admin.TabularInline):
@@ -44,8 +44,19 @@ admin.site.register(Product, ProductAdmin) # connects the product model with the
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ('title',)}
     inlines = [CategoryImageInline]
+
     class Meta:
         model = Category
 
-
 admin.site.register(Category, CategoryAdmin)
+
+class UserPurchaseAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__', 'user', 'total', 'product_count', 'timestamp')
+
+    def product_count(self, obj):
+        return obj.product_set.count()
+
+    class Meta:
+        model = UserPurchase
+
+admin.site.register(UserPurchase, UserPurchaseAdmin)

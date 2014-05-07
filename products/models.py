@@ -27,6 +27,14 @@ class Category(models.Model):
         # matches in all cases
         verbose_name_plural = "Categories"
 
+class UserPurchase(models.Model):
+    user = models.ForeignKey(User)
+    total = models.DecimalField(max_digits=20, decimal_places=2)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+
+    def __unicode__(self):
+        return self.id
+
 # COMMENT DATE: 3-3-14
 # The model gives instruction to the database on how it should be stored
 # The way the models work are as follows: the 'ForeignKey' designator in the first model attribute
@@ -54,6 +62,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category)
     active = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)
+    purchase = models.ForeignKey(UserPurchase, null=True, blank=True)
 
     def __unicode__(self):
         return str(self.title)

@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import password_change
 
 from profiles.models import Product
-from .models import UserPurchase, UserProfile
+from .models import UserProfile
 from .forms import UserForm, ReviewSellerForm, UserProfileForm
 
 def profile(request, username):

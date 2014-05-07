@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from products.models import Product
+from products.models import Product, UserPurchase
 
 class UserProfile(models.Model):
     # This Line is required. Links UserProfile to a User Model instance.
@@ -15,13 +15,6 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
 
-class UserPurchase(models.Model):
-    user = models.ForeignKey(User)
-    products = models.ManyToManyField(Product)
-
-    def __unicode__(self, ):
-        return self.user.username
-
 class SellerReview(models.Model):
     seller = models.ForeignKey(User, null=False, blank=False, related_name='reviews_received')
     author = models.ForeignKey(User, null=False, blank=False, related_name='reviews_made')
@@ -33,13 +26,13 @@ class SellerReview(models.Model):
 
 def has_purchased(self, product):
     for purchase in UserPurchase.objects.filter(user=self):
-        if product in purchase.products.all():
+        if product in purchase.product_set.all():
             return True
     return False
 User.has_purchased = has_purchased
 
 def purchased_products(self):
-    return [product for purchase in UserPurchase.objects.filter(user=self) for product in purchase.products.all()]
+    return [product for purchase in UserPurchase.objects.filter(user=self) for product in purchase.product_set.all()]
 User.purchased_products = purchased_products
 
 def flatten(alist):
@@ -51,7 +44,7 @@ def sell_transactions(self):
     # one-to-many, as each Product is unique and can be in just a single
     # UserPurchase.
     products = Product.objects.filter(user=self)
-    return flatten(list(UserPurchase.objects.filter(products=product)) for product in products)
+    return flatten(list(UserPurchase.objects.filter(product=product)) for product in products)
 User.sell_transactions = sell_transactions
 
 def can_review(self, other_user):
