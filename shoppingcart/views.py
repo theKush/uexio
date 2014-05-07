@@ -68,7 +68,7 @@ def _get_shopping_cart_items(request):
 def _get_shopping_cart(request):
     try:
         shoppingcart_id = request.session['shoppingcart_id']
-        shoppingcart = Shoppingcart.objects.get(id=shoppingcart_id)
+        shoppingcart = Shoppingcart.objects.get(id=shoppingcart_id, user=request.user)
         return shoppingcart
     except (KeyError, Shoppingcart.DoesNotExist):
         return None
@@ -76,7 +76,7 @@ def _get_shopping_cart(request):
 def _get_or_create_shopping_cart(request):
     shoppingcart = _get_shopping_cart(request)
     if not shoppingcart:
-        shoppingcart = Shoppingcart()
+        shoppingcart = Shoppingcart(user=request.user)
         shoppingcart.save()
         request.session['shoppingcart_id'] = shoppingcart.id
     return shoppingcart
