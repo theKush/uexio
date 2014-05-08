@@ -1,10 +1,14 @@
 from django.contrib import messages
-from django.shortcuts import render_to_response, Http404, RequestContext, HttpResponseRedirect
+from django.shortcuts import render_to_response, Http404, RequestContext, HttpResponseRedirect, get_object_or_404
 from django.core.urlresolvers import reverse
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse, HttpResponseBadRequest
+
 from products.models import Product, Coupon
 
 from .models import Shoppingcart, ShoppingcartItem
 from .forms import ApplyCouponForm
+from .paypal_integration import transaction_data_matches, queue_paypal_notification
 
 def shoppingcart(request):
     coupon_form = ApplyCouponForm()
@@ -58,6 +62,20 @@ def apply_coupon(request):
                 messages.error(request, 'Coupon code invalid')
     return HttpResponseRedirect(reverse('shoppingcart'))
 
+@csrf_exempt
+def thankyou(request):
+    _clear_shopping_cart(request)
+    return render_to_response('shoppingcart/thankyou.html', locals(), context_instance=RequestContext(request))
+
+@csrf_exempt
+def paypal_notification(request, id):
+    shoppingcart = get_object_or_404(Shoppingcart, id=id)
+    if transaction_data_matches(shoppingcart, request.POST):
+        queue_paypal_notification(shoppingcart, request.POST)
+        return HttpResponse('')
+    else:
+        return HttpResponseBadRequest('')
+
 def _get_shopping_cart_items(request):
     shoppingcart = _get_shopping_cart(request)
     if shoppingcart:
@@ -80,6 +98,9 @@ def _get_or_create_shopping_cart(request):
         shoppingcart.save()
         request.session['shoppingcart_id'] = shoppingcart.id
     return shoppingcart
+
+def _clear_shopping_cart(request):
+    del request.session['shoppingcart_id']
 
 def is_product_in_cart(request, product):
     items = _get_shopping_cart_items(request)

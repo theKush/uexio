@@ -2,6 +2,7 @@
 
 {% load bootstrap %}
 {% load cart %}
+{% load paypal %}
 
 {% block sidebar %}
     {% include "sidebar.html" %}
@@ -92,7 +93,7 @@
             </div>
             <div class="col-md-8">
               <div class="row">
-              <button type="button" class="btn btn-primary btn-lg pull-right">Pay with PayPal</button>
+                {% paypal_button request shoppingcart %}
               </div>
               <div class="row">
               <br>

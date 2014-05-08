@@ -18,6 +18,9 @@ class Shoppingcart(models.Model):
     def total_after_discount(self):
         return self.total_price() - self.total_discount()
 
+    def transaction_name(self):
+        return 'Uexio transaction #%s' % self.id
+
     def __unicode__(self):
         return str(self.id)
 

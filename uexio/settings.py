@@ -108,6 +108,7 @@ INSTALLED_APPS = (
     'shoppingcart',
     'auth',
     'bootstrap_pagination',
+    'django_rq',
 )
 
 LOGIN_URL = '/auth/login/'
@@ -182,3 +183,28 @@ MEDIA_ROOT = "/"
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
 MEDIA_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+
+######################################################################
+# PayPal integration
+
+PAYPAL_EMAIL = os.getenv('PAYPAL_EMAIL')
+# This can point to sandbox when testing.
+PAYPAL_HOST = os.getenv('PAYPAL_HOST')
+
+######################################################################
+# django-rq integration
+
+RQ_QUEUES = {
+    'default': {
+        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379'),
+        'DB': 0,
+    },
+}
+
+RQ_SHOW_ADMIN_LINK = True
+
+# Workaround for DeprecationWarning that's raised when trying to visit
+# a job page in admin. The message is:
+#   "job.status is deprecated. Use job.get_status() instead"
+from rq.job import Job
+Job.status = property(Job.get_status, Job.set_status)

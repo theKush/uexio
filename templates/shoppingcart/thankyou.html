@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load bootstrap %}
+{% load cart %}
+
+{% block sidebar %}
+    {% include "sidebar.html" %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <section id="breadcrumb" class="col-lg-9">
+      <ul class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">Cart</li>
+      </ul>
+    </section>
+{% endblock %}
+
+{% block content %}
+<div class="col-lg-9">
+    <h1>Thank you</h1>
+    <hr>
+    <section id="main">
+        <div class="row">
+            <p>
+                Thank you for your purchase.
+                The products should become avaiable in
+                <a href="{% url 'library' %}">your library</a>
+                soon.
+            </p>
+        </div>
+
+    </section>
+</div>
+
+{% endblock %}

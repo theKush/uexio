@@ -27,4 +27,7 @@ urlpatterns = patterns('',
     # The line below enables admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+
+    # django-rq panel
+    url(r'^django-rq/', include('django_rq.urls')),
 )
