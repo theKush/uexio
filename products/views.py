@@ -13,6 +13,7 @@ from django.db.models import Q
 
 from .models import Product, Category, ProductImage, Comment, Coupon
 from .forms import ProductForm, ProductImageForm, CommentForm, CouponForm, ProductImageFormSet
+from .helpers import product_url
 
 def list_all(request):
     title = "All Products"
@@ -54,18 +55,18 @@ def add_product(request):
         image.product = product
         image.featured_image = True
         image.save()
-        return HttpResponseRedirect('/products/%s'%(product.slug))
+        return HttpResponseRedirect(product_url(product))
 
     return render_to_response("products/edit.html", locals(), context_instance=RequestContext(request))
 
-def manage_product_image(request, slug):
-    product = Product.objects.get(slug=slug)
+def manage_product_image(request, id):
+    product = Product.objects.get(id=id)
 
     if request.user != product.user:
         raise Http404
 
     # this queries the images and ensures that the correct image is selected
-    queryset = ProductImage.objects.filter(product__slug=slug)
+    queryset = ProductImage.objects.filter(product__id=id)
     formset = ProductImageFormSet(request.POST or None, request.FILES or None, queryset=queryset)
 
     if request.method == 'POST' and formset.is_valid():
@@ -73,12 +74,12 @@ def manage_product_image(request, slug):
         for image in images:
             image.product = product
             image.save()
-        return HttpResponseRedirect(reverse('manage_product_image', args=[product.slug]))
+        return HttpResponseRedirect(reverse('manage_product_image', args=[product.id]))
 
     return render_to_response("products/manage_images.html", locals(), context_instance=RequestContext(request))
 
-def edit_product(request, slug):
-    instance = Product.objects.get(slug=slug)
+def edit_product(request, id):
+    instance = Product.objects.get(id=id)
     # this conditional ensures that only the product owners can edit the product,
     # any other user trying to access the edit form will be shown a 404 error
     if request.user != instance.user:
@@ -96,8 +97,8 @@ def edit_product(request, slug):
 
     return render_to_response("products/edit.html", locals(), context_instance=RequestContext(request))
 
-def single(request, slug):
-    product = Product.objects.get(slug=slug)
+def single(request, id, slug):
+    product = Product.objects.get(id=id, slug=slug)
     images = product.productimage_set.all()
     comment_form = CommentForm(request.POST)
     comments = Comment.objects.filter(product=product)
@@ -109,20 +110,20 @@ def single(request, slug):
 
     return render_to_response("products/single.html", locals(), context_instance=RequestContext(request))
 
-def activate_product(request, slug):
-    product = Product.objects.get(slug=slug)
+def activate_product(request, id):
+    product = Product.objects.get(id=id)
     product.active = True
     product.save()
     return HttpResponseRedirect(reverse('listings'))
 
-def deactivate_product(request, slug):
-    product = Product.objects.get(slug=slug)
+def deactivate_product(request, id):
+    product = Product.objects.get(id=id)
     product.active = False
     product.save()
     return HttpResponseRedirect(reverse('listings'))
 
-def comment(request, slug):
-    product = Product.objects.get(slug=slug)
+def comment(request, id):
+    product = Product.objects.get(id=id)
     if request.method == 'POST':
         try:
             comment = CommentForm(request.POST, instance=Comment(product=product, user=request.user))
@@ -130,10 +131,10 @@ def comment(request, slug):
         except ValueError: # handle validation errors
             return render_to_response("products/single.html", locals(), context_instance=RequestContext(request))
 
-    return HttpResponseRedirect(reverse('single_product', args=[product.slug]))
+    return HttpResponseRedirect(product_url(product))
 
-def manage_coupons(request, slug):
-    product = Product.objects.get(slug=slug)
+def manage_coupons(request, id):
+    product = Product.objects.get(id=id)
 
     if request.user != product.user:
         raise Http404
@@ -154,7 +155,7 @@ def manage_coupons(request, slug):
                 if coupon.product.user != request.user:
                     return HttpResponseForbidden()
                 coupon.save()
-            return HttpResponseRedirect(reverse('manage_coupons', args=[product.slug]))
+            return HttpResponseRedirect(reverse('manage_coupons', args=[product.id]))
         except ValueError: # handle validation errors
             pass
 

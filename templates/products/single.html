@@ -211,7 +211,7 @@
                         <p>
                             Note: Comments are public and visible to everyone
                         </p>
-                        <form id="commentForm" action="{% url 'comment' product.slug %}" method="post" role="form">
+                        <form id="commentForm" action="{% url 'comment' product.id %}" method="post" role="form">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label class="sr-only" for="id_content">Comment</label>

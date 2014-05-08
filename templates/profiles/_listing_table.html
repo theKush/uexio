@@ -1,3 +1,5 @@
+{% load urls %}
+
 <div class="row">
     <div class="table_container">
         <table id="table_library" class="table table-bordered table-responsive table-striped">
@@ -13,7 +15,7 @@
                 {% for product in products %}
                 <tr>
                     <td>
-                        <a href="{% url "single_product" product.slug %}">{{ product }}</a>
+                        <a href="{% product_url product %}">{{ product }}</a>
                     </td>
                     <td>
                         {{ product.headline|truncatechars:100 }}
@@ -22,16 +24,16 @@
                         <i class="fa fa-usd"></i>{{ product.price|floatformat:2 }}
                     </td>
                     <td>
-                        <a href="{% url 'edit_product' product.slug %}" class="btn btn-sm btn-primary" role="button" style="text-decoration: none; margin-bottom: 5px;">Edit</a>
-                        <a href="{% url 'manage_coupons' product.slug %}" class="btn btn-primary btn-sm" role="button" style="text-decoration: none; margin-bottom: 5px;">Coupons</a>
-                        <a href="{% url 'manage_product_image' product.slug %}" class="btn btn-primary btn-sm" role="button" style="text-decoration: none; margin-bottom: 5px;">Images</a>
+                        <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-primary" role="button" style="text-decoration: none; margin-bottom: 5px;">Edit</a>
+                        <a href="{% url 'manage_coupons' product.id %}" class="btn btn-primary btn-sm" role="button" style="text-decoration: none; margin-bottom: 5px;">Coupons</a>
+                        <a href="{% url 'manage_product_image' product.id %}" class="btn btn-primary btn-sm" role="button" style="text-decoration: none; margin-bottom: 5px;">Images</a>
                         {% if product.active %}
-                        <form action="/products/{{product.slug}}/deactivate/" method="post">
+                        <form action="{% url 'deactivate_product' product.id %}" method="post">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-sm btn-warning">Deactivate</button>
                         </form>
                         {% elif product.can_activate %}
-                        <form action="/products/{{product.slug}}/activate/" method="post">
+                        <form action="{% url 'activate_product' product.id %}" method="post">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-sm btn-success">Activate</button>
                         </form>

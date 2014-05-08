@@ -2,6 +2,7 @@
 
 {% load bootstrap %}
 {% load gravatar %}
+{% load urls %}
 
 {% block breadcrumbs %}
     <div class="col-lg-9">
@@ -76,13 +77,13 @@
                                 <div class="media">
                                     {% for image in product.productimage_set.all %}      {# populate the featured image #}
                                         {% if image.featured_image %}
-                                            <a class="pull-left" href="{% url "single_product" product.slug %}">
+                                            <a class="pull-left" href="{% product_url product %}">
                                                 <img class="media-object" src="{{ MEDIA_URL }}{{ image.image }}" width="100" height="100" border="0" />
                                             </a>
                                         {% endif %}
                                     {% endfor %}
                                     <div class="media-body">
-                                        <a href="{% url "single_product" product.slug %}"><h5>{{ product }}</h5></a>
+                                        <a href="{% product_url product %}"><h5>{{ product }}</h5></a>
                                         <div class="text" >
                                             <p>{{product.headline}}</p>
                                         </div>

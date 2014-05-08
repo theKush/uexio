@@ -1,6 +1,7 @@
 {% extends "pages/base.html" %}
 
 {% load bootstrap %}
+{% load urls %}
 
 {% block content%}
 
@@ -41,7 +42,7 @@
                     <div class="thumbnail">
                         {% for image in product.productimage_set.all %}
                             {% if image.featured_image %}
-                                <a href="{% url "single_product" product.slug %}">
+                                <a href="{% product_url product %}">
                                     <img src="{{ MEDIA_URL }}{{ image.image }}"  alt="{{ image.title }}" width="70%"/>
                             {% endif %}
                         {% endfor %}
