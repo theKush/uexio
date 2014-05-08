@@ -38,7 +38,11 @@
                                     {{ product.description }}
                                 </td>
                                 <td>
-                                    <a href='{{ product.download.url }}'>Download Materials</a>
+                                    {% if product.download %}
+                                        <a href='{{ product.download.url }}'>Download Materials</a>
+                                    {% else %}
+                                        <span class="text-muted">no downloads available</span>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}
