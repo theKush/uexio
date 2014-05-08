@@ -62,17 +62,19 @@
                             Add to Cart
                         </div>
                         <div class="panel-body">
-                            {% if product.user != user %}
-                            <div class="price pull-left">
-                                <i class="fa fa-usd fa-sm"></i>
-                                <span itemprop="price">{{ product.price|floatformat:2 }}</span>
-                                <meta itemprop="currency" content="USD">
-                            </div>
-                            <div class="pull-right">
-                                {% add_to_cart_button product "btn btn-success" %}
-                            </div>
-                            {% else %}
+                            {% if product.purchase %}
+                                <p>This product has been sold</p>
+                            {% elif product.user == user %}
                                 <p>This is your product</p>
+                            {% else %}
+                                <div class="price pull-left">
+                                    <i class="fa fa-usd fa-sm"></i>
+                                    <span itemprop="price">{{ product.price|floatformat:2 }}</span>
+                                    <meta itemprop="currency" content="USD">
+                                </div>
+                                <div class="pull-right">
+                                    {% add_to_cart_button product "btn btn-success" %}
+                                </div>
                             {% endif %}
                         </div>
                     </div>
