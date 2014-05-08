@@ -53,7 +53,6 @@ class Product(models.Model):
     download = models.FileField(upload_to=download_loc, blank=True, null=True) # this is for testing the order authentication process
     condition = models.IntegerField(choices=CONDITION_CHOICES, null=True)
     price = models.DecimalField(max_digits=20, decimal_places=2)
-    sale_price = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
     slug = models.SlugField()
     order = models.IntegerField(default=0)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)

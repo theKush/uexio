@@ -17,7 +17,7 @@ class CategoryImageInline(admin.TabularInline):
 
 # Admin components
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'active', 'user', 'current_price', 'category_link')
+    list_display = ('__unicode__', 'active', 'user', 'price', 'category_link')
     inlines = [TagInline, ProductImageInline] # sets up the two inline attribute selectors of tags and images
     search_fields = ['title', 'description', 'price', 'category__title', 'category__description', 'tag__tag'] # establishes what fields are searchable
     list_filter = ['price', 'timestamp', 'updated'] # establishes the filter process on the right hand side of the page
@@ -26,12 +26,6 @@ class ProductAdmin(admin.ModelAdmin):
 
     class Meta:
         model = Product # connects a variable 'model' to the product model
-
-    def current_price(self, obj): # this is a method that takes in the product and returns either the sale or regular price
-        if obj.sale_price > 0:
-            return obj.sale_price
-        else:
-            return obj.price
 
     def category_link(self, obj): # this category method that enables the category to be clickable
         return "<a href='/admin/products/category/" + str(obj.category.id) + "'>" + obj.category.title + "</a>"
