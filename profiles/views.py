@@ -18,7 +18,7 @@ def profile(request, username):
     if not profile_user:
         raise Http404
     can_review = request.user.can_review(profile_user)
-    products = Product.objects.filter(user=profile_user, active=True)
+    products = Product.listing().filter(user=profile_user)
     products_sold_count = Product.objects.filter(user=profile_user, purchase__isnull=False).count()
     return render_to_response("profiles/profile.html", locals(), context_instance=RequestContext(request))
 

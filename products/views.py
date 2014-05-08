@@ -16,19 +16,19 @@ from .forms import ProductForm, ProductImageForm, CommentForm, CouponForm, Produ
 
 def list_all(request):
     title = "All Products"
-    products = Product.objects.filter(active=True)
+    products = Product.listing()
     return _all_products_page(request, locals())
 
 def search_products(request):
     query = request.GET['query']
-    products = Product.objects.filter(Q(description__icontains=query) | Q(title__icontains=query) | Q(headline__icontains=query) | Q(author__icontains=query) | Q(isbn_number__icontains=query), active=True)
+    products = Product.listing().filter(Q(description__icontains=query) | Q(title__icontains=query) | Q(headline__icontains=query) | Q(author__icontains=query) | Q(isbn_number__icontains=query))
     title = "Products matching \"" + query + "\""
     return _all_products_page(request, locals())
 
 def category(request, slug):
     category = Category.objects.get(slug=slug)
     title = "Products in \"" + category.title + "\""
-    products = Product.objects.filter(category=category, active=True)
+    products = Product.listing().filter(category=category)
     return _all_products_page(request, locals())
 
 def _all_products_page(request, context):

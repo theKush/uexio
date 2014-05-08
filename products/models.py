@@ -72,6 +72,10 @@ class Product(models.Model):
     def can_activate(self):
         return self.productimage_set.count() > 0
 
+    @classmethod
+    def listing(cls):
+        return cls.objects.filter(active=True)
+
     # COMMENT DATE: 3-3-14
     # This sets up the
     class Meta:
