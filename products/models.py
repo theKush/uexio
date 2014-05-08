@@ -74,7 +74,7 @@ class Product(models.Model):
 
     @classmethod
     def listing(cls):
-        return cls.objects.filter(active=True)
+        return cls.objects.filter(active=True, purchase__isnull=True)
 
     # COMMENT DATE: 3-3-14
     # This sets up the
