@@ -12,6 +12,10 @@ def bootstrap_field_tag(field):
     return field.as_widget(attrs={'class': 'form-control'})
 
 @register.simple_tag
+def bootstrap_textarea_tag(field):
+    return field.as_textarea(attrs={'class': 'form-control'})
+
+@register.simple_tag
 def bootstrap_form_group_class(field):
     if field.errors:
         return 'form-group has-error'

@@ -75,7 +75,7 @@ def mysolditems(request):
 def review_seller(request, username):
     current_user_profile_url = get_current_user_profile_url(request)
     profile_user = User.objects.get(username=username)
-    form = ReviewSellerForm(request.POST)
+    form = ReviewSellerForm(request.POST or None)
 
     if not request.user.can_review(profile_user):
         return HttpResponseForbidden()

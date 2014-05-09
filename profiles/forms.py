@@ -16,5 +16,5 @@ class UserProfileForm(ModelForm):
 class ReviewSellerForm(ModelForm):
     class Meta:
         model = SellerReview
-        fields = ('content',)
+        fields = ('rating', 'content')
 

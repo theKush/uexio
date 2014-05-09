@@ -16,9 +16,11 @@ class UserProfile(models.Model):
         return self.user.username
 
 class SellerReview(models.Model):
+    RATING_CHOICES = ((1,'*'), (2,'**'), (3,'***'), (4,'****'), (5,'*****'))
     seller = models.ForeignKey(User, null=False, blank=False, related_name='reviews_received')
     author = models.ForeignKey(User, null=False, blank=False, related_name='reviews_made')
     content = models.CharField(max_length=500)
+    rating = models.IntegerField(choices=RATING_CHOICES, blank=False)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __unicode__(self):

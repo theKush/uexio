@@ -55,6 +55,7 @@
                         {% for review in profile_user.reviews_received.all %} {# from all the feedbacks received for this user #}
                         <blockquote>
                             <p>{{ review.content }}</p>  {# populate the feedback #}
+                            <p>Rating: {{ review.rating }}</p> {# to be styled with stars or similar #}
                             <small>{{ review.author }} on {{ review.timestamp|date }}</small>    {# and feedback received by #}
                         </blockquote>
                         {% endfor %}
