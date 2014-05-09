@@ -49,7 +49,20 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">2. Find the textbook you want to buy...</div>
                         <div class="panel-body">
-                            <p>It's very quick and easy</p>
+                            <div class="col-sm-8 nav navbar-nav">
+                                <form class="navbar-form navbar-left" role="search" id="header_search_form" action="{% url 'search_products' %}" method="get">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                            <input type="text" class="form-control" name="query" placeholder="Search" value="{{ query }}">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-success" type="submit">Go</button>
+                                        </span>
+                                    </div>
+                                </form>
+                                    <div class="pull-left">
+                                        <span class="help-block">Type in a Title, Author or ISBN number...</span>
+                                    </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -59,7 +72,8 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">3. Browse the listing you're interested in and choose... </div>
                         <div class="panel-body">
-                            <p>It's very quick and easy</p>
+                            <img src="http://i977.photobucket.com/albums/ae259/alejandro9561/UEXIOlisting2_zps90d9ff86.png" width="500" height="200"></i>
+                            <p>When you know this is the product you want, click the "add to cart" button...</p>
                         </div>
                     </div>
                 </div>
@@ -69,7 +83,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">4. Pay with PayPal... </div>
                         <div class="panel-body">
-                            <p>It's very quick and easy</p>
+                            <p>UEXIO will setup the transaction for you with PayPal. You don't need a PayPal account, you can just use your credit card if you want.</p>
                         </div>
                     </div>
                 </div>
@@ -79,7 +93,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">5. After you pay... </div>
                         <div class="panel-body">
-                            <p>It's very quick and easy</p>
+                            <p>You will receive confirmation on your purchase. You may also communicate with the seller if you wish to arrange other shipping methods.</p>
                         </div>
                     </div>
                 </div>
