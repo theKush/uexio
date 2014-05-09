@@ -77,7 +77,7 @@ def review_seller(request, username):
     profile_user = User.objects.get(username=username)
     form = ReviewSellerForm(request.POST)
 
-    if profile_user == request.user:
+    if not request.user.can_review(profile_user):
         return HttpResponseForbidden()
 
     if request.method == 'POST':
