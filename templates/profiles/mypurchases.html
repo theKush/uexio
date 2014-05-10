@@ -25,37 +25,37 @@
                     <thead>
                         <tr>
                             <th class="col-sm-1">Order #</th>
-                            <th class="col-sm-7">Title</th>
+                            <th class="col-sm-5">Title</th>
+                            <th class="col-sm-2">Seller</th>
                             <th class="col-sm-2">Price</th>
                             <th class="col-sm-2">Bought on</th>
+                            <th class="col-sm-2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for purchase in purchases %}
-                            <tr>
-                                <td>
-                                    {{ purchase.transaction_id }}
-                                </td>
-                                <td>
-                                    <ul class="list-unstyled">
-                                    {% for product in purchase.product_set.all %}
-                                        <li>
-                                            {{ product.title }}
-                                            <small class="text-muted">
-                                                for <i class="fa fa-usd"></i>{{ product.sold_for|floatformat:2 }}
-                                                from <a href="{% url 'profile' product.user.username %}">{{ product.user.username }}</a>
-                                            </small>
-                                        </li>
-                                    {% endfor %}
-                                    </ul>
-                                </td>
-                                <td>
-                                    <i class="fa fa-usd"></i>{{ purchase.total|floatformat:2 }}
-                                </td>
-                                <td>
-                                    {{ purchase.timestamp }}
-                                </td>
-                            </tr>
+                            {% for product in purchase.product_set.all %}
+                                <tr>
+                                    <td>
+                                        {{ purchase.transaction_id }}/{{ forloop.counter0 | add:1 }}
+                                    </td>
+                                    <td>
+                                        {{ product.title }}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'profile' product.user.username %}">{{ product.user.username }}</a>
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-usd"></i>{{ product.sold_for|floatformat:2 }}
+                                    </td>
+                                    <td>
+                                        {{ purchase.timestamp }}
+                                    </td>
+                                    <td>
+                                        <a href="mailto:{{ product.user.email }}" class="btn btn-sm btn-primary action-btn" role="button">Message the seller</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
                         {% endfor %}
                     </tbody>
                 </table>

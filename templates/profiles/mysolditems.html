@@ -29,6 +29,7 @@
                             <th class="col-sm-2">Buyer</th>
                             <th class="col-sm-2">Price</th>
                             <th class="col-sm-2">Bought on</th>
+                            <th class="col-sm-2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,6 +49,9 @@
                                 </td>
                                 <td>
                                     {{ product.purchase.timestamp }}
+                                </td>
+                                <td>
+                                    <a href="mailto:{{ product.purchase.user.email }}" class="btn btn-sm btn-primary action-btn" role="button">Message the buyer</a>
                                 </td>
                             </tr>
                         {% endfor %}

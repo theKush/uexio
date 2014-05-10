@@ -30,6 +30,10 @@ div .thumbnail img{
     width:200px;
     height:200px;
 }
+.action-btn {
+    text-decoration: none !important;
+    margin-bottom: 5px;
+}
 .price {
 font-size: 250%;
 line-height: 100%;
