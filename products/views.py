@@ -5,7 +5,7 @@ from mimetypes import guess_type
 from django.conf import settings
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render_to_response, RequestContext, Http404, HttpResponseRedirect
+from django.shortcuts import render_to_response, RequestContext, Http404, HttpResponseRedirect, get_object_or_404
 from django.template.defaultfilters import slugify
 from django.forms.models import modelformset_factory
 from django.core.urlresolvers import reverse
@@ -159,6 +159,18 @@ def manage_coupons(request, id):
             pass
 
     return render_to_response("products/manage_coupons.html", locals(), context_instance=RequestContext(request))
+
+def mark_as_received(request, id):
+    product = get_object_or_404(Product, id=id)
+
+    # Only the buyer should be able to do that.
+    if product.purchase.user != request.user:
+        return HttpResponseForbidden()
+
+    product.status = Product.RECEIVED
+    product.save()
+
+    return HttpResponseRedirect(reverse('mypurchases'))
 
 def fill_in_product_id(params, product_id):
     params = params.copy()

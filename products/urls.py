@@ -16,5 +16,6 @@ urlpatterns = patterns('products.views',
     url(r'^(?P<id>.*)/coupons/', 'manage_coupons', name="manage_coupons"),
     url(r'^(?P<id>.*)/images/', 'manage_product_image', name="manage_product_image"),
     url(r'^(?P<id>.*)/edit/', 'edit_product', name="edit_product"),
+    url(r'^(?P<id>.*)/mark_as_received/', 'mark_as_received', name="mark_as_received"),
     url(r'^(?P<id>[0-9]+)/(?P<slug>.*)/$', 'single', name="single_product"),
 )

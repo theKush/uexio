@@ -53,6 +53,12 @@
                                     </td>
                                     <td>
                                         <a href="mailto:{{ product.user.email }}" class="btn btn-sm btn-primary action-btn" role="button">Message the seller</a>
+                                        {% if product.is_purchased %}
+                                        <form action="{% url 'mark_as_received' product.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-success">Mark as received</button>
+                                        </form>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}

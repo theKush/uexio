@@ -95,6 +95,9 @@ class Product(models.Model):
     def is_active(self):
         return self.status == self.ACTIVE
 
+    def is_purchased(self):
+        return self.status == self.PURCHASED
+
     @classmethod
     def listing(cls):
         return cls.objects.filter(status=cls.ACTIVE)
