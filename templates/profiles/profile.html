@@ -35,7 +35,7 @@
                     <li><b>User since:</b> {{ profile_user.date_joined|date }}</li>
                     <li><b>Active Listings:</b> {{ products.count }}</li>
                     <li><b>Items Sold:</b> {{ products_sold_count }}</li>
-                    <li><b>User Rating:</b> {{ profile_user.rating }}{# user rating or stars #}</li>
+                    <li><b>User Rating:</b> {{ profile_user.avg_rating|default_if_none:"-" }} / 5.0</li>
                 </ul>
             </div>
         </div>

@@ -94,7 +94,7 @@
                             <div class="media-body">
                                 <ul>
                                     <li><b>{{ product.user }}</b></li> {# seller name #}
-                                    <li> {{product.user.avg_rating }} / 5.0</li> {# seller rating #}
+                                    <li> {{product.user.avg_rating|default_if_none:"-" }} / 5.0</li> {# seller rating #}
                                 </ul>
                             </div>
                         </div>
