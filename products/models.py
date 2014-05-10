@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 
+from .verification_code import verification_code
+
 def download_loc(instance, filename):
     if instance.user.username:
         return "%s/download/%s" %(instance.user.username, filename)
@@ -70,6 +72,9 @@ class Product(models.Model):
 
     def can_activate(self):
         return self.productimage_set.count() > 0
+
+    def verification_code(self):
+        return verification_code(self)
 
     @classmethod
     def listing(cls):
