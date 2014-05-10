@@ -55,3 +55,12 @@ def can_review(self, other_user):
     return self != other_user and ((other_user in sellers) or (other_user in buyers))
 User.can_review = can_review
 AnonymousUser.can_review = lambda s,u: False
+
+def avg(seq):
+    if len(seq) == 0:
+        return None
+    return sum(seq) / float(len(seq))
+
+def avg_rating(self):
+    return avg(self.reviews_received.values_list('rating', flat=True).all())
+User.avg_rating = avg_rating
