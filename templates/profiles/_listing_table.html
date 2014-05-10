@@ -27,7 +27,7 @@
                         <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-primary" role="button" style="text-decoration: none; margin-bottom: 5px;">Edit</a>
                         <a href="{% url 'manage_coupons' product.id %}" class="btn btn-primary btn-sm" role="button" style="text-decoration: none; margin-bottom: 5px;">Coupons</a>
                         <a href="{% url 'manage_product_image' product.id %}" class="btn btn-primary btn-sm" role="button" style="text-decoration: none; margin-bottom: 5px;">Images</a>
-                        {% if product.active %}
+                        {% if product.is_active %}
                         <form action="{% url 'deactivate_product' product.id %}" method="post">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-sm btn-warning">Deactivate</button>

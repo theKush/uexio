@@ -17,7 +17,7 @@ class CategoryImageInline(admin.TabularInline):
 
 # Admin components
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'active', 'user', 'price', 'category_link')
+    list_display = ('__unicode__', 'status', 'user', 'price', 'category_link', 'purchase_link')
     inlines = [TagInline, ProductImageInline] # sets up the two inline attribute selectors of tags and images
     search_fields = ['title', 'description', 'price', 'category__title', 'category__description', 'tag__tag'] # establishes what fields are searchable
     list_filter = ['price', 'timestamp', 'updated'] # establishes the filter process on the right hand side of the page
@@ -29,8 +29,14 @@ class ProductAdmin(admin.ModelAdmin):
 
     def category_link(self, obj): # this category method that enables the category to be clickable
         return "<a href='/admin/products/category/" + str(obj.category.id) + "'>" + obj.category.title + "</a>"
-
     category_link.allow_tags = True # this function call allows for the categories column to allow html tags
+
+    def purchase_link(self, obj):
+        if obj.purchase:
+            return "<a href='/admin/products/userpurchase/%s'>%s products for $%s</a>" % \
+                (obj.purchase.id, obj.purchase.product_set.count(), obj.purchase.total)
+        return '-'
+    purchase_link.allow_tags = True
 
 admin.site.register(Product, ProductAdmin) # connects the product model with the productadmin page
 

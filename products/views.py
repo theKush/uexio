@@ -49,7 +49,6 @@ def add_product(request):
         product = form.save(commit=False)
         product.user = request.user
         product.slug = slugify(form.cleaned_data['title'])
-        product.active = False
         product.save()
         image = image_form.save(commit=False)
         image.product = product
@@ -112,13 +111,13 @@ def single(request, id, slug):
 
 def activate_product(request, id):
     product = Product.objects.get(id=id)
-    product.active = True
+    product.status = Product.ACTIVE
     product.save()
     return HttpResponseRedirect(reverse('listings'))
 
 def deactivate_product(request, id):
     product = Product.objects.get(id=id)
-    product.active = False
+    product.status = Product.INACTIVE
     product.save()
     return HttpResponseRedirect(reverse('listings'))
 

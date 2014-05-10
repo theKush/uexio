@@ -57,9 +57,9 @@ def library(request):
 
 def listings(request):
     current_user_profile_url = get_current_user_profile_url(request)
-    _products = Product.objects.filter(user=request.user, purchase__isnull=True)
-    active_products = _products.filter(active=True)
-    inactive_products = _products.filter(active=False)
+    _products = Product.objects.filter(user=request.user)
+    active_products = _products.filter(status=Product.ACTIVE)
+    inactive_products = _products.filter(status=Product.INACTIVE)
     return render_to_response("profiles/listings.html", locals(), context_instance=RequestContext(request))
 
 def mypurchases(request):

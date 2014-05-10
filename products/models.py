@@ -62,7 +62,23 @@ class Product(models.Model):
     isbn_number = models.CharField(max_length=20, null=True, blank=True)
     author = models.CharField(max_length=500, null=True, blank=True)
     category = models.ForeignKey(Category)
-    active = models.BooleanField(default=True)
+
+    INACTIVE = 'inactive'
+    ACTIVE = 'active'
+    PURCHASED = 'purchased'
+    RECEIVED = 'received'
+    DISPUTED = 'disputed'
+    FINALIZED = 'finalized'
+    STATUS_CHOICES = (
+        (INACTIVE, 'inactive (draft)'),
+        (ACTIVE, 'active (shows up in listings)'),
+        (PURCHASED, 'purchased (paid by the buyer)'),
+        (RECEIVED, 'physical product received by the buyer'),
+        (DISPUTED, 'disputed'),
+        (FINALIZED, 'finalized (money transfered to seller)'),
+    )
+    status = models.CharField(max_length=9, choices=STATUS_CHOICES, default=INACTIVE)
+
     featured = models.BooleanField(default=False)
     purchase = models.ForeignKey(UserPurchase, null=True, blank=True)
     sold_for = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
@@ -76,9 +92,12 @@ class Product(models.Model):
     def verification_code(self):
         return verification_code(self)
 
+    def is_active(self):
+        return self.status == self.ACTIVE
+
     @classmethod
     def listing(cls):
-        return cls.objects.filter(active=True, purchase__isnull=True)
+        return cls.objects.filter(status=cls.ACTIVE)
 
     # COMMENT DATE: 3-3-14
     # This sets up the
