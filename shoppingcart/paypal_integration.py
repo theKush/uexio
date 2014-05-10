@@ -42,6 +42,7 @@ def process_paypal_notification(cart_id, params):
         for item in cart.shoppingcartitem_set.all():
             product = item.product
             product.purchase = purchase
+            product.status = Product.PURCHASED
             product.sold_for = product.price - (item.discount or 0)
             product.save()
         cart.delete()
