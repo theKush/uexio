@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib import messages
 from django.shortcuts import render_to_response, Http404, RequestContext, HttpResponseRedirect, get_object_or_404
 from django.core.urlresolvers import reverse
@@ -74,6 +76,8 @@ def paypal_notification(request, id):
         queue_paypal_notification(shoppingcart, request.POST)
         return HttpResponse('')
     else:
+        logger = logging.getLogger('debug')
+        logger.error('IPN failed for cart id=%s, params=%s' % (id, dict(request.POST)))
         return HttpResponseBadRequest('')
 
 def _get_shopping_cart_items(request):
