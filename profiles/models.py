@@ -41,12 +41,7 @@ def flatten(alist):
     return [item for sublist in alist for item in sublist]
 
 def sell_transactions(self):
-    # TODO Optimize this to narrow down records at the DB level.
-    # Ideally Product <-> UserPurchase should not be many-to-many, but
-    # one-to-many, as each Product is unique and can be in just a single
-    # UserPurchase.
-    products = Product.objects.filter(user=self)
-    return flatten(list(UserPurchase.objects.filter(product=product)) for product in products)
+    return UserPurchase.objects.filter(product__user=self).all()
 User.sell_transactions = sell_transactions
 
 def can_review(self, other_user):
