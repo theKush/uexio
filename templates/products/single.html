@@ -191,7 +191,7 @@
                                                     <img class="media-object" src="{% gravatar_image_url comment.user 50 %}" width="50" height="50" border="0" />
                                                 </a>
                                                 <div class="media-body">
-                                                    <a href="#">{{comment.user}}</a>
+                                                    <a href="{% url 'profile' comment.user %}">{{comment.user}}</a>
                                                     {% if comment.user.is_superuser %}
                                                     <span class="label label-success">Staff</span>
                                                     {% endif %}
