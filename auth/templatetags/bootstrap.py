@@ -42,7 +42,7 @@ def add_to_cart_button(context, product, css_class="btn btn-primary btn-block"):
         label = 'Remove from'
     else:
         url = reverse('add_to_cart', args=[product.id])
-        text = ''
+        text = '&nbsp'
         label = 'Add to'
     return '''<small>%(text)s</small>
         <a class="%(css_class)s" href="%(url)s">

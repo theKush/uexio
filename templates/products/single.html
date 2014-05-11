@@ -47,7 +47,8 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-                <div class="panel-footer">
+                <div class="panel-footer" align="center">
+                    Verification Code: {{ product.verification_code }}
                 </div>
             </div>
         </div>
@@ -94,7 +95,7 @@
                             <div class="media-body">
                                 <ul>
                                     <li><b>{{ product.user }}</b></li> {# seller name #}
-                                    <li> {{product.user.avg_rating|default_if_none:"-" }} / 5.0</li> {# seller rating #}
+                                    <li> Seller Rating: {{product.user.avg_rating|default_if_none:"-" }} / 5.0</li> {# seller rating #}
                                 </ul>
                             </div>
                         </div>
