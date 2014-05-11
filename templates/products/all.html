@@ -56,7 +56,7 @@
                         {% endif %}
                     {% endfor %}
                     <div class="caption">
-                        <h5>{{ product|truncatechars:30 }}</h5></a>
+                        <h5 title="{{ product }}">{{ product|truncatechars:30 }}</h5></a>
                         <p><i class="fa fa-usd"></i> {{ product.price|floatformat:2 }} <span class="pull-right">{{ product.get_condition_display }}</span> </p>
                         <h4>
                             {% if product.user == user %}
