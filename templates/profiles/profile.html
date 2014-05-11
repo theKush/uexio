@@ -55,8 +55,18 @@
                         {% for review in profile_user.reviews_received.all %} {# from all the feedbacks received for this user #}
                         <blockquote>
                             <p>{{ review.content }}</p>  {# populate the feedback #}
-                            <p>Rating: {{ review.rating }}</p> {# to be styled with stars or similar #}
-                            <small>{{ review.author }} on {{ review.timestamp|date }}</small>    {# and feedback received by #}
+                            <small>
+                                {{ review.author }} on {{ review.timestamp|date }}
+                                {% if review.rating >= 4 %}
+                                    <span class="label label-success pull-right">
+                                {% elif review.rating >= 2 and review.rating < 4 %}
+                                    <span class="label label-warning pull-right">
+                                {% else %}
+                                    <span class="label label-danger pull-right">
+                                {% endif %}
+                                    Rating: {{ review.rating }}
+                                </span>
+                            </small>    {# and feedback received by #}
                         </blockquote>
                         {% endfor %}
                     {% endif %}
