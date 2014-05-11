@@ -36,7 +36,9 @@
     <div class="row">
         <h1>Edit "{{ product.title }}" images</h1>
         <hr>
-
+        <p>Please include at least one image with verification code written down on a piece of paper next to your product. This helps us verify your product and increase the credibility of your product among the buyers </p>
+        <h4>Verification Code: {{ product.verification_code }} </h4>
+        <hr>
         <form method='POST' action='' enctype="multipart/form-data" class="form-horizontal" role="form">
             {% csrf_token %}
             {{ formset.management_form }}
