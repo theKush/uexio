@@ -74,7 +74,11 @@
                                     <meta itemprop="currency" content="USD">
                                 </div>
                                 <div class="pull-right">
-                                    {% add_to_cart_button product "btn btn-success" %}
+                                    {% if not user.is_authenticated %}
+                                        <button rel="tooltip" type="button" class="btn btn-success" title="Please Login to Add to Cart" >Add to <i class="fa fa-shopping-cart"></i></button>
+                                    {% else %}
+                                        {% add_to_cart_button product "btn btn-success" %}
+                                    {% endif %}
                                 </div>
                             {% endif %}
                         </div>
@@ -187,7 +191,7 @@
                                                     <img class="media-object" src="{% gravatar_image_url comment.user 50 %}" width="50" height="50" border="0" />
                                                 </a>
                                                 <div class="media-body">
-                                                    <a href="#">{{comment.user}}</a>
+                                                    <a href="{% url 'profile' comment.user %}">{{comment.user}}</a>
                                                     {% if comment.user.is_superuser %}
                                                     <span class="label label-success">Staff</span>
                                                     {% endif %}

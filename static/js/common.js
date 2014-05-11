@@ -52,4 +52,8 @@ $(document).ready(function(){
     $("select.autosubmit").change(function() {
         $(this).closest('form').submit();
     });
+    $(document).ready(function(){
+        $("[rel=tooltip]").tooltip({ placement: 'bottom'});
+    });
+
 });
