@@ -93,58 +93,7 @@
                   <div class="col-lg-10">
 
                       {{ form.condition }}
-                    <!--div class="controls widget" style="margin-bottom:0px;">
-                      <div class="condition_widget">
-                        <table class="table table-bordered">
-                          <tbody>
-                            <tr>
 
-
-                              <td width="25%">
-                                <label for="id_condition_mint" class="radio">
-                                  <input type="radio" id="id_condition_mint" value="1" name="condition" class="required">
-                                  New
-                                </label>
-                                <ul>
-                                  <li>In origial packaging</li>
-                                  <li>Never Used</li>
-                                </ul>
-                              </td>
-                              <td width="25%">
-                                <label for="id_condition_mint" class="radio">
-                                  <input type="radio" id="id_condition_mint" value="2" name="condition" class="required">
-                                  Mint
-                                </label>
-                                <ul>
-                                  <li>Looks new</li>
-                                  <li>No Sign of use</li>
-                                </ul>
-                              </td>
-                              <td width="25%">
-                                <label for="id_condition_good" class="radio">
-                                  <input type="radio" id="id_condition_good" value="3" name="condition" class="required">
-                                  Good
-                                </label>
-                                <ul>
-                                  <li>Normal wear</li>
-                                  <li>Some markings</li>
-                                </ul>
-                              </td>
-                              <td width="25%">
-                                <label for="id_condition_fair" class="radio">
-                                  <input type="radio" id="id_condition_fair" value="fair" name="condition" class="required">
-                                  Fair
-                                </label>
-                                <ul>
-                                  <li>Heavily Damaged</li>
-                                  <li>Full of markings</li>
-                                </ul>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div-->
                     <span class="help-block">Please be honest here</span>
                   </div>
                 </div>
@@ -162,7 +111,7 @@
                 <div class="form-group">
                   <label class="col-lg-2 control-label" for="inputPaypal">PayPal Email</label>
                   <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputPaypal" placeholder="{{ user.email }}" disabled="">
+                    <input type="text" class="form-control" id="inputPaypal" placeholder="{{ user.userprofile.paypal }}" disabled="">
                     <span class="help-block">Your PayPal Email address will be used to accept payment</span>
                   </div>
                 </div>
