@@ -13,8 +13,8 @@ The application using Python for the programming language.
 Uexio utilizes the Django framework.
 
 ### Views
-Currently you can visit http://localhost:8000/admin (after you have started the server) to access the admin dashboard for the application.
-Also, you can view the cart, single product page, and all products. 
+Currently you can visit http://localhost:5000/admin (after you have started the server) to access the admin dashboard for the application.
+You can visit the user side by visiting http://localhost:5000/
 
 ### Functionality
 In the admin panel you can create products, associate products with categories, create addtional categories, create url slugs, etc. You can also create users.
@@ -39,9 +39,20 @@ You can create a local superadmin user by running the command: ```django-admin.p
 * python manage.py migrate
 * python manage.py createsuperuser
 
-### Running the application
+To test the paypal checkout process, use the following sandbox account
+* username/email: kush.patel@ttu.edu
+* password: kushpatel
 
-Copy `.env.sample` file to `.env` and fill in the S3 credentials. Once that's done you can start the server with ```foreman start```.
+### Running the application
+You can test our application on http://uexio.herokuapp.com/ . 
+If you would like to install a local copy follow this instructions (note that paypal wont work in local copy)
+* Create an amazon S3 account (if not already).
+* Create a bucket in amazon S3
+* Get the required credentials from your amazon S3
+* Copy `.env.sample` file to `.env` and fill in the S3 credentials. 
+* Download Redis from redis.io (if not already). On a Mac you can install it with brew using following command in your terminal ```brew install redis```
+* Once redis is installed, run the redis server with following command ```redis-server```
+* Once that's done you can start the uexio server with ```foreman start```. 
 
 ### Indentation
 Since the application is being built with Python, indentation is vital for the program to function properly, you will see spacing is consistent throughout the program.
