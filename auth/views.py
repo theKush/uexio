@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 from profiles.forms import UserProfileForm
 from .forms import UserCreateForm
-
+# allow user to register
 def register(request):
     # If it's a HTTP POST, we're interest in processing form data.
     if request.method == 'POST':

@@ -3,17 +3,17 @@ from django.forms import ValidationError
 from django.forms.models import BaseModelFormSet, modelformset_factory
 
 from .models import Product, ProductImage, Comment, Coupon # this is a call to a relative model, it just needs the '.' because we're already in the product dir
-
+# create new product form
 class ProductForm(ModelForm):
     class Meta:
         model = Product
         fields = ('title', 'author', 'isbn_number', 'headline', 'category', 'description', 'condition', 'price', 'download')
-
+# product images form
 class ProductImageForm(ModelForm):
     class Meta:
         model = ProductImage
         fields = ('title', 'image', 'featured_image')
-
+# making sure that featured images are set, and only one featured image is allowed.
 class BaseProductImageFormSet(BaseModelFormSet):
     def clean(self):
         super(BaseProductImageFormSet, self).clean()
@@ -32,12 +32,12 @@ ProductImageFormSet = modelformset_factory(ProductImage,
                                            formset=BaseProductImageFormSet,
                                            can_delete=True)
 
-
+# form to add comments on single product pages
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
         fields = ('content',)
-
+# form to create coupon codes and making sure coupon discount is less than the product price
 class CouponForm(ModelForm):
     class Meta:
         model = Coupon

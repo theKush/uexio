@@ -2,7 +2,7 @@ from django import template
 import hashlib
 
 register = template.Library()
-
+#custom django template tag for gravatar images
 @register.simple_tag
 def gravatar_image_url(user, size=80):
     md5 = hashlib.md5()

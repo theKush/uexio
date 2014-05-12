@@ -14,24 +14,24 @@ from django.db.models import Q
 from .models import Product, Category, ProductImage, Comment, Coupon
 from .forms import ProductForm, ProductImageForm, CommentForm, CouponForm, ProductImageFormSet
 from .helpers import product_url
-
+# create a list of all products to display it on all products page
 def list_all(request):
     title = "All Products"
     products = Product.listing()
     return _all_products_page(request, locals())
-
+# search for products and display search results
 def search_products(request):
     query = request.GET['query']
     products = Product.listing().filter(Q(description__icontains=query) | Q(title__icontains=query) | Q(headline__icontains=query) | Q(author__icontains=query) | Q(isbn_number__icontains=query))
     title = "Products matching \"" + query + "\""
     return _all_products_page(request, locals())
-
+# create a list of categories to display products by categories
 def category(request, slug):
     category = Category.objects.get(slug=slug)
     title = "Products in \"" + category.title + "\""
     products = Product.listing().filter(category=category)
     return _all_products_page(request, locals())
-
+# render the all products page with categories, pagination, and sorting by price.
 def _all_products_page(request, context):
     categories = Category.objects.all()
     order = _order(request)
@@ -40,7 +40,7 @@ def _all_products_page(request, context):
     return render_to_response("products/all.html",
                               context,
                               context_instance=RequestContext(request))
-
+# create new products
 def add_product(request):
     form = ProductForm(request.POST or None, request.FILES or None)
     image_form = ProductImageForm(request.POST or None, request.FILES or None)
@@ -57,7 +57,7 @@ def add_product(request):
         return HttpResponseRedirect(product_url(product))
 
     return render_to_response("products/edit.html", locals(), context_instance=RequestContext(request))
-
+# manage the product's images
 def manage_product_image(request, id):
     product = Product.objects.get(id=id)
 
@@ -76,7 +76,7 @@ def manage_product_image(request, id):
         return HttpResponseRedirect(reverse('manage_product_image', args=[product.id]))
 
     return render_to_response("products/manage_images.html", locals(), context_instance=RequestContext(request))
-
+# edit already created products.
 def edit_product(request, id):
     instance = Product.objects.get(id=id)
     # this conditional ensures that only the product owners can edit the product,
@@ -95,7 +95,7 @@ def edit_product(request, id):
             pass
 
     return render_to_response("products/edit.html", locals(), context_instance=RequestContext(request))
-
+# view single product listings
 def single(request, id, slug):
     product = Product.objects.get(id=id, slug=slug)
     images = product.productimage_set.all()
@@ -108,19 +108,19 @@ def single(request, id, slug):
     edit = True
 
     return render_to_response("products/single.html", locals(), context_instance=RequestContext(request))
-
+# activate products after creation
 def activate_product(request, id):
     product = Product.objects.get(id=id)
     product.status = Product.ACTIVE
     product.save()
     return HttpResponseRedirect(reverse('listings'))
-
+# diactivate products
 def deactivate_product(request, id):
     product = Product.objects.get(id=id)
     product.status = Product.INACTIVE
     product.save()
     return HttpResponseRedirect(reverse('listings'))
-
+# add comments on single product page
 def comment(request, id):
     product = Product.objects.get(id=id)
     if request.method == 'POST':
@@ -131,7 +131,7 @@ def comment(request, id):
             return render_to_response("products/single.html", locals(), context_instance=RequestContext(request))
 
     return HttpResponseRedirect(product_url(product))
-
+# manage coupons associated with a product
 def manage_coupons(request, id):
     product = Product.objects.get(id=id)
 
@@ -159,7 +159,7 @@ def manage_coupons(request, id):
             pass
 
     return render_to_response("products/manage_coupons.html", locals(), context_instance=RequestContext(request))
-
+# escrow process: allowing users to mark a bought product as received
 def mark_as_received(request, id):
     product = get_object_or_404(Product, id=id)
 
@@ -182,13 +182,13 @@ def fill_in_product_id(params, product_id):
             break
 
     return params
-
+# ability to sort by price
 def _order(request):
     order = request.GET.get('order')
     if order in ['price', '-price']:
         return order
     return 'price' # the default sorting order
-
+# allow users to paginate and set pagination threshold to 15
 def _paginate(products, request):
     paginator = Paginator(products, 15)
 
