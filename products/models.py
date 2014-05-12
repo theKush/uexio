@@ -3,13 +3,13 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 from .verification_code import verification_code
-
+# setting up the download location
 def download_loc(instance, filename):
     if instance.user.username:
         return "%s/download/%s" %(instance.user.username, filename)
     else:
         return "%s/download/%s" %("default", filename)
-
+# creating the category model
 class Category(models.Model):
     title = models.CharField(max_length=120)
     description = models.CharField(max_length=500)
@@ -28,7 +28,7 @@ class Category(models.Model):
         # work well in most cases, so it's best to designate it to ensure it
         # matches in all cases
         verbose_name_plural = "Categories"
-
+# creating the user purchase model for tracking the user transactions
 class UserPurchase(models.Model):
     user = models.ForeignKey(User)
     total = models.DecimalField(max_digits=20, decimal_places=2)
@@ -62,7 +62,7 @@ class Product(models.Model):
     isbn_number = models.CharField(max_length=20, null=True, blank=True)
     author = models.CharField(max_length=500, null=True, blank=True)
     category = models.ForeignKey(Category)
-
+    # different status's for a product
     INACTIVE = 'inactive'
     ACTIVE = 'active'
     PURCHASED = 'purchased'
@@ -85,16 +85,16 @@ class Product(models.Model):
 
     def __unicode__(self):
         return str(self.title)
-
+    # check if you can activate a product
     def can_activate(self):
         return self.productimage_set.count() > 0
-
+    # create a verification code
     def verification_code(self):
         return verification_code(self)
-
+    # check if the product status is active
     def is_active(self):
         return self.status == self.ACTIVE
-
+    # check if the product status is purchased
     def is_purchased(self):
         return self.status == self.PURCHASED
 
@@ -108,7 +108,7 @@ class Product(models.Model):
         # The default ordering for the object, for use when obtaining lists of objects:
         # the '-' will return the items in reverse order
         ordering = ['-order']
-
+# create a model for product images
 class ProductImage(models.Model):
     product = models.ForeignKey(Product)
     image = models.ImageField(upload_to="products/image/")
@@ -149,7 +149,7 @@ class CategoryImage(models.Model):
         # work well in most cases, so it's best to designate it to ensure it
         # matches in all cases
         verbose_name_plural = "Category Images"
-
+# create model for user comments
 class Comment(models.Model):
     product = models.ForeignKey(Product)
     user = models.ForeignKey(User, null=False, blank=False)
@@ -158,7 +158,7 @@ class Comment(models.Model):
 
     def __unicode__(self):
         return str(self.content)
-
+# create a model for product coupons
 class Coupon(models.Model):
     product = models.ForeignKey(Product)
     code = models.CharField(max_length=20, unique=True)
