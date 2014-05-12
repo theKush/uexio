@@ -7,7 +7,7 @@ from django.db import transaction
 
 from uexio.settings import PAYPAL_EMAIL, PAYPAL_HOST
 
-from products.models import UserPurchase
+from products.models import UserPurchase, Product
 from .models import Shoppingcart
 
 IPN_URLSTRING = 'https://%s/cgi-bin/webscr' % PAYPAL_HOST
@@ -29,7 +29,7 @@ def is_paypal_notification_valid(params):
     return status == 'VERIFIED'
 
 def queue_paypal_notification(cart, params):
-    django_rq.enqueue(process_paypal_notification, cart.id, dict([k, v[0]] for k, v in dict(params).iteritems()))
+    django_rq.enqueue(process_paypal_notification, cart.id, params)
 
 @transaction.atomic
 def process_paypal_notification(cart_id, params):

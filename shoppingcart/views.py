@@ -68,17 +68,23 @@ def apply_coupon(request):
 def thankyou(request):
     _clear_shopping_cart(request)
     return render_to_response('shoppingcart/thankyou.html', locals(), context_instance=RequestContext(request))
+
 # create paypal notifications with shoppingcart ids
 @csrf_exempt
 def paypal_notification(request, id):
     shoppingcart = get_object_or_404(Shoppingcart, id=id)
-    if transaction_data_matches(shoppingcart, request.POST):
-        queue_paypal_notification(shoppingcart, request.POST)
+    params = _flatten_params(request.POST)
+    if transaction_data_matches(shoppingcart, params):
+        queue_paypal_notification(shoppingcart, params)
         return HttpResponse('')
     else:
         logger = logging.getLogger('debug')
-        logger.error('IPN failed for cart id=%s, params=%s' % (id, dict(request.POST)))
+        logger.error('IPN failed for cart id=%s, params=%s' % (id, params))
         return HttpResponseBadRequest('')
+
+def _flatten_params(params):
+    return dict([k, v[0]] for k, v in dict(params).iteritems())
+
 # get the total number of items in shopping cart
 def _get_shopping_cart_items(request):
     shoppingcart = _get_shopping_cart(request)
